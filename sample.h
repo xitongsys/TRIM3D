@@ -8,11 +8,10 @@ class Sample {
 
 public:
     vector<Object3D> objs;
-    double xmin,xmax,ymin,ymax,zmin,zmax;
 
 public:
     Sample();
-    void loadFile(char *fname);
+    Sample(string input);
 };
 
 #endif // SAMPLE_H

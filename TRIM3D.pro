@@ -15,12 +15,17 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     object3d.cpp \
-    sample.cpp
+    sample.cpp \
+    atom.cpp \
+    stopping.cpp
 
 HEADERS  += mainwindow.h \
     global.h \
     object3d.h \
-    sample.h
+    sample.h \
+    atom.h \
+    phyconst.h \
+    stopping.h
 
 FORMS    += mainwindow.ui
 

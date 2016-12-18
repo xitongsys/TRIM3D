@@ -35,6 +35,7 @@ struct Vect{
         va.x = x + v2.x;
         va.y = y + v2.y;
         va.z = z + v2.z;
+        return va;
     }
 
     void normalize(){
