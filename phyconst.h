@@ -11,6 +11,7 @@ const double Cme=9.109534e-31;
 const double CN0=6.022045e23;
 const double Ckb=1.380662e-23;
 
+const double CPI=3.141592653;
 
 
 #endif // PHYCONST_H

@@ -17,11 +17,12 @@ public:
     vector<Atom> elements;
     vector<double> fraction;
     vector<double> density;// m-3
+    vector<double> disEnergy;
 
 public:
     Object3D();
     void loadObj(string fname);
-    void addElement(Atom type, double frac, double dens);
+    void addElement(Atom type, double frac, double dens, double disE);
 
 };
 

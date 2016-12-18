@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+LIBS += -lglut -lGL -lGLU
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -32,5 +33,6 @@ FORMS    += mainwindow.ui
 CONFIG += mobility
 MOBILITY = 
 
-DISTFILES +=
+DISTFILES += \
+    input.txt
 

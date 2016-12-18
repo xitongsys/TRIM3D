@@ -2,7 +2,7 @@
 #define STOPPING_H
 
 
-class Stopping{
+class Stopping{//E:keV
 public:
     double hstop(int Z1, double M1,
                  int Z2, double M2, double E);
@@ -12,6 +12,10 @@ public:
                   int Z2, double M2,
                   double E, double VFERMI, double LFCTR);
     vector<vector<double> > pcoef;
+
+    double nstop(int Z1, double M1, int Z2, double M2,
+                 double E, double P,
+                 double &dE, double &angle1, double &angle2);
 
 public:
     Stopping(string coefFile);

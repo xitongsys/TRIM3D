@@ -13,6 +13,7 @@ void Object3D::loadObj(string fname){
         char buff[1024];
         memset(buff, 0, sizeof(buff));
         fin.getline(buff, 1024);
+
         string str(buff);
         stringstream ss(str);
         string head;
@@ -92,10 +93,11 @@ void Object3D::loadObj(string fname){
 }
 
 
-void Object3D::addElement(Atom type, double frac, double dens){
+void Object3D::addElement(Atom type, double frac, double dens, double disE){
     elements.push_back(type);
     fraction.push_back(frac);
     density.push_back(dens);
+    disEnergy.push_back(disE);
 
     double sum=0;
     for(int i=0; i<fraction.size(); i++){
