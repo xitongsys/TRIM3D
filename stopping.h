@@ -8,6 +8,9 @@ public:
                  int Z2, double M2, double E);
     double hestop(int Z1, double M1,
                  int Z2, double M2, double E);
+    double histop(int Z1, double M1,
+                  int Z2, double M2,
+                  double E, double VFERMI, double LFCTR);
     vector<vector<double> > pcoef;
 
 public:

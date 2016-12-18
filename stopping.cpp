@@ -53,3 +53,82 @@ double Stopping::hestop(int Z1, double M1, int Z2, double M2, double E){
     SE = SE/(CeV/CA);
     return SE;
 }
+
+
+double Stopping::histop(int Z1, double M1, int Z2, double M2, double E, double VFERMI, double LFCTR){
+    double YRMIN = 0.13, VRMIN = 1.0;
+    double V = sqrt(E/25)/VFERMI;
+    double VR = V*VFERMI*(1 + 1/(5*V*V));
+    if(V < 1){
+        VR = (3*VFERMI/4)*(1 + (2*V*V/3) - pow(V,4)/15.0);
+    }
+    double YR = max(YRMIN, VR/pow(Z1, 0.6667));
+    YR = max(YR, VRMIN/pow(Z1, 0.6667));
+
+    double A = -0.803*pow(YR,0.3) + 1.3167*pow(YR, 0.6) + 0.38157*YR + 0.008983*YR*YR;
+    double Q = min(1.0, max(0.0, 1.0 - exp(-min(A, 50))));
+
+    double B = (min(0.43, max(0.32, 0.12+0.025*Z1)))/pow(Z1, 0.3333);
+    double L0 = (0.8 - Q*(min(1.2, 0.6+Z1/30.0)))/pow(Z1, 0.3333);
+
+    if(Q < 0.2){
+        L1 = 0;
+    }
+    else if(Q < (max(0.0, 0.9 - 0.025*Z1))){
+        Q1 = 0.2;
+        L1 = B*(Q - 0.2)/abs(max(0.0, 0.9-0.025*Z1) - 0.2000001);
+    }
+    else if(Q < (max(0.0, 1.0 - 0.025*min(16.0, 1.0*Z1)))){
+        L1 = B;
+    }
+
+    double L = max(L1, L0*LFCTR);
+    ZETA = Q + (1.0/(2.0*VFERMI*VFERMI))*(1.0-Q)*log(1 + pow((4*L*VFERMI/1.919),2));
+    A = -pow((7.6 - max(0.0, log(E))),2);
+    ZETA = ZETA * (1.0 + (1.0/Z1/Z1)*(0.18 + 0.0015*Z2)*exp(A));
+
+    if(YR <= max(YRMIN, VRMIN/pow(Z1, 0.6667))){
+        VRMIN = max(VRMIN, YRMIN*pow(Z1, 0.6667));
+        VMIN = 0.5*(VRMIN + sqrt(max(0.0, VRMIN*VRMIN - 0.8*VFERMI*VFERMI)));
+        EEE = 25*VMIN*VMIN;
+        SP=hstop(Z1,M1,Z2,M2,EEE);
+        POWER = 0.5;
+        if((Z2==6) || (((Z2==14) || (Z2==32)) && (Z1==19))) POWER = 0.375;
+        SE = (SP*pow((ZETA*Z1),2))*pow((E/EEE),POWER);
+    }
+    else{
+        SP = hstop(Z1, M1, Z1, M2, E);
+        SE = SP*pow((ZETA*Z1),2);
+    }
+
+    SE = SE/(CeV/A);
+    return SE;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
