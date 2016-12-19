@@ -10,7 +10,7 @@ public:
     vector<vector<Atom> > record;
 
 public:
-    MC(string inFile);
+    MC(string inFile, string sFile);
     void run();
     double randMC();
 };

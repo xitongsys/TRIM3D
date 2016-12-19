@@ -14,6 +14,7 @@ public:
 
 public:
     Sample();
+    Sample(string inputFile);
     void loadInput(string input);
 };
 

@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 
 #include <GL/glut.h>
 #include <global.h>
-#include "sample.h"
+#include "mc.h"
 
 GLfloat x,y;
 GLfloat dx,dy;
@@ -27,7 +27,7 @@ GLfloat wH,wW;
 GLfloat angle=0;
 GLfloat angle2=0;
 
-Sample sample;
+MC mc("/home/zxt/input.txt", "/home/zxt/SCOEF.88");
 
 void drawObj(Object3D & obj){
     int lf = obj.faces.size();
@@ -61,7 +61,7 @@ void onSizeChange(GLsizei w, GLsizei h){
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(60.0, (GLfloat)w/(GLfloat)h, sample.zmax, sample.zmin);
+    gluPerspective(60.0, (GLfloat)w/(GLfloat)h, mc.zmax, mc.zmin);
     //glOrtho(sample.xmin, sample.xmax, sample.ymin, sample.ymax, sample.zmax, sample.zmin);
 
 }
@@ -94,7 +94,7 @@ void renderScene(void){
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    gluLookAt(2,2,sample.zmax+20, 0,0,0, 0,1,0);
+    gluLookAt(2,2,mc.zmax+20, 0,0,0, 0,1,0);
 
     glRotatef(angle/3.14*180, 1, 0, 0);
     glRotatef(angle2/3.14*180, 0, 1, 0);
@@ -106,8 +106,8 @@ void renderScene(void){
 
     glColor3f(0.1, 1, 0);
 
-    for(int i=0; i<sample.objs.size();i++){
-        drawObj(sample.objs[i]);
+    for(int i=0; i<mc.objs.size();i++){
+        drawObj(mc.objs[i]);
     }
 
     glMatrixMode(GL_MODELVIEW);
@@ -142,7 +142,8 @@ int main(int argc, char* argv[]){
     glutReshapeFunc(onSizeChange);
     glutSpecialFunc(onKey);
 
-    sample.loadInput("/home/zxt/input.txt");
+    //mc.run();
+
     glutMainLoop();
 
     return 0;

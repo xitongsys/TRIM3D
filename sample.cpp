@@ -8,6 +8,13 @@ Sample::Sample(){
     zmin = INT_MAX; zmax = INT_MIN;
 }
 
+Sample::Sample(string inputFile){
+    xmin = INT_MAX; xmax = INT_MIN;
+    ymin = INT_MAX; ymax = INT_MIN;
+    zmin = INT_MAX; zmax = INT_MIN;
+    loadInput(inputFile);
+}
+
 void Sample::loadInput(string fname){
     ifstream fi(fname);
     char buff[1024];
@@ -31,7 +38,7 @@ void Sample::loadInput(string fname){
                 ss.clear(); ss.str(""); ss<<str;
                 ss>>eName>>Z>>mass>>density>>fraction>>disE;
                 objs[ln].loadObj(fname);
-                Atom atom(eName, Z, mass, 0,0,0, 0,0,0, TARGET);
+                Atom atom(eName, Z, mass, Vect(0,0,0), Vect(0,0,0), 0, TARGET);
                 objs[ln].addElement(atom, fraction, density, disE);
             }
 
@@ -53,7 +60,7 @@ void Sample::loadInput(string fname){
                 int Z,num; double mass,x,y,z,vx,vy,vz;
                 ss>>name>>Z>>mass>>num>>x>>y>>z>>vx>>vy>>vz;
                 int ln = ions.size();
-                Atom atom(name, Z, mass, x, y, z, vx, vy, vz, INCIDENT);
+                Atom atom(name, Z, mass, Vect(x, y, z), Vect(vx, vy, vz), 0, INCIDENT);
                 ions.push_back(atom);
                 ionNum.push_back(num);
             }

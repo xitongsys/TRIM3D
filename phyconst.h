@@ -1,6 +1,8 @@
 #ifndef PHYCONST_H
 #define PHYCONST_H
 
+//system unit: Energy:eV, Mass:u, Length:A, Density:atoms/A3
+
 
 const double CeV=1.6021892e-19;
 const double Ce=1.6021892e-19;

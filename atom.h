@@ -12,7 +12,8 @@ public:
     string name;
     int Z;
     double mass, energy;
-    double x,y,z,vx,vy,vz;
+    Vect pos;
+    Vect direct;
 
     IonType type;
 
@@ -20,9 +21,8 @@ public:
 public:
     Atom();
     Atom(string namep, int Zp, double massp,
-         double xp, double yp, double zp,
-         double vxp, double vyp, double vzp,
-         IonType type);
+         Vect posp, Vect directp, double energyp,
+         IonType typep);
 };
 
 #endif // ATOM_H

@@ -1,8 +1,7 @@
 #include "mc.h"
 
 
-MC::MC(string inFile):Sample(inFile),Stopping("H.88"){
-}
+MC::MC(string inFile, string sFile):Sample(inFile),Stopping(sFile){}
 
 double MC::randMC(){
     int MOD=1000000;
@@ -19,8 +18,8 @@ void MC::run(){
             int k=0;
             while(k<record[rc].size()){
                 while(true){
-                    Vect pos(record[rc][k].x, record[rc][k].y, record[rc][k].z);
-                    vect dir(record[rc][k].vx, record[rc][k].vy, record[rc][k].vz);
+                    Vect pos = record[rc][k].pos;
+                    Vect dir = record[rc][k].direct;
 
                     int oi=0;
                     for(oi=0; oi<objs.size(); oi++){
@@ -61,31 +60,46 @@ void MC::run(){
                         if(Z1==1){dEE=hstop(Z1,M1,Z2,M2,E)*LS;}
                         else if(Z1==2){dEE=hestop(Z1,M1,Z2,M2,E)*LS;}
                         else{
-                            dEE=histop(Z1,M1,Z2,M2,E,atomInfo[Z2][6],atomInfo[Z1][7]);
+                            dEE=histop(Z1,M1,Z2,M2,E,atomInf[Z2][6],atomInf[Z1][7]);
                         }
+
+                        Atom ion = record[rc][k];
+                        double a1,a2;
+                        ion.direct.getAngle(a1,a2);
 
                         if(dNE > objs[oi].disEnergy[ei]){
-                            double recoilEnergy = dNe - objs[oi].disEnergy[ei];
-
+                            double recoilEnergy = dNE - objs[oi].disEnergy[ei];
+                            Atom recoil(objs[oi].elements[ei].name, Z2, M2, ion.pos, Vect(0,0,1), recoilEnergy, RECOIL);
+                            recoil.direct.Ry(angle2);
+                            recoil.direct.Ry(a2);
+                            recoil.direct.Rz(a1);
+                            record[rc].push_back(recoil);
                         }
 
+                        Vect tmp(0,0,1);
+                        tmp.Ry(-angle1);
+                        tmp.Ry(a2); tmp.Rz(a1);
+                        record[rc][k].direct = tmp;
+                        record[rc][k].energy = (E - dEE - dNE);
+                        record[rc][k].pos.x += LS*record[rc][k].direct.x;
+                        record[rc][k].pos.y += LS*record[rc][k].direct.y;
+                        record[rc][k].pos.z += LS*record[rc][k].direct.z;
 
-
+                        double EF=5;
+                        if(record[rc][k].energy < EF) k++;
 
                     }
                     else{
                         Vect nP(INT_MAX, INT_MAX, INT_MAX);
                         for(oi=0; oi<objs.size(); oi++){
                             Vect tmp = objs[oi].lineInteraction(pos, dir);
-                            if(pos.dis(np) > pos.dis[tmp]){
+                            if(pos.dis(nP) > pos.dis(tmp)){
                                 nP = tmp;
                             }
                         }
                         if(pos.dis(nP)>=INT_MAX) break;
                         else{
-                            record[r][k].x = nP.x;
-                            record[r][k].y = nP.y;
-                            record[r][k].z = nP.z;
+                            record[rc][k].pos = nP;
                         }
                     }
 

@@ -107,7 +107,7 @@ void Object3D::addElement(Atom type, double frac, double dens, double disE){
     for(int i=0; i<fraction.size(); i++){
         fraction[i] /= sum;
         ZAve += elements[i].Z * fraction[i];
-        massAve += element[i].mass * fraction[i];
+        massAve += elements[i].mass * fraction[i];
         densityAve += density[i];
     }
 }
