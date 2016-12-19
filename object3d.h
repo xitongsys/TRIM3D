@@ -19,10 +19,14 @@ public:
     vector<double> density;// m-3
     vector<double> disEnergy;
 
+    double ZAve,massAve,densityAve;
+
 public:
     Object3D();
     void loadObj(string fname);
     void addElement(Atom type, double frac, double dens, double disE);
+    bool ifin(Vect &pos);
+    Vect lineInteraction(Vect &pos, Vect &direct);
 
 };
 

@@ -3,13 +3,21 @@
 #include "stopping.h"
 
 Stopping::Stopping(string coefFile){
+    atomInf = vector<vector<double> >(1, vector<double>(8, 0.0));
     pcoef = vector<vector<double> >(1, vector<double>(9,0.0));
     ifstream fin(coefFile);
-    while(!fin.eof()){
+    for(int i=0; i<92; i++){
+        int ln = atomInf.size();
+        atomInf.push_back(vector<double>(8,0));
+        for(int j=0; j<8; j++){
+            fin>>atomInf[ln][j];
+        }
+    }
+    for(int i=0; i<92; i++){
         int ln = pcoef.size();
         pcoef.push_back(vector<double>(9,0));
-        for(int i=0; i<9; i++){
-            fin>>pcoef[ln][i];
+        for(int j=0; j<9; j++){
+            fin>>pcoef[ln][j];
         }
     }
     fin.close();

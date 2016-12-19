@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     object3d.cpp \
     sample.cpp \
     atom.cpp \
-    stopping.cpp
+    stopping.cpp \
+    mc.cpp
 
 HEADERS  += mainwindow.h \
     global.h \
@@ -26,7 +27,8 @@ HEADERS  += mainwindow.h \
     sample.h \
     atom.h \
     phyconst.h \
-    stopping.h
+    stopping.h \
+    mc.h
 
 FORMS    += mainwindow.ui
 

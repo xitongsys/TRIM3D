@@ -89,7 +89,6 @@ struct Vect{
         tmp.y += pos.y;
         tmp.z += pos.z;
         x=tmp.x; y=tmp.y; z=tmp.z;
-
     }
 
     void normalize(){

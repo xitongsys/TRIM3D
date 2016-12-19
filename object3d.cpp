@@ -103,7 +103,63 @@ void Object3D::addElement(Atom type, double frac, double dens, double disE){
     for(int i=0; i<fraction.size(); i++){
         sum += fraction[i];
     }
+    ZAve=0; massAve=0; densityAve=0;
     for(int i=0; i<fraction.size(); i++){
         fraction[i] /= sum;
+        ZAve += elements[i].Z * fraction[i];
+        massAve += element[i].mass * fraction[i];
+        densityAve += density[i];
     }
 }
+
+
+bool Object3D::ifin(Vect& pos){
+    double x=pos.x, y=pos.y, z=pos.z;
+    for(int i=0; i<points.size(); i++){
+        double px = points[i].x, py = points[i].y, pz = points[i].z;
+        if(px*x + py*y + pz*z >= 0) return false;
+    }
+    return true;
+}
+
+
+Vect Object3D::lineInteraction(Vect &pos, Vect &direct){
+    Vect ans(INT_MAX, INT_MAX, INT_MAX);
+    double x0 = pos.x, y0 = pos.y, z0 = pos.z;
+    double vx = direct.x, vy = direct.y, vz = direct.z;
+    double x,y,z;
+
+    for(int i=0; i<faces.size(); i++){
+        double xp = points[faces[i].vertex[0]].x;
+        double yp = points[faces[i].vertex[0]].y;
+        double zp = points[faces[i].vertex[0]].z;
+        double nx = vnorms[faces[i].vnorm[0]].x;
+        double ny = vnorms[faces[i].vnorm[0]].y;
+        double nz = vnorms[faces[i].vnorm[0]].z;
+
+        if(vx*nx+vy*ny+vz*nz==0) continue;
+
+        double k = ((xp - x0)*nx + (yp -y0)*ny + (zp -z0)*nz ) / (vx*nx + vy*ny + vz*nz);
+        Vect tmp(k*vx+x0, k*vy+y0, k*vz+z0);
+
+        if(k>0 && pos.dis(tmp)<pos.dis(ans)){
+            ans = tmp;
+        }
+    }
+
+    return ans;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
