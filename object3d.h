@@ -7,19 +7,20 @@
 class Object3D {
 public:
     //structure .obj file
-    vector<Vect> points;
-    vector<Vect> vnorms;
-    vector<Face> faces;
+    vector<Vect> points;//vertex of the structure
+    vector<Vect> vnorms;//normal vector of every point
+    vector<Face> faces;//faces
     string name;
-    double xmin,xmax,ymin,ymax,zmin,zmax;
+    double xmin,xmax,ymin,ymax,zmin,zmax;//this obj range
 
     //elements
-    vector<Atom> elements;
-    vector<double> fraction;
-    vector<double> density;// m-3
-    vector<double> disEnergy;
+    vector<Atom> elements; //elements
+    vector<double> fraction;// fraction of every elements
+    vector<double> density;// atom density of every elements (atoms/A3)
+    vector<double> disEnergy;// displacement energy of every kind of elements
 
-    double ZAve,massAve,densityAve;
+    double ZAve,massAve;//average Z and average mass
+    double densityAve;//total atom density
 
 public:
     Object3D();

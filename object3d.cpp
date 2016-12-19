@@ -33,7 +33,6 @@ void Object3D::loadObj(string fname){
         else if(head=="vn"){
             double x,y,z;
             ss>>x>>y>>z;
-
             vnorms.push_back(Vect(x,y,z));
         }
         else if(head=="f"){
@@ -75,11 +74,10 @@ void Object3D::loadObj(string fname){
                 Vect v12 = points[vi2] - points[vi1];
                 Vect vnorm = v01^v12;
                 vnorm.normalize();
-                int lv = vnorms.size();
-                vnorms.push_back(vnorm);
-
                 for(int i=0; i<faces[lf].vertex.size(); i++){
                     if(faces[lf].vnorm[i]<0){
+                        int lv = vnorms.size();
+                        vnorms.push_back(vnorm);
                         faces[lf].vnorm[i]=lv;
                     }
                 }
@@ -89,9 +87,15 @@ void Object3D::loadObj(string fname){
         }
 
     }
+
+    /*
+    for(int i=0; i<vnorms.size(); i++){
+        cout<<"normals:"<<vnorms[i].x<<" "<<vnorms[i].y<<" "<<vnorms[i].z<<endl;
+    }
+    */
+
     fin.close();
 }
-
 
 void Object3D::addElement(Atom type, double frac, double dens, double disE){
     elements.push_back(type);
@@ -99,13 +103,8 @@ void Object3D::addElement(Atom type, double frac, double dens, double disE){
     density.push_back(dens);
     disEnergy.push_back(disE);
 
-    double sum=0;
-    for(int i=0; i<fraction.size(); i++){
-        sum += fraction[i];
-    }
     ZAve=0; massAve=0; densityAve=0;
     for(int i=0; i<fraction.size(); i++){
-        fraction[i] /= sum;
         ZAve += elements[i].Z * fraction[i];
         massAve += elements[i].mass * fraction[i];
         densityAve += density[i];
@@ -115,9 +114,13 @@ void Object3D::addElement(Atom type, double frac, double dens, double disE){
 
 bool Object3D::ifin(Vect& pos){
     double x=pos.x, y=pos.y, z=pos.z;
-    for(int i=0; i<points.size(); i++){
-        double px = points[i].x, py = points[i].y, pz = points[i].z;
-        if(px*x + py*y + pz*z >= 0) return false;
+    for(int i=0; i<faces.size(); i++){
+        Vect pt = points[faces[i].vertex[0]];
+        double px=pt.x, py=pt.y, pz=pt.z;
+        double vx=x-px, vy=y-py, vz=z-pz;
+        double nx=vnorms[i].x, ny=vnorms[i].y, nz=vnorms[i].z;
+
+        if(nx*vx + ny*vy + nz*vz > 0) return false;
     }
     return true;
 }

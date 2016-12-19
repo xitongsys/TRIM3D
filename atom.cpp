@@ -3,6 +3,8 @@
 Atom::Atom(){
     name="H";
     Z=1; mass=1.008; energy=0;
+    pos=Vect(0,0,0);
+    direct=Vect(0,0,1);
     type = TARGET;
 }
 

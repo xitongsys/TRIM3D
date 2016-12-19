@@ -61,8 +61,8 @@ void onSizeChange(GLsizei w, GLsizei h){
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(60.0, (GLfloat)w/(GLfloat)h, mc.zmax, mc.zmin);
-    //glOrtho(sample.xmin, sample.xmax, sample.ymin, sample.ymax, sample.zmax, sample.zmin);
+    gluPerspective(60.0, (GLfloat)w/(GLfloat)h, mc.zmax+50, mc.zmin-50);
+    //glOrtho(mc.xmin, mc.xmax, mc.ymin, mc.ymax, mc.zmax, mc.zmin);
 
 }
 
@@ -94,7 +94,7 @@ void renderScene(void){
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    gluLookAt(2,2,mc.zmax+20, 0,0,0, 0,1,0);
+    gluLookAt((mc.xmax+mc.xmin)/2,(mc.ymax+mc.ymin)/2,mc.zmax+300, 0,0,0, 0,1,0);
 
     glRotatef(angle/3.14*180, 1, 0, 0);
     glRotatef(angle2/3.14*180, 0, 1, 0);
@@ -142,7 +142,7 @@ int main(int argc, char* argv[]){
     glutReshapeFunc(onSizeChange);
     glutSpecialFunc(onKey);
 
-    //mc.run();
+    mc.run();
 
     glutMainLoop();
 

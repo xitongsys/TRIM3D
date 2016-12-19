@@ -32,12 +32,13 @@ void Sample::loadInput(string fname){
             ss>>fname; ss>>eleNum;
             string eName; int Z;
             double mass, density, fraction, disE;
+            objs[ln].loadObj(fname);
+
             for(int i=0; i<eleNum; i++){
                 fi.getline(buff, 1024);
                 str=string(buff);
                 ss.clear(); ss.str(""); ss<<str;
                 ss>>eName>>Z>>mass>>density>>fraction>>disE;
-                objs[ln].loadObj(fname);
                 Atom atom(eName, Z, mass, Vect(0,0,0), Vect(0,0,0), 0, TARGET);
                 objs[ln].addElement(atom, fraction, density, disE);
             }
@@ -57,14 +58,26 @@ void Sample::loadInput(string fname){
                 str=string(buff);
                 ss.clear(); ss.str(""); ss<<str;
                 string name;
-                int Z,num; double mass,x,y,z,vx,vy,vz;
-                ss>>name>>Z>>mass>>num>>x>>y>>z>>vx>>vy>>vz;
+                int Z,num; double mass,x,y,z,vx,vy,vz,energy;
+                ss>>name>>Z>>mass>>num>>x>>y>>z>>vx>>vy>>vz>>energy;
                 int ln = ions.size();
-                Atom atom(name, Z, mass, Vect(x, y, z), Vect(vx, vy, vz), 0, INCIDENT);
+                Atom atom(name, Z, mass, Vect(x, y, z), Vect(vx, vy, vz), energy, INCIDENT);
                 ions.push_back(atom);
                 ionNum.push_back(num);
             }
         }
     }
     fi.close();
+
+    /*
+    for(int i=0; i<objs.size(); i++){
+        for(int j=0; j<objs[i].elements.size(); j++){
+            cout<<objs[i].elements[j].name<<" "<<objs[i].density[j]<<" "<<objs[i].fraction[j]<<" "<<objs[i].disEnergy[j]<<endl;
+        }
+    }
+    for(int i=0; i<ions.size(); i++){
+        cout<<ions[i].name<<" "<<" "<<ions[i].energy<<" "<<ionNum[i]<<endl;
+    }
+    */
+
 }

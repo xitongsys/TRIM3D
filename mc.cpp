@@ -11,12 +11,16 @@ double MC::randMC(){
 }
 
 void MC::run(){
+    double EF=5;//eV
     for(int i=0; i<ions.size(); i++){
         for(int j=0; j<ionNum[i]; j++){
             int rc = record.size();
             record.push_back(vector<Atom>(1, ions[i]));
             int k=0;
             while(k<record[rc].size()){
+                if(record[rc][k].energy < EF){
+                    k++; continue;
+                }
                 while(true){
                     Vect pos = record[rc][k].pos;
                     Vect dir = record[rc][k].direct;
@@ -45,23 +49,32 @@ void MC::run(){
                         double MUAve=M1/M2Ave;
                         double A = 0.5292*0.8853/(pow(Z1,0.23) + pow(Z2Ave,0.23));
                         double F = A*M2Ave/(Z1*Z2Ave*14.4*(M1+M2Ave));
-                        double E = record[rc][k].energy;
+                        double E = record[rc][k].energy;//eV
                         double EPSDG=TMIN*F*(1 + MUAve)*(1+MUAve)/(4*MUAve);
                         double EPS=E*F;
                         double EEG = sqrt(EPS*EPSDG);
                         double PMAX = A/(EEG + sqrt(EEG) + 0.125*pow(EEG,0.1));
                         double P = PMAX*sqrt(randMC());
-                        double ARHO=objs[oi].densityAve;
+                        double ARHO=objs[oi].densityAve;//atoms/A3
                         double LS = 1.0/(CPI*PMAX*PMAX*ARHO);
 
-                        double dNE,angle1,angle2;
-                        nstop(Z1,M1,Z2,M2,E,P,dNE,angle1,angle2);
-                        double dEE;
-                        if(Z1==1){dEE=hstop(Z1,M1,Z2,M2,E)*LS;}
-                        else if(Z1==2){dEE=hestop(Z1,M1,Z2,M2,E)*LS;}
-                        else{
-                            dEE=histop(Z1,M1,Z2,M2,E,atomInf[Z2][6],atomInf[Z1][7]);
+                        double dNE=0,angle1=0,angle2=0;
+                        nstop(Z1,M1,Z2,M2,E/1000,P,dNE,angle1,angle2);
+
+                        double sE=0.0;//eV/A
+                        for(int e=0; e<eNum; e++){
+                            if(Z1==1){
+                                sE += hstop(Z1,M1,Z2,M2,E/1000/M1)*objs[oi].fraction[e]*ARHO;
+                            }
+                            else if(Z1==2){
+                                sE += hestop(Z1,M1,Z2,M2,E/1000/M1)*objs[oi].fraction[e]*ARHO;
+                            }
+                            else{
+                                sE += histop(Z1,M1,Z2,M2,E/1000/M1,atomInf[Z2][6], atomInf[Z1][7])*objs[oi].fraction[e]*ARHO;
+                            }
                         }
+
+                        double dEE=sE*LS;
 
                         Atom ion = record[rc][k];
                         double a1,a2;
@@ -73,20 +86,22 @@ void MC::run(){
                             recoil.direct.Ry(angle2);
                             recoil.direct.Ry(a2);
                             recoil.direct.Rz(a1);
+
                             record[rc].push_back(recoil);
                         }
 
+                        record[rc][k].pos.x += LS*record[rc][k].direct.x;
+                        record[rc][k].pos.y += LS*record[rc][k].direct.y;
+                        record[rc][k].pos.z += LS*record[rc][k].direct.z;
                         Vect tmp(0,0,1);
                         tmp.Ry(-angle1);
                         tmp.Ry(a2); tmp.Rz(a1);
                         record[rc][k].direct = tmp;
                         record[rc][k].energy = (E - dEE - dNE);
-                        record[rc][k].pos.x += LS*record[rc][k].direct.x;
-                        record[rc][k].pos.y += LS*record[rc][k].direct.y;
-                        record[rc][k].pos.z += LS*record[rc][k].direct.z;
-
-                        double EF=5;
-                        if(record[rc][k].energy < EF) k++;
+                        if(record[rc][k].energy < EF){
+                            k++;
+                            break;
+                        }
 
                     }
                     else{
@@ -97,7 +112,10 @@ void MC::run(){
                                 nP = tmp;
                             }
                         }
-                        if(pos.dis(nP)>=INT_MAX) break;
+                        if(pos.dis(nP)>=INT_MAX){
+                            k++;
+                            break;
+                        }
                         else{
                             record[rc][k].pos = nP;
                         }
@@ -109,6 +127,8 @@ void MC::run(){
             }
 
         }
+
     }
+
 
 }

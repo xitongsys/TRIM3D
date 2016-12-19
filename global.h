@@ -76,21 +76,6 @@ struct Vect{
 
     }
 
-    void rotate(Vect &pos, Vect &direct, double angle){
-        Vect tmp(x-pos.x,y-pos.y,z-pos.z);
-        double a1, a2;
-        direct.getAngle(a1,a2);
-        tmp.Rz(-a1);
-        tmp.Ry(-a2);
-        tmp.Rz(angle);
-        tmp.Ry(a2);
-        tmp.Rz(a1);
-        tmp.x += pos.x;
-        tmp.y += pos.y;
-        tmp.z += pos.z;
-        x=tmp.x; y=tmp.y; z=tmp.z;
-    }
-
     void normalize(){
         double length = sqrt(x*x + y*y + z*z);
         if(length>0){

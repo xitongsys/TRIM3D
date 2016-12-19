@@ -11,9 +11,9 @@ class Atom{
 public:
     string name;
     int Z;
-    double mass, energy;
-    Vect pos;
-    Vect direct;
+    double mass, energy;//mass:mu, energy:eV
+    Vect pos;//A
+    Vect direct;//angle
 
     IonType type;
 
