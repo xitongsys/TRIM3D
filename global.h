@@ -45,6 +45,10 @@ struct Vect{
 
     void getAngle(double &angle1, double &angle2){
         double l = sqrt(x*x + y*y);
+        if(l==0){
+            angle1 = 0; angle2=0;
+            return;
+        }
         angle1 = acos(x/l);
         if(x*y<0){
             angle1 += CPI;

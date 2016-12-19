@@ -25,6 +25,7 @@ void MC::run(){
                     Vect pos = record[rc][k].pos;
                     Vect dir = record[rc][k].direct;
 
+
                     int oi=0;
                     for(oi=0; oi<objs.size(); oi++){
                         if(objs[oi].ifin(pos)){
@@ -77,13 +78,15 @@ void MC::run(){
                         double dEE=sE*LS;
 
                         Atom ion = record[rc][k];
-                        double a1,a2;
+                        double a1=0,a2=0;
                         ion.direct.getAngle(a1,a2);
+                        double a3=2*CPI*randMC();
 
                         if(dNE > objs[oi].disEnergy[ei]){
                             double recoilEnergy = dNE - objs[oi].disEnergy[ei];
                             Atom recoil(objs[oi].elements[ei].name, Z2, M2, ion.pos, Vect(0,0,1), recoilEnergy, RECOIL);
                             recoil.direct.Ry(angle2);
+                            recoil.direct.Rz(a3);
                             recoil.direct.Ry(a2);
                             recoil.direct.Rz(a1);
 
@@ -95,13 +98,16 @@ void MC::run(){
                         record[rc][k].pos.z += LS*record[rc][k].direct.z;
                         Vect tmp(0,0,1);
                         tmp.Ry(-angle1);
+                        tmp.Rz(a3);
                         tmp.Ry(a2); tmp.Rz(a1);
+
                         record[rc][k].direct = tmp;
                         record[rc][k].energy = (E - dEE - dNE);
                         if(record[rc][k].energy < EF){
                             k++;
                             break;
                         }
+                        cout<<record[rc][k].Z<<" "<<pos.x<<" "<<pos.y<<" "<<pos.z<<endl;
 
                     }
                     else{
@@ -126,9 +132,9 @@ void MC::run(){
 
             }
 
+
         }
 
     }
-
 
 }
