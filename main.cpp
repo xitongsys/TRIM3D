@@ -19,6 +19,7 @@ int main(int argc, char *argv[])
 
 #include <GL/glut.h>
 #include <global.h>
+#include <pthread.h>
 #include "mc.h"
 
 GLfloat x,y;
@@ -26,8 +27,14 @@ GLfloat dx,dy;
 GLfloat wH,wW;
 GLfloat angle=0;
 GLfloat angle2=0;
+GLfloat eyeZ=0;
 
 MC mc("/home/zxt/input.txt", "/home/zxt/SCOEF.88");
+
+void *run(void *arg){
+    mc.run();
+    return (void*)NULL;
+}
 
 void drawObj(Object3D & obj){
     int lf = obj.faces.size();
@@ -53,6 +60,25 @@ void drawObj(Object3D & obj){
         glEnd();
     }
 }
+
+
+void drawAtom(){
+    glColor4f(1,0,0,0.7);
+    for(int i=0; i<mc.record.size(); i++){
+        for(int j=0; j<mc.record[i].size(); j++){
+            double x = mc.record[i][j].pos.x;
+            double y = mc.record[i][j].pos.y;
+            double z = mc.record[i][j].pos.z;
+            glMatrixMode(GL_MODELVIEW);
+            glPushMatrix();
+            glTranslatef(x,y,z);
+            glutSolidSphere(2, 10,10);
+            glPopMatrix();
+
+        }
+    }
+}
+
 
 
 void onSizeChange(GLsizei w, GLsizei h){
@@ -94,7 +120,7 @@ void renderScene(void){
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    gluLookAt((mc.xmax+mc.xmin)/2,(mc.ymax+mc.ymin)/2,mc.zmax+300, 0,0,0, 0,1,0);
+    gluLookAt((mc.xmax+mc.xmin)/2,(mc.ymax+mc.ymin)/2,mc.zmax+(mc.zmax-mc.zmin)+eyeZ, 0,0,0, 0,1,0);
 
     glRotatef(angle/3.14*180, 1, 0, 0);
     glRotatef(angle2/3.14*180, 0, 1, 0);
@@ -104,11 +130,18 @@ void renderScene(void){
     glMaterialfv(GL_FRONT,GL_SPECULAR,specularLight);   //指定材料对镜面光的反应
     glMateriali(GL_FRONT,GL_SHININESS,100);             //指定反射系数
 
-    glColor3f(0.1, 1, 0);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); //指定混合函数
+    glShadeModel(GL_SMOOTH);
+    glEnable(GL_BLEND);
+
+    drawAtom();
+
+    glColor4f(0.5, 0.5, 0.5, 0.5);
 
     for(int i=0; i<mc.objs.size();i++){
         drawObj(mc.objs[i]);
     }
+
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -130,7 +163,16 @@ void onKey(int key, int x, int y){
         angle2+=0.1;
     }
 
+    glutPostRedisplay();
+}
 
+void onMouse(int button, int state, int x, int y){
+    if(button==4){
+        eyeZ += 10;
+    }
+    else if(button==3){
+        eyeZ -= 10;
+    }
     glutPostRedisplay();
 }
 
@@ -141,10 +183,12 @@ int main(int argc, char* argv[]){
     glutDisplayFunc(renderScene);
     glutReshapeFunc(onSizeChange);
     glutSpecialFunc(onKey);
+    glutMouseFunc(onMouse);
 
+    pthread_t tid;
+    //pthread_create(&tid,NULL,run,NULL);
     mc.run();
 
     glutMainLoop();
-
     return 0;
 }
