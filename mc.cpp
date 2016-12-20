@@ -18,13 +18,13 @@ void MC::run(){
             record.push_back(vector<Atom>(1, ions[i]));
             int k=0;
             while(k<record[rc].size()){
-                if(record[rc][k].energy < EF){
-                    k++; continue;
-                }
                 while(true){
+                    if(record[rc][k].energy<EF){
+                        k++;break;
+                    }
+
                     Vect pos = record[rc][k].pos;
                     Vect dir = record[rc][k].direct;
-
 
                     int oi=0;
                     for(oi=0; oi<objs.size(); oi++){
@@ -38,11 +38,11 @@ void MC::run(){
                         int ei=0;
                         double rnd = randMC();
                         double sum=0;
-                        while(sum<rnd){
+                        while(sum<rnd && ei<eNum){
                             sum += objs[oi].fraction[ei];
                             ei++;
                         }
-                        ei--;
+                        if(ei>0)ei--;
 
                         double TMIN=5;
                         double Z1=record[rc][k].Z, Z2=objs[oi].elements[ei].Z, Z2Ave=objs[oi].ZAve;
@@ -61,6 +61,7 @@ void MC::run(){
 
                         double dNE=0,angle1=0,angle2=0;
                         nstop(Z1,M1,Z2,M2,E/1000,P,dNE,angle1,angle2);
+
 
                         double sE=0.0;//eV/A
                         for(int e=0; e<eNum; e++){
@@ -91,6 +92,7 @@ void MC::run(){
                             recoil.direct.Rz(a1);
 
                             record[rc].push_back(recoil);
+
                         }
 
                         record[rc][k].pos.x += LS*record[rc][k].direct.x;
@@ -103,11 +105,8 @@ void MC::run(){
 
                         record[rc][k].direct = tmp;
                         record[rc][k].energy = (E - dEE - dNE);
-                        if(record[rc][k].energy < EF){
-                            k++;
-                            break;
-                        }
-                        cout<<record[rc][k].Z<<" "<<pos.x<<" "<<pos.y<<" "<<pos.z<<endl;
+
+                        //cout<<record[rc][k].Z<<" "<<pos.x<<" "<<pos.y<<" "<<pos.z<<endl;
 
                     }
                     else{

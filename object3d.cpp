@@ -143,9 +143,10 @@ Vect Object3D::lineInteraction(Vect &pos, Vect &direct){
         if(vx*nx+vy*ny+vz*nz==0) continue;
 
         double k = ((xp - x0)*nx + (yp -y0)*ny + (zp -z0)*nz ) / (vx*nx + vy*ny + vz*nz);
+        k = k + 0.1;
         Vect tmp(k*vx+x0, k*vy+y0, k*vz+z0);
 
-        if(k>0 && pos.dis(tmp)<pos.dis(ans)){
+        if(k>0 && pos.dis(tmp)<pos.dis(ans) && ifin(tmp)){
             ans = tmp;
         }
     }
