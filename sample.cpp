@@ -16,7 +16,7 @@ Sample::Sample(string inputFile){
 }
 
 void Sample::loadInput(string fname){
-    ifstream fi(fname);
+    ifstream fi(fname.c_str());
     char buff[1024];
     while(!fi.eof()){
         memset(buff, 0, sizeof(buff));

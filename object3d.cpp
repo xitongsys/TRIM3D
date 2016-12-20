@@ -1,4 +1,7 @@
 #include "object3d.h"
+#include <fstream>
+#include <iostream>
+using namespace std;
 
 Object3D::Object3D() {
     xmin = INT_MAX; xmax = INT_MIN;
@@ -7,7 +10,7 @@ Object3D::Object3D() {
 }
 
 void Object3D::loadObj(string fname){
-    ifstream fin(fname);
+    ifstream fin(fname.c_str());
 
     while(!fin.eof()){
         char buff[1024];

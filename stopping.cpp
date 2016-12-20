@@ -5,7 +5,7 @@
 Stopping::Stopping(string coefFile){
     atomInf = vector<vector<double> >(1, vector<double>(9, 0.0));
     pcoef = vector<vector<double> >(1, vector<double>(9,0.0));
-    ifstream fin(coefFile);
+    ifstream fin(coefFile.c_str());
     for(int i=0; i<92; i++){
         int ln = atomInf.size();
         atomInf.push_back(vector<double>(9,0));

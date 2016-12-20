@@ -1,4 +1,3 @@
-/*
 #include "mainwindow.h"
 #include <QApplication>
 #include "sample.h"
@@ -9,14 +8,10 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
-    Sample sample;
-    sample.loadInput("input.txt");
-
     return a.exec();
 }
-*/
 
-
+/*
 #include <GL/glut.h>
 #include <global.h>
 #include <pthread.h>
@@ -192,3 +187,6 @@ int main(int argc, char* argv[]){
     glutMainLoop();
     return 0;
 }
+
+
+*/

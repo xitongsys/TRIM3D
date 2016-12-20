@@ -28,7 +28,8 @@ HEADERS  += mainwindow.h \
     atom.h \
     phyconst.h \
     stopping.h \
-    mc.h
+    mc.h \
+    qtdata.h
 
 FORMS    += mainwindow.ui
 
