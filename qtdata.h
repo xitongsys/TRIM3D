@@ -2,6 +2,7 @@
 #define QTDATA_H
 
 #include <vector>
+#include <fstream>
 using namespace std;
 
 class QTEle{
@@ -64,9 +65,84 @@ public:
 
 class QTInputData{
 public:
+    QTInputData(){
+        filePath="";
+    }
+    void clear(){
+        ions.clear();
+        objs.clear();
+        filePath="";
+    }
+
+    string filePath;
     vector<QTIon> ions;
     vector<QTObj> objs;
+
+    void loadInput(string path){
+        filePath = path;
+        ifstream fi(path.c_str());
+        char buff[1024];
+        while(!fi.eof()){
+            memset(buff, 0, sizeof(buff));
+            fi.getline(buff, 1024);
+            string str(buff);
+            stringstream ss(str);
+            string head; ss>>head;
+
+            if(head=="obj"){
+                int ln = objs.size();
+                string fname; int eleNum=0;
+                ss>>fname; ss>>eleNum;
+                string eName; int Z;
+                double mass, density, fraction, disE;
+                objs.push_back(QTObj(fname));
+
+                for(int i=0; i<eleNum; i++){
+                    fi.getline(buff, 1024);
+                    str=string(buff);
+                    ss.clear(); ss.str(""); ss<<str;
+                    ss>>eName>>Z>>mass>>density>>fraction>>disE;
+                    objs[ln].addEle(QTEle(eName,Z,mass,density,fraction,disE));
+                }
+            }
+            else if(head=="ion"){
+                int kind; ss>>kind;
+                for(int i=0; i<kind; i++){
+                    fi.getline(buff,1024);
+                    str=string(buff);
+                    ss.clear(); ss.str(""); ss<<str;
+                    string name;
+                    int Z,num; double mass,x,y,z,vx,vy,vz,energy;
+                    ss>>name>>Z>>mass>>num>>x>>y>>z>>vx>>vy>>vz>>energy;
+                    int ln = ions.size();
+                    ions.push_back(QTIon(name,Z,mass,num,x,y,z,vx,vy,vz,energy));
+                }
+            }
+        }
+        fi.close();
+    }
+
+    void saveInput(){
+        ofstream of;
+        of.open(filePath.c_str());
+        for(int i=0; i<objs.size(); i++){
+            of<<"obj "<<objs[i].objFile<<" "<<objs[i].elements.size()<<endl;
+            for(int j=0; j<objs[i].elements.size(); j++){
+                QTEle ele=objs[i].elements[j];
+                of<<ele.name<<" "<<ele.Z<<" "<<ele.M<<" "<<ele.density<<" "<<ele.fraction<<" "<<ele.disE<<endl;
+            }
+        }
+
+        of<<"ion "<<ions.size()<<endl;
+        for(int i=0; i<ions.size(); i++){
+            QTIon ion= ions[i];
+            of<<ion.name<<" "<<ion.Z<<" "<<ion.M<<" "<<ion.number<<" "<<ion.x<<" "<<ion.y<<" "<<ion.z<<" "<<ion.vx<<" "<<ion.vy<<" "<<ion.vz<<" "<<ion.energy<<endl;
+        }
+        of.close();
+    }
 };
+
+
 
 
 #endif // QTDATA_H

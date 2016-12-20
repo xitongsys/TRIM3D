@@ -25,35 +25,9 @@
     </property>
     <column>
      <property name="text">
-      <string>obj Files</string>
+      <string>Objects(*.obj)</string>
      </property>
     </column>
-   </widget>
-   <widget class="QLabel" name="labelObj">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>0</y>
-      <width>61</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Objects</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="labelEle">
-    <property name="geometry">
-     <rect>
-      <x>200</x>
-      <y>0</y>
-      <width>72</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Elements</string>
-    </property>
    </widget>
    <widget class="QTableWidget" name="eleTW">
     <property name="geometry">
@@ -160,56 +134,55 @@
      </property>
     </column>
    </widget>
-   <widget class="QLabel" name="labelIon">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>270</y>
-      <width>72</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Ions</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="addObjBT">
     <property name="geometry">
      <rect>
-      <x>70</x>
+      <x>0</x>
       <y>0</y>
-      <width>31</width>
-      <height>21</height>
+      <width>101</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>+</string>
+     <string>Objects</string>
+    </property>
+    <property name="icon">
+     <iconset resource="res.qrc">
+      <normaloff>:/images/add.svg</normaloff>:/images/add.svg</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="addEleBT">
     <property name="geometry">
      <rect>
-      <x>270</x>
+      <x>190</x>
       <y>0</y>
-      <width>31</width>
-      <height>21</height>
+      <width>101</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>+</string>
+     <string>Elements</string>
+    </property>
+    <property name="icon">
+     <iconset resource="res.qrc">
+      <normaloff>:/images/add.svg</normaloff>:/images/add.svg</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="addIonBT">
     <property name="geometry">
      <rect>
-      <x>50</x>
+      <x>0</x>
       <y>270</y>
-      <width>31</width>
-      <height>21</height>
+      <width>101</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>+</string>
+     <string>Ions</string>
+    </property>
+    <property name="icon">
+     <iconset resource="res.qrc">
+      <normaloff>:/images/add.svg</normaloff>:/images/add.svg</iconset>
     </property>
    </widget>
   </widget>
@@ -226,12 +199,36 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
+   <widget class="QMenu" name="menuControl">
+    <property name="title">
+     <string>Control</string>
+    </property>
+    <addaction name="actionPreview"/>
+    <addaction name="actionRun"/>
+    <addaction name="actionPause"/>
+   </widget>
+   <widget class="QMenu" name="menuData">
+    <property name="title">
+     <string>Data</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionContent"/>
+    <addaction name="actionAbout"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuControl"/>
+   <addaction name="menuData"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
@@ -243,28 +240,109 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="separator"/>
   </widget>
   <action name="actionOpen">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/images/open.svg</normaloff>:/images/open.svg</iconset>
+   </property>
    <property name="text">
-    <string>Open</string>
+    <string>Open File</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
    </property>
   </action>
   <action name="actionSave">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/images/save.svg</normaloff>:/images/save.svg</iconset>
+   </property>
    <property name="text">
     <string>Save</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
    </property>
   </action>
   <action name="actionExit">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/images/exit.svg</normaloff>:/images/exit.svg</iconset>
+   </property>
    <property name="text">
     <string>Exit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
+   </property>
+  </action>
+  <action name="actionNew">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/images/new.svg</normaloff>:/images/new.svg</iconset>
+   </property>
+   <property name="text">
+    <string>New</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionPreview">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/images/perview.svg</normaloff>:/images/perview.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Preview</string>
+   </property>
+  </action>
+  <action name="actionRun">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/images/start.svg</normaloff>:/images/start.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Run</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="actionPause">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/images/pause.svg</normaloff>:/images/pause.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Pause</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="actionContent">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/images/helpcontent.svg</normaloff>:/images/helpcontent.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Content</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
    </property>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="res.qrc"/>
+ </resources>
  <connections/>
 </ui>

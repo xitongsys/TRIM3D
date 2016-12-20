@@ -39,3 +39,6 @@ MOBILITY =
 DISTFILES += \
     input.txt
 
+RESOURCES += \
+    res.qrc
+

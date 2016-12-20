@@ -14,6 +14,15 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->objTW, SIGNAL(cellClicked(int,int)), this, SLOT(onObjCellClick(int,int)));
     connect(ui->eleTW, SIGNAL(cellChanged(int,int)), this, SLOT(onEleChangeTW(int,int)));
     connect(ui->ionTW, SIGNAL(cellChanged(int,int)), this, SLOT(onIonChangeTW(int,int)));
+
+    ui->toolBar->addAction(ui->actionNew);
+    ui->toolBar->addAction(ui->actionOpen);
+    ui->toolBar->addAction(ui->actionSave);
+    ui->toolBar->addAction(ui->actionPreview);
+    ui->toolBar->addAction(ui->actionRun);
+    ui->toolBar->addAction(ui->actionPause);
+    ui->toolBar->addAction(ui->actionContent);
+
 }
 
 MainWindow::~MainWindow()
@@ -105,7 +114,7 @@ void MainWindow::freshObjTW(){
 void MainWindow::freshEleTW(){
     int curR = ui->objTW->currentRow();
     int lo = qtdata.objs.size();
-    if(curR>=lo){
+    if(curR<0 || curR>=lo){
         ui->eleTW->setRowCount(0);
         return;
     }
@@ -201,3 +210,84 @@ void MainWindow::onAddIonBt(){
     qtdata.ions.push_back(QTIon("H", 1, 1.0087, 1, 0,0,0, 0,0,1, 1000));
     freshIonTW();
 }
+
+void MainWindow::on_actionNew_triggered(){
+    qtdata.clear();
+    freshEleTW();
+    freshIonTW();
+    freshObjTW();
+    this->setWindowTitle("TRIM3D");
+}
+
+void MainWindow::on_actionOpen_triggered(){
+    QFileDialog *fd=new QFileDialog(this);
+    fd->setFilter("t3dfile(*.t3d)");
+    fd->setViewMode(QFileDialog::List);
+    QStringList flist;
+    if(fd->exec()==QDialog::Accepted){
+        flist=fd->selectedFiles();
+        QString fname = flist[0];
+        qtdata.loadInput(fname.toStdString());
+        freshIonTW();
+        freshObjTW();
+        this->setWindowTitle(fname);
+    }
+    else{
+        fd->close();
+    }
+
+}
+
+void MainWindow::on_actionExit_triggered()
+{
+   exit(0);
+}
+
+void MainWindow::on_actionSave_triggered(){
+    string path = qtdata.filePath;
+    if(path.size()!=0){
+        qtdata.saveInput();
+    }
+    else{
+        QFileDialog *fd=new QFileDialog(this);
+        fd->setFilter("t3dfile(*.t3d)");
+        fd->setViewMode(QFileDialog::List);
+        if(fd->exec()==QDialog::Accepted){
+            QStringList flist = fd->selectedFiles();
+            QString name = flist[0];
+            qtdata.filePath = name.toStdString();
+            qtdata.saveInput();
+        }
+    }
+
+    this->setWindowTitle(qtdata.filePath.c_str());
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

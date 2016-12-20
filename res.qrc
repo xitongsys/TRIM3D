@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/new.svg</file>
+        <file>images/open.svg</file>
+        <file>images/pause.svg</file>
+        <file>images/refresh.svg</file>
+        <file>images/start.svg</file>
+        <file>images/exit.svg</file>
+        <file>images/save.svg</file>
+        <file>images/perview.svg</file>
+        <file>images/helpcontent.svg</file>
+        <file>images/add.svg</file>
+    </qresource>
+</RCC>

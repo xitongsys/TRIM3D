@@ -1,0 +1,9 @@
+# OBJ section: name Z mass(amu) density(atoms/A3) fraction displaceEnergy(eV)
+obj /home/zxt/cube.obj 2
+Si	14	28.086	0.01727	0.33333	5
+O	8	16.0	0.03455	0.66667	6
+
+# ion section: name Z mass(amu) number x,y,z(A) vx,vy,vz(unity direction) energy(eV)
+ion 1
+H	1	1.0087	100 0 0 50 0 0 -1 1000
+
