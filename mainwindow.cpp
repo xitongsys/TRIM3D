@@ -18,11 +18,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->toolBar->addAction(ui->actionNew);
     ui->toolBar->addAction(ui->actionOpen);
     ui->toolBar->addAction(ui->actionSave);
-    ui->toolBar->addAction(ui->actionPreview);
+    ui->toolBar->addAction(ui->actionLoad);
     ui->toolBar->addAction(ui->actionRun);
     ui->toolBar->addAction(ui->actionPause);
     ui->toolBar->addAction(ui->actionContent);
 
+    pmc = NULL;
 }
 
 MainWindow::~MainWindow()
@@ -37,26 +38,26 @@ void MainWindow::onObjCellClick(int row, int col){
 void MainWindow::onIonChangeTW(int row, int col){
     string str = ui->ionTW->item(row,col)->text().toStdString();
     stringstream ss; ss<<str;
-    if(col==0){
+    if(row==0){
         if(str.size()==0){
             qtdata.ions.erase(row + qtdata.ions.begin());
             freshIonTW();
             return;
         }
         else{
-            qtdata.ions[row].name = str;
+            qtdata.ions[col].name = str;
         }
     }
-    else if(col==1){ ss>>qtdata.ions[row].Z; }
-    else if(col==2){ ss>>qtdata.ions[row].M; }
-    else if(col==3){ ss>>qtdata.ions[row].number; }
-    else if(col==4){ ss>>qtdata.ions[row].x; }
-    else if(col==5){ ss>>qtdata.ions[row].y; }
-    else if(col==6){ ss>>qtdata.ions[row].z; }
-    else if(col==7){ ss>>qtdata.ions[row].vx; }
-    else if(col==8){ ss>>qtdata.ions[row].vy; }
-    else if(col==9){ ss>>qtdata.ions[row].vz; }
-    else if(col==10){ ss>>qtdata.ions[row].energy; }
+    else if(row==1){ ss>>qtdata.ions[col].Z; }
+    else if(row==2){ ss>>qtdata.ions[col].M; }
+    else if(row==3){ ss>>qtdata.ions[col].number; }
+    else if(row==4){ ss>>qtdata.ions[col].x; }
+    else if(row==5){ ss>>qtdata.ions[col].y; }
+    else if(row==6){ ss>>qtdata.ions[col].z; }
+    else if(row==7){ ss>>qtdata.ions[col].vx; }
+    else if(row==8){ ss>>qtdata.ions[col].vy; }
+    else if(row==9){ ss>>qtdata.ions[col].vz; }
+    else if(row==10){ ss>>qtdata.ions[col].energy; }
 }
 
 void MainWindow::onObjChangeTW(int row, int col){
@@ -146,39 +147,39 @@ void MainWindow::freshEleTW(){
 
 void MainWindow::freshIonTW(){
     int li = qtdata.ions.size();
-    ui->ionTW->setRowCount(li);
+    ui->ionTW->setColumnCount(li);
     for(int i=0; i<li; i++){
         stringstream ss;
         string str;
         ss<<qtdata.ions[i].name; ss>>str;
-        ui->ionTW->setItem(i, 0, new QTableWidgetItem(str.c_str()));
+        ui->ionTW->setItem(0,i, new QTableWidgetItem(str.c_str()));
         ss.clear(); ss.str(""); ss<<qtdata.ions[i].Z; ss>>str;
-        ui->ionTW->setItem(i, 1, new QTableWidgetItem(str.c_str()));
+        ui->ionTW->setItem(1,i, new QTableWidgetItem(str.c_str()));
         ss.clear(); ss.str(""); ss<<qtdata.ions[i].M; ss>>str;
-        ui->ionTW->setItem(i, 2, new QTableWidgetItem(str.c_str()));
+        ui->ionTW->setItem(2,i, new QTableWidgetItem(str.c_str()));
         ss.clear(); ss.str(""); ss<<qtdata.ions[i].number; ss>>str;
-        ui->ionTW->setItem(i, 3, new QTableWidgetItem(str.c_str()));
+        ui->ionTW->setItem(3,i, new QTableWidgetItem(str.c_str()));
         ss.clear(); ss.str(""); ss<<qtdata.ions[i].x; ss>>str;
-        ui->ionTW->setItem(i, 4, new QTableWidgetItem(str.c_str()));
+        ui->ionTW->setItem(4,i, new QTableWidgetItem(str.c_str()));
         ss.clear(); ss.str(""); ss<<qtdata.ions[i].y; ss>>str;
-        ui->ionTW->setItem(i, 5, new QTableWidgetItem(str.c_str()));
+        ui->ionTW->setItem(5,i, new QTableWidgetItem(str.c_str()));
         ss.clear(); ss.str(""); ss<<qtdata.ions[i].z; ss>>str;
-        ui->ionTW->setItem(i, 6, new QTableWidgetItem(str.c_str()));
+        ui->ionTW->setItem(6,i, new QTableWidgetItem(str.c_str()));
         ss.clear(); ss.str(""); ss<<qtdata.ions[i].vx; ss>>str;
-        ui->ionTW->setItem(i, 7, new QTableWidgetItem(str.c_str()));
+        ui->ionTW->setItem(7,i, new QTableWidgetItem(str.c_str()));
         ss.clear(); ss.str(""); ss<<qtdata.ions[i].vy; ss>>str;
-        ui->ionTW->setItem(i, 8, new QTableWidgetItem(str.c_str()));
+        ui->ionTW->setItem(8,i, new QTableWidgetItem(str.c_str()));
         ss.clear(); ss.str(""); ss<<qtdata.ions[i].vz; ss>>str;
-        ui->ionTW->setItem(i, 9, new QTableWidgetItem(str.c_str()));
+        ui->ionTW->setItem(9,i, new QTableWidgetItem(str.c_str()));
         ss.clear(); ss.str(""); ss<<qtdata.ions[i].energy; ss>>str;
-        ui->ionTW->setItem(i, 10, new QTableWidgetItem(str.c_str()));
+        ui->ionTW->setItem(10,i, new QTableWidgetItem(str.c_str()));
     }
 }
 
 
 void MainWindow::onAddObjBt(){
     QFileDialog *fd=new QFileDialog(this);
-    fd->setFilter("objfile(*.obj)");
+    fd->setNameFilter("obj file(*.obj)");
     fd->setViewMode(QFileDialog::List);
     QStringList flist;
     ui->objTW->setColumnWidth(0,200);
@@ -221,7 +222,7 @@ void MainWindow::on_actionNew_triggered(){
 
 void MainWindow::on_actionOpen_triggered(){
     QFileDialog *fd=new QFileDialog(this);
-    fd->setFilter("t3dfile(*.t3d)");
+    fd->setNameFilter("trim3d file(*.t3d)");
     fd->setViewMode(QFileDialog::List);
     QStringList flist;
     if(fd->exec()==QDialog::Accepted){
@@ -250,7 +251,7 @@ void MainWindow::on_actionSave_triggered(){
     }
     else{
         QFileDialog *fd=new QFileDialog(this);
-        fd->setFilter("t3dfile(*.t3d)");
+        fd->setNameFilter("trim3d file(*.t3d)");
         fd->setViewMode(QFileDialog::List);
         if(fd->exec()==QDialog::Accepted){
             QStringList flist = fd->selectedFiles();
@@ -261,33 +262,19 @@ void MainWindow::on_actionSave_triggered(){
     }
 
     this->setWindowTitle(qtdata.filePath.c_str());
+
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+void MainWindow::on_actionLoad_triggered(){
+    this->on_actionSave_triggered();
+    if(pmc!=NULL){
+        ui->openGLWidget->pmc = NULL;
+        delete pmc;
+    }
+    pmc = new MC(qtdata.filePath,"/home/zxt/SCOEF.88");
+    pmc->loadInput(qtdata.filePath);
+    ui->openGLWidget->pmc = pmc;
+    ui->openGLWidget->resetView();
+    ui->openGLWidget->repaint();
+}

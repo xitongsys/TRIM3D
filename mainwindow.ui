@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>791</width>
-    <height>559</height>
+    <width>1049</width>
+    <height>701</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,13 +19,26 @@
      <rect>
       <x>0</x>
       <y>30</y>
-      <width>191</width>
-      <height>231</height>
+      <width>181</width>
+      <height>151</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <attribute name="horizontalHeaderDefaultSectionSize">
+     <number>200</number>
+    </attribute>
     <column>
      <property name="text">
       <string>Objects(*.obj)</string>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
      </property>
     </column>
    </widget>
@@ -34,38 +47,82 @@
      <rect>
       <x>190</x>
       <y>30</y>
-      <width>601</width>
-      <height>231</height>
+      <width>571</width>
+      <height>151</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <attribute name="horizontalHeaderDefaultSectionSize">
+     <number>90</number>
+    </attribute>
+    <attribute name="verticalHeaderDefaultSectionSize">
+     <number>30</number>
+    </attribute>
     <column>
      <property name="text">
       <string>Name</string>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
      </property>
     </column>
     <column>
      <property name="text">
       <string>Z</string>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
     </column>
     <column>
      <property name="text">
       <string>M(amu)</string>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
      </property>
     </column>
     <column>
      <property name="text">
       <string>Density(/A3)</string>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="textAlignment">
+      <set>AlignLeading|AlignVCenter</set>
+     </property>
     </column>
     <column>
      <property name="text">
       <string>Fraction</string>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
     </column>
     <column>
      <property name="text">
       <string>Disp(eV)</string>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
      </property>
     </column>
    </widget>
@@ -73,66 +130,132 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>300</y>
-      <width>791</width>
-      <height>192</height>
+      <y>220</y>
+      <width>271</width>
+      <height>401</height>
      </rect>
     </property>
-    <column>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="horizontalScrollMode">
+     <enum>QAbstractItemView::ScrollPerPixel</enum>
+    </property>
+    <attribute name="verticalHeaderDefaultSectionSize">
+     <number>32</number>
+    </attribute>
+    <row>
      <property name="text">
       <string>Name</string>
      </property>
-    </column>
-    <column>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+    </row>
+    <row>
      <property name="text">
       <string>Z</string>
      </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>M(amu)</string>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
      </property>
-    </column>
-    <column>
+    </row>
+    <row>
+     <property name="text">
+      <string>M</string>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+    </row>
+    <row>
      <property name="text">
       <string>Number</string>
      </property>
-    </column>
-    <column>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+    </row>
+    <row>
      <property name="text">
       <string>x(A)</string>
      </property>
-    </column>
-    <column>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+    </row>
+    <row>
      <property name="text">
       <string>y(A)</string>
      </property>
-    </column>
-    <column>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+    </row>
+    <row>
      <property name="text">
       <string>z(A)</string>
      </property>
-    </column>
-    <column>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+    </row>
+    <row>
      <property name="text">
       <string>cosX</string>
      </property>
-    </column>
-    <column>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+    </row>
+    <row>
      <property name="text">
       <string>cosY</string>
      </property>
-    </column>
-    <column>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+    </row>
+    <row>
      <property name="text">
       <string>cosZ</string>
      </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>E(eV)</string>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
      </property>
-    </column>
+    </row>
+    <row>
+     <property name="text">
+      <string>Energy(eV)</string>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+    </row>
    </widget>
    <widget class="QPushButton" name="addObjBT">
     <property name="geometry">
@@ -172,7 +295,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>270</y>
+      <y>190</y>
       <width>101</width>
       <height>31</height>
      </rect>
@@ -185,13 +308,23 @@
       <normaloff>:/images/add.svg</normaloff>:/images/add.svg</iconset>
     </property>
    </widget>
+   <widget class="GLWT" name="openGLWidget">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>220</y>
+      <width>481</width>
+      <height>401</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>791</width>
+     <width>1049</width>
      <height>28</height>
     </rect>
    </property>
@@ -209,7 +342,7 @@
     <property name="title">
      <string>Control</string>
     </property>
-    <addaction name="actionPreview"/>
+    <addaction name="actionLoad"/>
     <addaction name="actionRun"/>
     <addaction name="actionPause"/>
    </widget>
@@ -292,13 +425,13 @@
     <string>Ctrl+N</string>
    </property>
   </action>
-  <action name="actionPreview">
+  <action name="actionLoad">
    <property name="icon">
     <iconset resource="res.qrc">
-     <normaloff>:/images/perview.svg</normaloff>:/images/perview.svg</iconset>
+     <normaloff>:/images/load.svg</normaloff>:/images/load.svg</iconset>
    </property>
    <property name="text">
-    <string>Preview</string>
+    <string>Load</string>
    </property>
   </action>
   <action name="actionRun">
@@ -341,6 +474,13 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>GLWT</class>
+   <extends>QOpenGLWidget</extends>
+   <header>glwt.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="res.qrc"/>
  </resources>

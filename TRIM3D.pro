@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui opengl
+QT	 += widgets
 LIBS += -lglut -lGL -lGLU
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -19,7 +20,8 @@ SOURCES += main.cpp\
     sample.cpp \
     atom.cpp \
     stopping.cpp \
-    mc.cpp
+    mc.cpp \
+    glwt.cpp
 
 HEADERS  += mainwindow.h \
     global.h \
@@ -29,7 +31,9 @@ HEADERS  += mainwindow.h \
     phyconst.h \
     stopping.h \
     mc.h \
-    qtdata.h
+    qtdata.h \
+    glwt.h \
+    drawinfo.h
 
 FORMS    += mainwindow.ui
 

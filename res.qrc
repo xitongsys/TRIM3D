@@ -10,5 +10,7 @@
         <file>images/perview.svg</file>
         <file>images/helpcontent.svg</file>
         <file>images/add.svg</file>
+        <file>images/load.svg</file>
+        <file>images/stop.svg</file>
     </qresource>
 </RCC>

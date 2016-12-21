@@ -11,7 +11,10 @@ int main(int argc, char *argv[])
     return a.exec();
 }
 
+
 /*
+
+
 #include <GL/glut.h>
 #include <global.h>
 #include <pthread.h>
@@ -24,7 +27,7 @@ GLfloat angle=0;
 GLfloat angle2=0;
 GLfloat eyeZ=0;
 
-MC mc("/home/zxt/input.txt", "/home/zxt/SCOEF.88");
+MC mc("/home/zxt/t.t3d", "/home/zxt/SCOEF.88");
 
 void *run(void *arg){
     mc.run();
@@ -67,7 +70,9 @@ void drawAtom(){
             glMatrixMode(GL_MODELVIEW);
             glPushMatrix();
             glTranslatef(x,y,z);
-            glutSolidSphere(2, 10,10);
+            //glutSolidSphere(2, 10,10);
+            gluSphere(gluNewQuadric(), 2, 10, 10);
+
             glPopMatrix();
 
         }
@@ -187,6 +192,7 @@ int main(int argc, char* argv[]){
     glutMainLoop();
     return 0;
 }
+
 
 
 */
