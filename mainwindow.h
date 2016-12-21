@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "mc.h"
 #include "qtdata.h"
+#include "threadcal.h"
 
 namespace Ui {
 class MainWindow;
@@ -16,6 +17,7 @@ class MainWindow : public QMainWindow
 public:
     MC *pmc;
     QTInputData qtdata;
+    ThreadCal tc;
 
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -38,12 +40,16 @@ public slots:
     void onEleChangeTW(int,int);
     void onIonChangeTW(int,int);
 
+    void slot_fresh(int curi, int curj);
+
 private slots:
     void on_actionNew_triggered();
     void on_actionOpen_triggered();
     void on_actionExit_triggered();
     void on_actionSave_triggered();
     void on_actionLoad_triggered();
+    void on_actionRun_triggered();
+    void on_actionStop_triggered();
 };
 
 #endif // MAINWINDOW_H

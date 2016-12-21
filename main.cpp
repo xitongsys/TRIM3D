@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include "sample.h"
+#include <QMutex>
+
+QMutex mutexLock;
 
 int main(int argc, char *argv[])
 {

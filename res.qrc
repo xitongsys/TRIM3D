@@ -12,5 +12,6 @@
         <file>images/add.svg</file>
         <file>images/load.svg</file>
         <file>images/stop.svg</file>
+        <file>SCOEF.88</file>
     </qresource>
 </RCC>

@@ -20,10 +20,25 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->toolBar->addAction(ui->actionSave);
     ui->toolBar->addAction(ui->actionLoad);
     ui->toolBar->addAction(ui->actionRun);
-    ui->toolBar->addAction(ui->actionPause);
+    ui->toolBar->addAction(ui->actionStop);
     ui->toolBar->addAction(ui->actionContent);
 
     pmc = NULL;
+    connect(&tc, SIGNAL(signal_fresh(int,int)), this, SLOT(slot_fresh(int,int)));
+}
+
+void MainWindow::slot_fresh(int curi, int curj){
+    ui->openGLWidget->repaint();
+    int sum=0, sumcur=0;
+    for(int i=0; i<pmc->ions.size(); i++){
+        sum += pmc->ionNum[i];
+        if(i<curi){
+            sumcur += pmc->ionNum[i];
+        }
+    }
+    sumcur += curj + 1;
+    ui->progressBar->setValue((int)((float)sumcur/sum * 100));
+
 }
 
 MainWindow::~MainWindow()
@@ -265,16 +280,25 @@ void MainWindow::on_actionSave_triggered(){
 
 }
 
-
 void MainWindow::on_actionLoad_triggered(){
     this->on_actionSave_triggered();
     if(pmc!=NULL){
         ui->openGLWidget->pmc = NULL;
         delete pmc;
     }
-    pmc = new MC(qtdata.filePath,"/home/zxt/SCOEF.88");
+    if(this->qtdata.filePath.size()==0) return;
+
+    pmc = new MC(qtdata.filePath, "SCOEF.88");
     pmc->loadInput(qtdata.filePath);
     ui->openGLWidget->pmc = pmc;
     ui->openGLWidget->resetView();
     ui->openGLWidget->repaint();
 }
+
+void MainWindow::on_actionRun_triggered(){
+    this->on_actionLoad_triggered();
+    tc.load(pmc, ui->openGLWidget);
+    tc.start();
+}
+
+void MainWindow::on_actionStop_triggered(){ tc.stop(); }

@@ -2,6 +2,7 @@
 #include "glwt.h"
 #include <QOpenGLFunctions>
 #include <QMouseEvent>
+#include <QMutex>
 
 GLWT::GLWT(QWidget *parent):QOpenGLWidget(parent){
     pmc=NULL;
@@ -95,6 +96,7 @@ void GLWT::drawObj(){
 }
 
 void GLWT::drawAtom(){
+    mutexLock.lock();
      for(int i=0; i<pmc->record.size(); i++){
          for(int j=0; j<pmc->record[i].size(); j++){
             int Z = pmc->record[i][j].Z;
@@ -109,9 +111,11 @@ void GLWT::drawAtom(){
             glPopMatrix();
          }
      }
+    mutexLock.unlock();
 }
 
 void GLWT::paintGL(){
+
     if(pmc==NULL) return;
 
     glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
@@ -162,8 +166,11 @@ void GLWT::paintGL(){
     glColorMaterial(GL_FRONT,GL_AMBIENT_AND_DIFFUSE);   //指定材料着色的面
     glMaterialfv(GL_FRONT,GL_SPECULAR,specularLight);   //指定材料对镜面光的反应
     glMateriali(GL_FRONT,GL_SHININESS,100);             //指定反射系数
+
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
+
     drawAtom(); drawObj();
 
     glLoadIdentity();
-
 }

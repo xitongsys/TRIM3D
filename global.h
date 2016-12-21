@@ -4,6 +4,7 @@
 #include <bits/stdc++.h>
 #include <fstream>
 #include "phyconst.h"
+#include <QMutex>
 
 using namespace std;
 
@@ -95,7 +96,7 @@ struct Face{
     vector<int> vnorm;
 };
 
-
+extern QMutex mutexLock;
 
 #endif // GLOBAL_H
 

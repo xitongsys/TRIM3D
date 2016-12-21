@@ -127,14 +127,14 @@ public:
         of.open(filePath.c_str());
         for(int i=0; i<objs.size(); i++){
             of<<"obj "<<objs[i].objFile<<" "<<objs[i].elements.size()<<endl;
-            for(int j=0; j<objs[i].elements.size(); j++){
+            for(int j=0; j<(int)objs[i].elements.size(); j++){
                 QTEle ele=objs[i].elements[j];
                 of<<ele.name<<" "<<ele.Z<<" "<<ele.M<<" "<<ele.density<<" "<<ele.fraction<<" "<<ele.disE<<endl;
             }
         }
 
         of<<"ion "<<ions.size()<<endl;
-        for(int i=0; i<ions.size(); i++){
+        for(int i=0; i<(int)ions.size(); i++){
             QTIon ion= ions[i];
             of<<ion.name<<" "<<ion.Z<<" "<<ion.M<<" "<<ion.number<<" "<<ion.x<<" "<<ion.y<<" "<<ion.z<<" "<<ion.vx<<" "<<ion.vy<<" "<<ion.vz<<" "<<ion.energy<<endl;
         }

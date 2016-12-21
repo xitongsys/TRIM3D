@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     atom.cpp \
     stopping.cpp \
     mc.cpp \
-    glwt.cpp
+    glwt.cpp \
+    threadcal.cpp
 
 HEADERS  += mainwindow.h \
     global.h \
@@ -33,7 +34,8 @@ HEADERS  += mainwindow.h \
     mc.h \
     qtdata.h \
     glwt.h \
-    drawinfo.h
+    drawinfo.h \
+    threadcal.h
 
 FORMS    += mainwindow.ui
 
