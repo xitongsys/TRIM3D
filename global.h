@@ -1,7 +1,7 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
-#include <bits/stdc++.h>
+#include <vector>
 #include <fstream>
 #include "phyconst.h"
 #include <QMutex>

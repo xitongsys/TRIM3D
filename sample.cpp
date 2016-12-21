@@ -1,6 +1,9 @@
 #include "sample.h"
 #include "object3d.h"
 #include "global.h"
+#include <climits>
+#include <memory.h>
+#include <sstream>
 
 Sample::Sample(){
     xmin = INT_MAX; xmax = INT_MIN;

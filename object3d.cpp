@@ -1,6 +1,13 @@
 #include "object3d.h"
 #include <fstream>
 #include <iostream>
+#include <climits>
+#include <cstdio>
+#include <cstdlib>
+#include <string>
+#include <sstream>
+#include <memory.h>
+
 using namespace std;
 
 Object3D::Object3D() {
