@@ -9,16 +9,24 @@ GLWT::GLWT(QWidget *parent):QOpenGLWidget(parent){
 }
 
 void GLWT::wheelEvent(QWheelEvent *event){
-    int num = event->delta()/8;
-    transZ += num;
+    if(pmc==NULL) return;
+    int num = event->delta();
+    double dz=(pmc->zmax - pmc->zmin)/10.0;
+    if(num>0){
+        transZ += dz;
+    }
+    else{
+        transZ -= dz;
+    }
     this->repaint();
     event->accept();
 }
 
 void GLWT::resetView(){
+    if(pmc==NULL) return;
     angleX=0; angleY=0; angleZ=0;
     transX = 0; transY = 0;
-    transZ = -200;
+    transZ = -(pmc->zmax - pmc->zmin)*5;
 
     this->repaint();
 }
@@ -50,6 +58,7 @@ void GLWT::initializeGL(){
 }
 
 void GLWT::resizeGL(int w, int h){
+    if(pmc==NULL) return;
     glViewport(0,0,w,h);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -126,6 +135,11 @@ void GLWT::paintGL(){
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
     glEnable(GL_LIGHT0);
+
+    glMatrixMode(GL_PROJECTION);
+    double dz = pmc->zmax - pmc->zmin;
+    glLoadIdentity();
+    gluPerspective(60, (float)(this->width())/(float)(this->height()), dz, -dz);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
