@@ -289,13 +289,13 @@ void MainWindow::on_actionLoad_triggered(){
     if(this->qtdata.filePath.size()==0) return;
 
     pmc = new MC(qtdata.filePath, "SCOEF.88");
-    pmc->loadInput(qtdata.filePath);
     ui->openGLWidget->pmc = pmc;
     ui->openGLWidget->resetView();
     ui->openGLWidget->repaint();
 }
 
 void MainWindow::on_actionRun_triggered(){
+    tc.stop();
     this->on_actionLoad_triggered();
     tc.load(pmc, ui->openGLWidget);
     tc.start();

@@ -1,4 +1,5 @@
-#include <GL/glut.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
 #include "glwt.h"
 #include <QOpenGLFunctions>
 #include <QMouseEvent>
