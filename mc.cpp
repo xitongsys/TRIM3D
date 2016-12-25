@@ -5,19 +5,23 @@
 using namespace std;
 
 
-MC::MC(string inFile, string sFile):Sample(inFile),Stopping(sFile){ }
+MC::MC(string inFile, string sFile):Sample(inFile),Stopping(sFile){}
 
 double MC::randMC(){
     int MOD=10000;
     double rnd = rand()%MOD + 1;
     rnd /= MOD;
-    cout<<rnd<<endl;
     return rnd;
 }
 
-int MC::runOne(int i, int j){
-    double EF=5;//eV
+bool MC::checkPara(){
+    if(objs.size()<=0 || ions.size()<=0)return false;
+}
 
+int MC::runOne(int i, int j){
+    if(!checkPara()) return 0;
+
+    double EF=5;//eV
     if(i>=ions.size()) return 0;
 
     int rc = record.size();

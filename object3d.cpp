@@ -18,6 +18,7 @@ Object3D::Object3D() {
 
 void Object3D::loadObj(string fname){
     ifstream fin(fname.c_str());
+    if(!fin.is_open())return;
 
     while(!fin.eof()){
         char buff[1024];

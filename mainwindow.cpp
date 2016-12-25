@@ -299,6 +299,7 @@ void MainWindow::on_actionLoad_triggered(){
 }
 
 void MainWindow::on_actionRun_triggered(){
+    if(pmc==NULL) return;
     tc.stop();
     this->on_actionLoad_triggered();
     tc.load(pmc, ui->openGLWidget);
