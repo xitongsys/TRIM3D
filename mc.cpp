@@ -8,7 +8,7 @@ using namespace std;
 MC::MC(string inFile, string sFile):Sample(inFile),Stopping(sFile){}
 
 double MC::randMC(){
-    int MOD=1000000;
+    int MOD=10000;
     double rnd = rand()%MOD + 1;
     rnd /= MOD;
     return rnd;

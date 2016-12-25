@@ -31,7 +31,7 @@ public:
     int atomSize, atomSlice;
 
     double randTmp(){
-        int MOD=1000000;
+        int MOD=1000;
         double rnd = rand()%MOD;
         rnd /= MOD;
         return rnd;
@@ -39,11 +39,11 @@ public:
 
     DrawInfo(){
         for(int i=0; i<100; i++){
-            AtomColorTable[i] = Color4f(randTmp(), randTmp(), randTmp(), 1.0);
+            AtomColorTable[i] = Color4f(randTmp()/2+0.5, randTmp()/2+0.5, randTmp()/2+0.5, 1.0);
         }
 
-        bgColor=Color4f(0.0, 0.0, 0.0, 0.0);
-        objColor=Color4f(0.8, 0.8, 0.8, 0.2);
+        bgColor=Color4f(0.0, 0.0, 0.0, 1.0);
+        objColor=Color4f(0.5, 0.5, 0.5, 0.1);
         atomSize=2; atomSlice=5;
         angleX = 0; angleY = 0; angleZ=0;
         transX = 0; transY = 0; transZ = 0;
