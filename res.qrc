@@ -13,5 +13,7 @@
         <file>images/load.svg</file>
         <file>images/stop.svg</file>
         <file>SCOEF.88</file>
+        <file>images/export.svg</file>
+        <file>images/helpabout.svg</file>
     </qresource>
 </RCC>

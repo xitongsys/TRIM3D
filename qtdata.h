@@ -4,6 +4,7 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+#include "mc.h"
 using namespace std;
 
 class QTEle{
@@ -152,6 +153,23 @@ public:
             QTIon ion= ions[i];
             of<<ion.name<<" "<<ion.Z<<" "<<ion.M<<" "<<ion.number<<" "<<ion.x<<" "<<ion.y<<" "<<ion.z<<" "<<ion.vx<<" "<<ion.vy<<" "<<ion.vz<<" "<<ion.energy<<endl;
         }
+        of.close();
+    }
+
+    void saveExport(string name, MC *pmc){
+        ofstream of(name.c_str());
+        if(!of.is_open())return;
+        of<<"Name Z mass(amu) type(recoil or incident) energy(eV) x y z cosX cosY cosZ"<<endl;
+        for(int i=0; i<pmc->record.size(); i++){
+            for(int j=0; j<(pmc->record[i]).size();j++){
+                Atom atom=pmc->record[i][j];
+                double x=atom.pos.x, y=atom.pos.y, z=atom.pos.z;
+                double vx=atom.direct.x, vy=atom.direct.y, vz=atom.direct.z;
+                of<<atom.name<<" "<<atom.Z<<" "<<atom.mass<<" "<<atom.type<<" "<<atom.energy<<" ";
+                of<<x<<" "<<y<<" "<<z<<" "<<vx<<" "<<vy<<" "<<vz<<endl;
+            }
+        }
+
         of.close();
     }
 };

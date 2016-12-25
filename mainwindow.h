@@ -50,6 +50,8 @@ private slots:
     void on_actionLoad_triggered();
     void on_actionRun_triggered();
     void on_actionStop_triggered();
+    void on_actionExport_data_triggered();
+    void on_actionAbout_triggered();
 };
 
 #endif // MAINWINDOW_H

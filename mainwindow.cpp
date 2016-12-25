@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QFileDialog>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -21,7 +22,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->toolBar->addAction(ui->actionLoad);
     ui->toolBar->addAction(ui->actionRun);
     ui->toolBar->addAction(ui->actionStop);
-    ui->toolBar->addAction(ui->actionContent);
+    ui->toolBar->addAction(ui->actionExport_data);
+    ui->toolBar->addAction(ui->actionAbout);
 
     pmc = NULL;
     connect(&tc, SIGNAL(signal_fresh(int,int)), this, SLOT(slot_fresh(int,int)));
@@ -237,6 +239,7 @@ void MainWindow::on_actionNew_triggered(){
 
 void MainWindow::on_actionOpen_triggered(){
     QFileDialog *fd=new QFileDialog(this);
+    fd->setWindowTitle("Open input file");
     fd->setNameFilter("trim3d file(*.t3d)");
     fd->setViewMode(QFileDialog::List);
     QStringList flist;
@@ -266,6 +269,7 @@ void MainWindow::on_actionSave_triggered(){
     }
     else{
         QFileDialog *fd=new QFileDialog(this);
+        fd->setWindowTitle("Save input file");
         fd->setNameFilter("trim3d file(*.t3d)");
         fd->setViewMode(QFileDialog::List);
         if(fd->exec()==QDialog::Accepted){
@@ -302,3 +306,20 @@ void MainWindow::on_actionRun_triggered(){
 }
 
 void MainWindow::on_actionStop_triggered(){ tc.stop(); }
+
+void MainWindow::on_actionExport_data_triggered() {
+    if(pmc==NULL) return;
+    QFileDialog *fd=new QFileDialog(this);
+    fd->setWindowTitle("Export data file");
+    fd->setNameFilter("all(*.*)");
+    fd->setViewMode(QFileDialog::List);
+    if(fd->exec()==QDialog::Accepted){
+        QStringList flist=fd->selectedFiles();
+        QString name=flist[0];
+        qtdata.saveExport(name.toStdString(), pmc);
+    }
+}
+
+void MainWindow::on_actionAbout_triggered(){
+    QMessageBox::information(this,"About","This is a 3D TRIM program.\n\n Made by zxt\n zxt@pku.edu.cn");
+}
