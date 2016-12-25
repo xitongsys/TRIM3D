@@ -338,7 +338,12 @@ void MainWindow::on_actionExport_data_triggered() {
 }
 
 void MainWindow::on_actionAbout_triggered(){
-    QMessageBox::information(this,"About","This is a 3D TRIM program.\n\n Made by zxt\n zxt@pku.edu.cn");
+    QMessageBox message(this);
+    message.setWindowTitle("About TRIM3D");
+    message.setText("Trim3D v1.0\n\n Mady by zxt\nEmail: xitongsys@gmail.com\nSource: https://github.com/xitongsys/TRIM3D");
+    message.setIconPixmap(QPixmap(":/images/mainIcon/ico128x128.png"));
+    message.exec();
+
 }
 
 void MainWindow::on_ifShowCB_clicked() { }
