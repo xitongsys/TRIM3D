@@ -15,5 +15,6 @@
         <file>SCOEF.88</file>
         <file>images/export.svg</file>
         <file>images/helpabout.svg</file>
+        <file>images/ico.png</file>
     </qresource>
 </RCC>

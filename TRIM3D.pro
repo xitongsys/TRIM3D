@@ -6,7 +6,6 @@
 
 QT       += core gui opengl
 QT	 += widgets
-LIBS +=
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -45,7 +44,10 @@ CONFIG += mobility
 MOBILITY = 
 
 DISTFILES += \
-    input.txt
+    input.txt \
+    res.rc
+
+RC_FILE += res.rc
 
 RESOURCES += \
     res.qrc

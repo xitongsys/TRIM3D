@@ -25,6 +25,10 @@
   <property name="windowTitle">
    <string>TRIM3D</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="res.qrc">
+    <normaloff>:/images/ico.png</normaloff>:/images/ico.png</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QTableWidget" name="objTW">
     <property name="geometry">
@@ -378,7 +382,7 @@
      <x>0</x>
      <y>0</y>
      <width>766</width>
-     <height>28</height>
+     <height>17</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
