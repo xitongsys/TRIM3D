@@ -1,5 +1,6 @@
 #include "threadcal.h"
 #include <iostream>
+#include <time.h>
 using namespace std;
 
 ThreadCal::ThreadCal(){}
@@ -10,6 +11,7 @@ void ThreadCal::load(MC *pmcp, GLWT *pglp){
 }
 
 void ThreadCal::run(){
+    srand(time(NULL));
     for(int i=0; i<pmc->ions.size(); i++){
         for(int j=0; j<pmc->ionNum[i]; j++){
             if(stopped) return;
