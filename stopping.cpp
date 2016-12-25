@@ -137,7 +137,7 @@ double Stopping::nstop(int Z1, double M1, int Z2, double M2,
     double E = E0KEV*1000;//eV
     double TMIN = 5;
     double EPS = E * F;
-    double EPSDG = TMIN*F*(1 + MU)*(1 + MU)/(4*MU);
+    //double EPSDG = TMIN*F*(1 + MU)*(1 + MU)/(4*MU);
     double B = P/A;
     if(EPS<=10){
         R = B;

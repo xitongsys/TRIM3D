@@ -74,7 +74,6 @@ void Sample::loadInput(string fname){
                 string name;
                 int Z,num; double mass,x,y,z,vx,vy,vz,energy;
                 ss>>name>>Z>>mass>>num>>x>>y>>z>>vx>>vy>>vz>>energy;
-                int ln = ions.size();
                 Atom atom(name, Z, mass, Vect(x, y, z), Vect(vx, vy, vz), energy, INCIDENT);
                 ions.push_back(atom);
                 ionNum.push_back(num);

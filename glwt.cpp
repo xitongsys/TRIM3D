@@ -139,7 +139,7 @@ void GLWT::setupVertexAttribs(){
 
 void GLWT::resizeGL(int w, int h){
     m_proj.setToIdentity();
-    m_proj.perspective(60, GLfloat(w)/h, 0.01, 999999999.0f);
+    m_proj.perspective(60, double(w)/h, 0.01, 999999999.0f);
 }
 
 void GLWT::drawObj(){
@@ -152,7 +152,7 @@ void GLWT::drawObj(){
             int v0 = pobj->faces[i].vertex[0];
             int n0 = pobj->faces[i].vnorm[0];
 
-            for(int j=2; j<pobj->faces[i].vertex.size(); j++){
+            for(int j=2; j<(int)pobj->faces[i].vertex.size(); j++){
                 GLfloat x,y,z;
                 x = pobj->points[v0].x;
                 y = pobj->points[v0].y;
@@ -224,8 +224,8 @@ void GLWT::drawObj(){
 void GLWT::drawAtom(){
     mutexLock.lock();
     double R = 3.0;
-     for(int i=0; i<pmc->record.size(); i++){
-         for(int j=0; j<pmc->record[i].size(); j++){
+     for(int i=0; i<(int)pmc->record.size(); i++){
+         for(int j=0; j<(int)pmc->record[i].size(); j++){
             int Z = pmc->record[i][j].Z;
             double x = pmc->record[i][j].pos.x;
             double y = pmc->record[i][j].pos.y;

@@ -44,7 +44,7 @@ void MainWindow::slot_fresh(int curi, int curj){
     ui->reNumEd->setText(str.c_str());
 
     int sum=0, sumcur=0;
-    for(int i=0; i<pmc->ions.size(); i++){
+    for(int i=0; i<(int)pmc->ions.size(); i++){
         sum += pmc->ionNum[i];
         if(i<curi){
             sumcur += pmc->ionNum[i];
@@ -98,7 +98,7 @@ void MainWindow::onObjChangeTW(int row, int col){
 
 void MainWindow::onEleChangeTW(int row, int col){
     int oi = ui->objTW->currentRow();
-    if(oi>=0 && oi<qtdata.objs.size()){
+    if(oi>=0 && oi<(int)qtdata.objs.size()){
         string str = ui->eleTW->item(row,col)->text().toStdString();
         if(col==0){
             if(str.size()==0){
@@ -229,7 +229,7 @@ void MainWindow::onAddObjBt(){
 
 void MainWindow::onAddEleBt(){
     int oi = ui->objTW->currentRow();
-    if(oi>=0 && oi<qtdata.objs.size()){
+    if(oi>=0 && oi<(int)qtdata.objs.size()){
         qtdata.objs[oi].addEle(QTEle("H",1,1.0087,0.05,1.0,5));
         freshEleTW();
     }
@@ -314,6 +314,10 @@ void MainWindow::on_actionRun_triggered(){
     if(pmc==NULL) return;
     tc.stop();
     this->on_actionLoad_triggered();
+    if(pmc->objs.size()<=0 || pmc->ions.size()<=0) return;
+    for(int i=0; i<(int)pmc->objs.size();i++){
+        if(pmc->objs[i].elements.size()<=0)return;
+    }
     tc.load(pmc, ui->openGLWidget);
     tc.start();
 }

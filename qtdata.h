@@ -127,7 +127,6 @@ public:
                     string name;
                     int Z,num; double mass,x,y,z,vx,vy,vz,energy;
                     ss>>name>>Z>>mass>>num>>x>>y>>z>>vx>>vy>>vz>>energy;
-                    int ln = ions.size();
                     ions.push_back(QTIon(name,Z,mass,num,x,y,z,vx,vy,vz,energy));
                 }
             }
@@ -140,7 +139,7 @@ public:
         of.open(filePath.c_str());
         if(!of.is_open()) return;
 
-        for(int i=0; i<objs.size(); i++){
+        for(int i=0; i<(int)objs.size(); i++){
             of<<"obj \""<<objs[i].objFile<<"\" "<<objs[i].elements.size()<<endl;
             for(int j=0; j<(int)objs[i].elements.size(); j++){
                 QTEle ele=objs[i].elements[j];
@@ -160,8 +159,8 @@ public:
         ofstream of(name.c_str());
         if(!of.is_open())return;
         of<<"Name Z mass(amu) type(recoil or incident) energy(eV) x y z cosX cosY cosZ"<<endl;
-        for(int i=0; i<pmc->record.size(); i++){
-            for(int j=0; j<(pmc->record[i]).size();j++){
+        for(int i=0; i<(int)pmc->record.size(); i++){
+            for(int j=0; j<(int)(pmc->record[i]).size();j++){
                 Atom atom=pmc->record[i][j];
                 double x=atom.pos.x, y=atom.pos.y, z=atom.pos.z;
                 double vx=atom.direct.x, vy=atom.direct.y, vz=atom.direct.z;

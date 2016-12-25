@@ -16,23 +16,16 @@ double MC::randMC(){
     return rnd;
 }
 
-bool MC::checkPara(){
-    if(objs.size()<=0 || ions.size()<=0)return false;
-    return true;
-}
-
 int MC::runOne(int i, int j){
-    if(!checkPara()) return 0;
-
     double EF=5;//eV
-    if(i>=ions.size()) return 0;
+    if(i>=(int)ions.size()) return 0;
 
     int rc = record.size();
     record.push_back(vector<Atom>(1, ions[i]));
     incidentNum++;
 
     int k=0;
-     while(k<record[rc].size()){
+     while(k<(int)record[rc].size()){
      while(true){
            if(record[rc][k].energy<EF){
                k++;break;
@@ -42,13 +35,13 @@ int MC::runOne(int i, int j){
            Vect dir = record[rc][k].direct;
 
            int oi=0;
-           for(oi=0; oi<objs.size(); oi++){
+           for(oi=0; oi<(int)objs.size(); oi++){
                if(objs[oi].ifin(pos)){
                    break;
                }
            }
 
-           if(oi < objs.size()){
+           if(oi < (int)objs.size()){
                int eNum = objs[oi].elements.size();
                int ei=0;
                double rnd = randMC();
@@ -127,7 +120,7 @@ int MC::runOne(int i, int j){
            }
            else{
                Vect nP(INT_MAX, INT_MAX, INT_MAX);
-               for(oi=0; oi<objs.size(); oi++){
+               for(oi=0; oi<(int)objs.size(); oi++){
                    Vect tmp = objs[oi].lineInteraction(pos, dir);
                    if(pos.dis(nP) > pos.dis(tmp)){
                        nP = tmp;
@@ -156,12 +149,12 @@ int MC::runOne(int i, int j){
 
 void MC::run(){
     double EF=5;//eV
-    for(int i=0; i<ions.size(); i++){
+    for(int i=0; i<(int)ions.size(); i++){
         for(int j=0; j<ionNum[i]; j++){
             int rc = record.size();
             record.push_back(vector<Atom>(1, ions[i]));
             int k=0;
-            while(k<record[rc].size()){
+            while(k<(int)record[rc].size()){
                 while(true){
                     if(record[rc][k].energy<EF){
                         k++;break;
@@ -171,13 +164,13 @@ void MC::run(){
                     Vect dir = record[rc][k].direct;
 
                     int oi=0;
-                    for(oi=0; oi<objs.size(); oi++){
+                    for(oi=0; oi<(int)objs.size(); oi++){
                         if(objs[oi].ifin(pos)){
                             break;
                         }
                     }
 
-                    if(oi < objs.size()){
+                    if(oi < (int)objs.size()){
                         int eNum = objs[oi].elements.size();
                         int ei=0;
                         double rnd = randMC();
@@ -255,7 +248,7 @@ void MC::run(){
                     }
                     else{
                         Vect nP(INT_MAX, INT_MAX, INT_MAX);
-                        for(oi=0; oi<objs.size(); oi++){
+                        for(oi=0; oi<(int)objs.size(); oi++){
                             Vect tmp = objs[oi].lineInteraction(pos, dir);
                             if(pos.dis(nP) > pos.dis(tmp)){
                                 nP = tmp;

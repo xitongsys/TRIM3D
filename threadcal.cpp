@@ -12,7 +12,7 @@ void ThreadCal::load(MC *pmcp, GLWT *pglp){
 
 void ThreadCal::run(){
     srand(time(NULL));
-    for(int i=0; i<pmc->ions.size(); i++){
+    for(int i=0; i<(int)pmc->ions.size(); i++){
         for(int j=0; j<pmc->ionNum[i]; j++){
             if(stopped) return;
             curi=i; curj=j;

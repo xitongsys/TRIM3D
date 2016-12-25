@@ -12,7 +12,6 @@ public:
 
 public:
     MC(string inFile, string sFile);
-    bool checkPara();
     void run();
     int runOne(int i, int j);
     double randMC();
