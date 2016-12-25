@@ -18,7 +18,6 @@ void ThreadCal::run(){
             pmc->runOne(i,j);
             mutexLock.unlock();
             emit signal_fresh(i,j);
-
         }
     }
 }

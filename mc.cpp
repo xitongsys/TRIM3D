@@ -1,6 +1,8 @@
 #include "mc.h"
 #include <vector>
 #include <climits>
+#include <iostream>
+using namespace std;
 
 
 MC::MC(string inFile, string sFile):Sample(inFile),Stopping(sFile){}
