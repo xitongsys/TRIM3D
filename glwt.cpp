@@ -233,25 +233,28 @@ void GLWT::drawAtom(){
 
             for(int angle=0; angle<360; angle+=90){
                 Vect pv[3];
+                Vect nv(1,1,1);
                 pv[0]=Vect(R,0,0); pv[1]=Vect(0,R,0); pv[2]=Vect(0,0,R);
                 for(int k=0; k<3; k++){
                     double angleTmp = float(angle)/180.0*CPI;
                     pv[k].Rz(angleTmp);
+                    nv.Rz(angleTmp);
                     m_data.push_back(pv[k].x+x); m_data.push_back(pv[k].y+y); m_data.push_back(pv[k].z+z);
-                    m_data.push_back(pv[k].x); m_data.push_back(pv[k].y); m_data.push_back(pv[k].z);
+                    m_data.push_back(nv.x); m_data.push_back(nv.y); m_data.push_back(nv.z);
                     m_data.push_back(AtomColorTable[Z].r); m_data.push_back(AtomColorTable[Z].g);
                     m_data.push_back(AtomColorTable[Z].b); m_data.push_back(AtomColorTable[Z].a);
                 }
             }
             for(int angle=0; angle<360; angle+=90){
                 Vect pv[3];
+                Vect nv(1,1,-1);
                 pv[0]=Vect(R,0,0); pv[1]=Vect(0,0,-R); pv[2]=Vect(0,R,0);
                 for(int k=0; k<3; k++){
                     double angleTmp = float(angle)/180.0*CPI;
-
                     pv[k].Rz(angleTmp);
+                    nv.Rz(angleTmp);
                     m_data.push_back(pv[k].x+x); m_data.push_back(pv[k].y+y); m_data.push_back(pv[k].z+z);
-                    m_data.push_back(pv[k].x); m_data.push_back(pv[k].y); m_data.push_back(pv[k].z);
+                    m_data.push_back(nv.x); m_data.push_back(nv.y); m_data.push_back(nv.z);
                     m_data.push_back(AtomColorTable[Z].r); m_data.push_back(AtomColorTable[Z].g);
                     m_data.push_back(AtomColorTable[Z].b); m_data.push_back(AtomColorTable[Z].a);
                 }
