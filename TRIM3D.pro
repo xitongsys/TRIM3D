@@ -4,9 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui opengl
+QT       += core gui
 QT	 += widgets
-LIBS += -lglut -lGL -lGLU
+LIBS += -lglu32 -lopengl32
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     stopping.cpp \
     mc.cpp \
     glwt.cpp \
-    threadcal.cpp
+    threadcal.cpp \
+    logo.cpp
 
 HEADERS  += mainwindow.h \
     global.h \
@@ -35,7 +36,8 @@ HEADERS  += mainwindow.h \
     qtdata.h \
     glwt.h \
     drawinfo.h \
-    threadcal.h
+    threadcal.h \
+    logo.h
 
 FORMS    += mainwindow.ui
 

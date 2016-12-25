@@ -4,9 +4,29 @@
 #include <QOpenGLWidget>
 #include "drawinfo.h"
 #include "mc.h"
+#include <QOpenGLVertexArrayObject>
+#include <QOpenGLBuffer>
+#include <QMatrix>
+#include <QOpenGLFunctions>
+#include <QVector>
+#include <QOpenGLShaderProgram>
+#include "logo.h"
 
 
-class GLWT : public QOpenGLWidget, DrawInfo {
+class GLWT : public QOpenGLWidget, DrawInfo, QOpenGLFunctions{
+
+public:
+    QOpenGLVertexArrayObject m_vao;
+    QOpenGLBuffer m_vbo;
+    QOpenGLShaderProgram *m_program;
+    int m_projMatrixLoc;
+    int m_mvMatrixLoc;
+    int m_lightPosLoc;
+    int m_normalMatrixLoc;
+    QMatrix4x4 m_proj, m_camera, m_world;
+    QVector<GLfloat> m_data;
+
+    Logo m_logo;
 
 public:
     MC *pmc;
@@ -17,6 +37,7 @@ public:
     void mouseMoveEvent(QMouseEvent *event);
     void wheelEvent(QWheelEvent *event);
     void resetView();
+    void cleanup();
 
 protected:
     void initializeGL();
@@ -24,6 +45,7 @@ protected:
     void paintGL();
     void drawObj();
     void drawAtom();
+    void setupVertexAttribs();
 };
 
 #endif // GLWT_H
