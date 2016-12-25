@@ -42,8 +42,8 @@ public:
             AtomColorTable[i] = Color4f(randTmp(), randTmp(), randTmp(), 1.0);
         }
 
-        bgColor=Color4f(0.0, 0.0, 0.0, 1.0);
-        objColor=Color4f(0.5, 0.5, 0.5, 0.5);
+        bgColor=Color4f(0.0, 0.0, 0.0, 0.0);
+        objColor=Color4f(0.8, 0.8, 0.8, 0.2);
         atomSize=2; atomSlice=5;
         angleX = 0; angleY = 0; angleZ=0;
         transX = 0; transY = 0; transZ = 0;

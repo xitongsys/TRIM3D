@@ -139,7 +139,7 @@ void GLWT::setupVertexAttribs(){
 
 void GLWT::resizeGL(int w, int h){
     m_proj.setToIdentity();
-    m_proj.perspective(60, GLfloat(w)/h, 0.01, 700.0f);
+    m_proj.perspective(60, GLfloat(w)/h, 0.01, 999999999.0f);
 }
 
 void GLWT::drawObj(){
@@ -223,7 +223,7 @@ void GLWT::drawObj(){
 
 void GLWT::drawAtom(){
     mutexLock.lock();
-    double R = 2.0;
+    double R = 3.0;
      for(int i=0; i<pmc->record.size(); i++){
          for(int j=0; j<pmc->record[i].size(); j++){
             int Z = pmc->record[i][j].Z;
@@ -231,65 +231,33 @@ void GLWT::drawAtom(){
             double y = pmc->record[i][j].pos.y;
             double z = pmc->record[i][j].pos.z;
 
-            for(int ai=1; ai<5; ai++){
-                for(int aj=0; aj<5; aj++){
-                    double aii = (ai-1+5)%5, ajj=(aj-1+5)%5;
-                    double angle1, angle2;
-                    double ax,ay,az;
-
-                    {
-                        angle1=aii*CPI/5.0; angle2=ajj*2*CPI/5.0;
-                        ax = R*sin(angle1)*cos(angle2); ay = R*sin(angle1)*sin(angle2); az = R*cos(angle1);
-                        m_data.push_back(ax+x); m_data.push_back(ay+y); m_data.push_back(az+z);
-                        m_data.push_back(ax); m_data.push_back(ay); m_data.push_back(az);
-                        m_data.push_back(AtomColorTable[Z].r); m_data.push_back(AtomColorTable[Z].g);
-                        m_data.push_back(AtomColorTable[Z].b); m_data.push_back(AtomColorTable[Z].a);
-
-
-                        angle1 = ai*CPI/5.0; angle2 = ajj*2*CPI/5.0;
-                        ax = R*sin(angle1)*cos(angle2); ay = R*sin(angle1)*sin(angle2); az = R*cos(angle1);
-                        m_data.push_back(ax+x); m_data.push_back(ay+y); m_data.push_back(az+z);
-                        m_data.push_back(ax); m_data.push_back(ay); m_data.push_back(az);
-                        m_data.push_back(AtomColorTable[Z].r); m_data.push_back(AtomColorTable[Z].g);
-                        m_data.push_back(AtomColorTable[Z].b); m_data.push_back(AtomColorTable[Z].a);
-
-                        angle1 = ai*CPI/5.0; angle2 = aj*2*CPI/5.0;
-                        ax = R*sin(angle1)*cos(angle2); ay = R*sin(angle1)*sin(angle2); az = R*cos(angle1);
-                        m_data.push_back(ax+x); m_data.push_back(ay+y); m_data.push_back(az+z);
-                        m_data.push_back(ax); m_data.push_back(ay); m_data.push_back(az);
-                        m_data.push_back(AtomColorTable[Z].r); m_data.push_back(AtomColorTable[Z].g);
-                        m_data.push_back(AtomColorTable[Z].b); m_data.push_back(AtomColorTable[Z].a);
-
-                    }
-
-                    {
-                        angle1=aii*CPI/5.0; angle2=ajj*2*CPI/5.0;
-                        ax = R*sin(angle1)*cos(angle2); ay = R*sin(angle1)*sin(angle2); az = R*cos(angle1);
-                        m_data.push_back(ax+x); m_data.push_back(ay+y); m_data.push_back(az+z);
-                        m_data.push_back(ax); m_data.push_back(ay); m_data.push_back(az);
-                        m_data.push_back(AtomColorTable[Z].r); m_data.push_back(AtomColorTable[Z].g);
-                        m_data.push_back(AtomColorTable[Z].b); m_data.push_back(AtomColorTable[Z].a);
-
-
-                        angle1 = ai*CPI/5.0; angle2 = aj*2*CPI/5.0;
-                        ax = R*sin(angle1)*cos(angle2); ay = R*sin(angle1)*sin(angle2); az = R*cos(angle1);
-                        m_data.push_back(ax+x); m_data.push_back(ay+y); m_data.push_back(az+z);
-                        m_data.push_back(ax); m_data.push_back(ay); m_data.push_back(az);
-                        m_data.push_back(AtomColorTable[Z].r); m_data.push_back(AtomColorTable[Z].g);
-                        m_data.push_back(AtomColorTable[Z].b); m_data.push_back(AtomColorTable[Z].a);
-
-                        angle1 = aii*CPI/5.0; angle2 = aj*2*CPI/5.0;
-                        ax = R*sin(angle1)*cos(angle2); ay = R*sin(angle1)*sin(angle2); az = R*cos(angle1);
-                        m_data.push_back(ax+x); m_data.push_back(ay+y); m_data.push_back(az+z);
-                        m_data.push_back(ax); m_data.push_back(ay); m_data.push_back(az);
-                        m_data.push_back(AtomColorTable[Z].r); m_data.push_back(AtomColorTable[Z].g);
-                        m_data.push_back(AtomColorTable[Z].b); m_data.push_back(AtomColorTable[Z].a);
-
-                    }
-
-
+            for(int angle=0; angle<360; angle+=90){
+                Vect pv[3];
+                pv[0]=Vect(R,0,0); pv[1]=Vect(0,R,0); pv[2]=Vect(0,0,R);
+                for(int k=0; k<3; k++){
+                    double angleTmp = float(angle)/180.0*CPI;
+                    pv[k].Rz(angleTmp);
+                    m_data.push_back(pv[k].x+x); m_data.push_back(pv[k].y+y); m_data.push_back(pv[k].z+z);
+                    m_data.push_back(pv[k].x); m_data.push_back(pv[k].y); m_data.push_back(pv[k].z);
+                    m_data.push_back(AtomColorTable[Z].r); m_data.push_back(AtomColorTable[Z].g);
+                    m_data.push_back(AtomColorTable[Z].b); m_data.push_back(AtomColorTable[Z].a);
                 }
             }
+            for(int angle=0; angle<360; angle+=90){
+                Vect pv[3];
+                pv[0]=Vect(R,0,0); pv[1]=Vect(0,0,-R); pv[2]=Vect(0,R,0);
+                for(int k=0; k<3; k++){
+                    double angleTmp = float(angle)/180.0*CPI;
+
+                    pv[k].Rz(angleTmp);
+                    m_data.push_back(pv[k].x+x); m_data.push_back(pv[k].y+y); m_data.push_back(pv[k].z+z);
+                    m_data.push_back(pv[k].x); m_data.push_back(pv[k].y); m_data.push_back(pv[k].z);
+                    m_data.push_back(AtomColorTable[Z].r); m_data.push_back(AtomColorTable[Z].g);
+                    m_data.push_back(AtomColorTable[Z].b); m_data.push_back(AtomColorTable[Z].a);
+                }
+            }
+
+
          }
      }
     mutexLock.unlock();
@@ -301,12 +269,14 @@ void GLWT::paintGL(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
 
     QOpenGLVertexArrayObject::Binder vaoBinder(&m_vao);
 
     m_vbo.bind();
     m_data.clear();
-    drawObj(); drawAtom();
+    drawAtom(); drawObj();
     m_vbo.allocate(m_data.constData(), m_data.size()*sizeof(GLfloat));
     setupVertexAttribs();
     m_vbo.release();

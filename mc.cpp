@@ -9,7 +9,7 @@ MC::MC(string inFile, string sFile):Sample(inFile),Stopping(sFile){}
 
 double MC::randMC(){
     int MOD=1000000;
-    double rnd = rand()%MOD;
+    double rnd = rand()%MOD + 1;
     rnd /= MOD;
     return rnd;
 }
