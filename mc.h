@@ -8,6 +8,7 @@
 class MC:public Sample, public Stopping{
 public:
     vector<vector<Atom> > record;
+    int incidentNum,recoilNum;
 
 public:
     MC(string inFile, string sFile);

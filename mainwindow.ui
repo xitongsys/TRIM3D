@@ -340,9 +340,9 @@
    <widget class="QProgressBar" name="progressBar">
     <property name="geometry">
      <rect>
-      <x>710</x>
+      <x>630</x>
       <y>190</y>
-      <width>211</width>
+      <width>231</width>
       <height>16</height>
      </rect>
     </property>
@@ -353,7 +353,7 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>680</x>
+      <x>600</x>
       <y>190</y>
       <width>21</width>
       <height>16</height>
@@ -366,30 +366,33 @@
    <widget class="QCheckBox" name="ifShowCB">
     <property name="geometry">
      <rect>
-      <x>330</x>
+      <x>860</x>
       <y>190</y>
-      <width>71</width>
+      <width>61</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>Show</string>
+     <string>Update</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="ionNumEd">
     <property name="geometry">
      <rect>
-      <x>440</x>
+      <x>360</x>
       <y>190</y>
       <width>71</width>
       <height>16</height>
      </rect>
     </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>410</x>
+      <x>330</x>
       <y>190</y>
       <width>31</width>
       <height>16</height>
@@ -402,17 +405,20 @@
    <widget class="QLineEdit" name="reNumEd">
     <property name="geometry">
      <rect>
-      <x>580</x>
+      <x>500</x>
       <y>190</y>
       <width>81</width>
       <height>16</height>
      </rect>
     </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>530</x>
+      <x>450</x>
       <y>190</y>
       <width>41</width>
       <height>16</height>

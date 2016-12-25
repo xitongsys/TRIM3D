@@ -30,7 +30,19 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 void MainWindow::slot_fresh(int curi, int curj){
-    ui->openGLWidget->repaint();
+    if(ui->ifShowCB->isChecked()){
+        ui->openGLWidget->repaint();
+    }
+    int ionNum=0, recoilNum=0;
+    ionNum = pmc->incidentNum;
+    recoilNum = pmc->recoilNum;
+    stringstream ss; ss<<ionNum;
+    string str; ss>>str;
+    ui->ionNumEd->setText(str.c_str());
+    ss.clear(); ss.str("");
+    ss<<(recoilNum-ionNum); ss>>str;
+    ui->reNumEd->setText(str.c_str());
+
     int sum=0, sumcur=0;
     for(int i=0; i<pmc->ions.size(); i++){
         sum += pmc->ionNum[i];
@@ -324,3 +336,5 @@ void MainWindow::on_actionExport_data_triggered() {
 void MainWindow::on_actionAbout_triggered(){
     QMessageBox::information(this,"About","This is a 3D TRIM program.\n\n Made by zxt\n zxt@pku.edu.cn");
 }
+
+void MainWindow::on_ifShowCB_clicked() { }

@@ -52,6 +52,7 @@ private slots:
     void on_actionStop_triggered();
     void on_actionExport_data_triggered();
     void on_actionAbout_triggered();
+    void on_ifShowCB_clicked();
 };
 
 #endif // MAINWINDOW_H

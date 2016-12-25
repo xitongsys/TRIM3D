@@ -5,7 +5,9 @@
 using namespace std;
 
 
-MC::MC(string inFile, string sFile):Sample(inFile),Stopping(sFile){}
+MC::MC(string inFile, string sFile):Sample(inFile),Stopping(sFile){
+    incidentNum=0; recoilNum=0;
+}
 
 double MC::randMC(){
     int MOD=10000;
@@ -16,6 +18,7 @@ double MC::randMC(){
 
 bool MC::checkPara(){
     if(objs.size()<=0 || ions.size()<=0)return false;
+    return true;
 }
 
 int MC::runOne(int i, int j){
@@ -26,6 +29,8 @@ int MC::runOne(int i, int j){
 
     int rc = record.size();
     record.push_back(vector<Atom>(1, ions[i]));
+    incidentNum++;
+
     int k=0;
      while(k<record[rc].size()){
      while(true){
@@ -102,6 +107,7 @@ int MC::runOne(int i, int j){
                    recoil.direct.Rz(a1);
 
                    record[rc].push_back(recoil);
+                   recoilNum++;
 
                }
 
