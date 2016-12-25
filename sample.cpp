@@ -20,6 +20,8 @@ Sample::Sample(string inputFile){
 
 void Sample::loadInput(string fname){
     ifstream fi(fname.c_str());
+    if(!fi.is_open()) return;
+
     char buff[1024];
     while(!fi.eof()){
         memset(buff, 0, sizeof(buff));
@@ -32,7 +34,16 @@ void Sample::loadInput(string fname){
             int ln = objs.size();
             objs.push_back(Object3D());
             string fname; int eleNum=0;
-            ss>>fname; ss>>eleNum;
+            string tmp;
+            while(ss>>tmp){
+                fname += tmp;
+                if(*(tmp.end()-1)=='"')break;
+            }
+
+            int lf=fname.size();
+            fname=fname.substr(1,lf-2);
+
+            ss>>eleNum;
             string eName; int Z;
             double mass, density, fraction, disE;
             objs[ln].loadObj(fname);

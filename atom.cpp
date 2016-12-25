@@ -23,8 +23,3 @@ Atom::Atom(string namep, int Zp, double massp,
 
 }
 
-
-
-
-
-

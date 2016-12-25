@@ -505,7 +505,7 @@
      <normaloff>:/images/stop.svg</normaloff>:/images/stop.svg</iconset>
    </property>
    <property name="text">
-    <string>Pause</string>
+    <string>Stop</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+P</string>

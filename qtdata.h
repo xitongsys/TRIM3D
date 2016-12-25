@@ -82,6 +82,8 @@ public:
     void loadInput(string path){
         filePath = path;
         ifstream fi(path.c_str());
+        if(!fi.is_open()) return;
+
         char buff[1024];
         while(!fi.eof()){
             memset(buff, 0, sizeof(buff));
@@ -93,7 +95,16 @@ public:
             if(head=="obj"){
                 int ln = objs.size();
                 string fname; int eleNum=0;
-                ss>>fname; ss>>eleNum;
+                string tmp;
+                while(ss>>tmp){
+                    fname += tmp;
+                    if(*(tmp.end()-1)=='"') break;
+                }
+
+                int lf=fname.size();
+                fname=fname.substr(1, lf-2);
+
+                ss>>eleNum;
                 string eName; int Z;
                 double mass, density, fraction, disE;
                 objs.push_back(QTObj(fname));
@@ -126,8 +137,10 @@ public:
     void saveInput(){
         ofstream of;
         of.open(filePath.c_str());
+        if(!of.is_open()) return;
+
         for(int i=0; i<objs.size(); i++){
-            of<<"obj "<<objs[i].objFile<<" "<<objs[i].elements.size()<<endl;
+            of<<"obj \""<<objs[i].objFile<<"\" "<<objs[i].elements.size()<<endl;
             for(int j=0; j<(int)objs[i].elements.size(); j++){
                 QTEle ele=objs[i].elements[j];
                 of<<ele.name<<" "<<ele.Z<<" "<<ele.M<<" "<<ele.density<<" "<<ele.fraction<<" "<<ele.disE<<endl;
