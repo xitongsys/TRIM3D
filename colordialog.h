@@ -28,6 +28,8 @@ private slots:
 
     void on_atomColorBT_clicked();
 
+    void on_structureBT_clicked();
+
 private:
     Ui::ColorDialog *ui;
 };

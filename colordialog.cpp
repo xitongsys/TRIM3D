@@ -24,6 +24,13 @@ ColorDialog::ColorDialog(QWidget *parent) :
     char buf[1024];
     sprintf(buf, "QPushButton{background-color:rgb(%d,%d,%d);}", r,g,b);
     ui->bgBT->setStyleSheet(buf);
+
+    r = pp->pDrawInfo->objColor.r*255;
+    g = pp->pDrawInfo->objColor.g*255;
+    b = pp->pDrawInfo->objColor.b*255;
+    sprintf(buf, "QPushButton{background-color:rgb(%d,%d,%d);}", r,g,b);
+    ui->structureBT->setStyleSheet(buf);
+
 }
 
 ColorDialog::~ColorDialog()
@@ -70,4 +77,15 @@ void ColorDialog::on_atomColorBT_clicked(){
     pp->pDrawInfo->AtomColorTable[Z].g = (float)c.green()/255;
     pp->pDrawInfo->AtomColorTable[Z].b = (float)c.blue()/255;
 
+}
+
+void ColorDialog::on_structureBT_clicked()
+{
+    QColor c = QColorDialog::getColor();
+    char buf[1024];
+    sprintf(buf, "QPushButton{background-color:rgb(%d,%d,%d);}", c.red(), c.green(), c.blue());
+    ui->structureBT->setStyleSheet(buf);
+    pp->pDrawInfo->objColor.r = (float)c.red()/255;
+    pp->pDrawInfo->objColor.g = (float)c.green()/255;
+    pp->pDrawInfo->objColor.b = (float)c.blue()/255;
 }
