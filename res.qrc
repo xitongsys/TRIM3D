@@ -17,5 +17,6 @@
         <file>images/helpabout.svg</file>
         <file>images/ico.png</file>
         <file>images/mainIcon/ico128x128.png</file>
+        <file>images/color.png</file>
     </qresource>
 </RCC>

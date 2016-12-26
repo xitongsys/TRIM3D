@@ -221,9 +221,10 @@ void GLWT::drawObj(){
     }
 }
 
-void GLWT::drawAtom(){
+int GLWT::drawAtom(){
     mutexLock.lock();
-    double R = 3.0;
+    int num=0;
+    double R = atomSize;
      for(int i=0; i<(int)pmc->record.size(); i++){
          for(int j=0; j<(int)pmc->record[i].size(); j++){
             int Z = pmc->record[i][j].Z;
@@ -260,26 +261,36 @@ void GLWT::drawAtom(){
                 }
             }
 
-
+            /*
+            m_data.push_back(x); m_data.push_back(y); m_data.push_back(z);
+            m_data.push_back(1); m_data.push_back(0); m_data.push_back(0);
+            m_data.push_back(AtomColorTable[Z].r); m_data.push_back(AtomColorTable[Z].g);
+            m_data.push_back(AtomColorTable[Z].b); m_data.push_back(AtomColorTable[Z].a);
+            */
+            num++;
          }
      }
     mutexLock.unlock();
+    return num;
 }
 
 void GLWT::paintGL(){
-    if(pmc==NULL) return;
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
+    glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
+
+    if(pmc==NULL) return;
 
     QOpenGLVertexArrayObject::Binder vaoBinder(&m_vao);
 
     m_vbo.bind();
     m_data.clear();
-    drawAtom(); drawObj();
+    int atomNum = drawAtom();
+    drawObj();
     m_vbo.allocate(m_data.constData(), m_data.size()*sizeof(GLfloat));
     setupVertexAttribs();
     m_vbo.release();
@@ -293,7 +304,7 @@ void GLWT::paintGL(){
 
     z = -(pmc->zmax) + transZ;
     m_camera.setToIdentity();
-    m_camera.translate(x,y,z);
+    m_camera.translate(0,0,z);
 
     QMatrix4x4 rM; rM.setToIdentity();
     rM.rotate(angleX, 1, 0, 0);
@@ -310,6 +321,8 @@ void GLWT::paintGL(){
     m_program->setUniformValue(m_normalMatrixLoc, normalMatrix);
 
     //glDrawArrays(GL_TRIANGLES, 0, m_logo.vertexCount());
+    //glDrawArrays(GL_POINTS, 0, atomNum);
+    //glDrawArrays(GL_TRIANGLES, atomNum*10, (m_data.size()-atomNum*10)/10);
     glDrawArrays(GL_TRIANGLES, 0, m_data.size()/10);
     m_program->release();
 }

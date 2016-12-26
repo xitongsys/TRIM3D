@@ -13,7 +13,7 @@
 #include "logo.h"
 
 
-class GLWT : public QOpenGLWidget, DrawInfo, QOpenGLFunctions{
+class GLWT : public QOpenGLWidget, public DrawInfo, QOpenGLFunctions{
 
 public:
     QOpenGLVertexArrayObject m_vao;
@@ -44,7 +44,7 @@ protected:
     void resizeGL(int w, int h);
     void paintGL();
     void drawObj();
-    void drawAtom();
+    int drawAtom();
     void setupVertexAttribs();
 };
 

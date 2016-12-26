@@ -18,6 +18,7 @@ public:
     MC *pmc;
     QTInputData qtdata;
     ThreadCal tc;
+    DrawInfo *pDrawInfo;
 
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -53,6 +54,13 @@ private slots:
     void on_actionExport_data_triggered();
     void on_actionAbout_triggered();
     void on_ifShowCB_clicked();
+    void on_minusAtomSizeBT_clicked();
+    void on_addAtomSizeBT_clicked();
+    void on_actionColor_triggered();
+
+
+public:
+    void freshGL();
 };
 
 #endif // MAINWINDOW_H

@@ -28,7 +28,7 @@ public:
     double transX, transY, transZ;
     float MR[16];
 
-    int atomSize, atomSlice;
+    double atomSize, atomSlice;
 
     double randTmp(){
         int MOD=1000;
@@ -39,7 +39,7 @@ public:
 
     DrawInfo(){
         for(int i=0; i<100; i++){
-            AtomColorTable[i] = Color4f(randTmp()/2+0.5, randTmp()/2+0.5, randTmp()/2+0.5, 1.0);
+            AtomColorTable[i] = Color4f(randTmp(), randTmp(), randTmp(), 1.0);
         }
 
         bgColor=Color4f(0.0, 0.0, 0.0, 1.0);

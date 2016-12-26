@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QColorDialog>
+#include "colordialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -23,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->toolBar->addAction(ui->actionRun);
     ui->toolBar->addAction(ui->actionStop);
     ui->toolBar->addAction(ui->actionExport_data);
+    ui->toolBar->addAction(ui->actionColor);
     ui->toolBar->addAction(ui->actionAbout);
 
     pmc = NULL;
@@ -40,7 +43,7 @@ void MainWindow::slot_fresh(int curi, int curj){
     string str; ss>>str;
     ui->ionNumEd->setText(str.c_str());
     ss.clear(); ss.str("");
-    ss<<(recoilNum-ionNum); ss>>str;
+    ss<<(recoilNum); ss>>str;
     ui->reNumEd->setText(str.c_str());
 
     int sum=0, sumcur=0;
@@ -258,6 +261,7 @@ void MainWindow::on_actionOpen_triggered(){
     if(fd->exec()==QDialog::Accepted){
         flist=fd->selectedFiles();
         QString fname = flist[0];
+        this->on_actionNew_triggered();
         qtdata.loadInput(fname.toStdString());
         freshIonTW();
         freshObjTW();
@@ -347,3 +351,23 @@ void MainWindow::on_actionAbout_triggered(){
 }
 
 void MainWindow::on_ifShowCB_clicked() { }
+
+void MainWindow::on_minusAtomSizeBT_clicked(){
+    ui->openGLWidget->atomSize *= 0.9;
+    ui->openGLWidget->repaint();
+}
+
+void MainWindow::on_addAtomSizeBT_clicked(){
+    ui->openGLWidget->atomSize *= 1.1;
+    ui->openGLWidget->repaint();
+}
+
+void MainWindow::on_actionColor_triggered(){
+    pDrawInfo=(DrawInfo*)ui->openGLWidget;
+    ColorDialog cdlg(this);
+    cdlg.exec();
+}
+
+void MainWindow::freshGL(){
+    ui->openGLWidget->repaint();
+}
