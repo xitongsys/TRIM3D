@@ -6,20 +6,35 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>260</width>
-    <height>165</height>
+    <width>261</width>
+    <height>197</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>261</width>
+    <height>197</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>261</width>
+    <height>197</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Color</string>
+  </property>
+  <property name="modal">
+   <bool>false</bool>
   </property>
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
      <x>160</x>
-     <y>130</y>
+     <y>170</y>
      <width>91</width>
-     <height>32</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="orientation">
@@ -33,7 +48,7 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>10</y>
+     <y>30</y>
      <width>71</width>
      <height>31</height>
     </rect>
@@ -46,8 +61,8 @@
    <property name="geometry">
     <rect>
      <x>100</x>
-     <y>10</y>
-     <width>151</width>
+     <y>30</y>
+     <width>91</width>
      <height>31</height>
     </rect>
    </property>
@@ -59,7 +74,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>100</y>
+     <y>120</y>
      <width>54</width>
      <height>12</height>
     </rect>
@@ -72,7 +87,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>90</y>
+     <y>110</y>
      <width>71</width>
      <height>31</height>
     </rect>
@@ -82,8 +97,8 @@
    <property name="geometry">
     <rect>
      <x>100</x>
-     <y>90</y>
-     <width>151</width>
+     <y>110</y>
+     <width>91</width>
      <height>31</height>
     </rect>
    </property>
@@ -95,7 +110,7 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>60</y>
+     <y>80</y>
      <width>54</width>
      <height>12</height>
     </rect>
@@ -108,13 +123,74 @@
    <property name="geometry">
     <rect>
      <x>100</x>
-     <y>50</y>
-     <width>151</width>
+     <y>70</y>
+     <width>91</width>
      <height>31</height>
     </rect>
    </property>
    <property name="text">
     <string/>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="bgASB">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>30</y>
+     <width>51</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>100</number>
+   </property>
+   <property name="singleStep">
+    <number>5</number>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="objASB">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>70</y>
+     <width>51</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>100</number>
+   </property>
+   <property name="singleStep">
+    <number>5</number>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="atomASB">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>110</y>
+     <width>51</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>100</number>
+   </property>
+   <property name="singleStep">
+    <number>5</number>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="applyBT">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>170</y>
+     <width>75</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Apply</string>
    </property>
   </widget>
  </widget>

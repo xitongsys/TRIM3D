@@ -30,6 +30,14 @@ private slots:
 
     void on_structureBT_clicked();
 
+    void on_applyBT_clicked();
+
+    void on_bgASB_editingFinished();
+
+    void on_objASB_editingFinished();
+
+    void on_atomASB_editingFinished();
+
 private:
     Ui::ColorDialog *ui;
 };
