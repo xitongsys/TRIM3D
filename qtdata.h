@@ -2,9 +2,12 @@
 #define QTDATA_H
 
 #include <vector>
+#include <iostream>
 #include <fstream>
 #include <sstream>
 #include "mc.h"
+#include <QDir>
+
 using namespace std;
 
 class QTEle{
@@ -85,6 +88,11 @@ public:
         ifstream fi(path.c_str());
         if(!fi.is_open()) return;
 
+        QDir dir(path.c_str());
+        string abPath=dir.absolutePath().toStdString();
+        MyPath mp(abPath);
+        QDir::setCurrent(mp.path.c_str());
+
         char buff[1024];
         while(!fi.eof()){
             memset(buff, 0, sizeof(buff));
@@ -139,8 +147,21 @@ public:
         of.open(filePath.c_str());
         if(!of.is_open()) return;
 
+        QDir dir(filePath.c_str());
+        string abPath=dir.absolutePath().toStdString();
+        MyPath mp(abPath);
+        QDir::setCurrent(mp.path.c_str());
+        QFile scoefFile(":/SCOEF.88");
+        scoefFile.copy("SCOEF.88");
+
         for(int i=0; i<(int)objs.size(); i++){
-            of<<"obj \""<<objs[i].objFile<<"\" "<<objs[i].elements.size()<<endl;
+            MyPath mpobj(objs[i].objFile);
+            if(mpobj.path!=mp.path){
+                QFile src(objs[i].objFile.c_str());
+                string des=mp.path + mpobj.fname;
+                src.copy(des.c_str());
+            }
+            of<<"obj \""<<mpobj.fname<<"\" "<<objs[i].elements.size()<<endl;
             for(int j=0; j<(int)objs[i].elements.size(); j++){
                 QTEle ele=objs[i].elements[j];
                 of<<ele.name<<" "<<ele.Z<<" "<<ele.M<<" "<<ele.density<<" "<<ele.fraction<<" "<<ele.disE<<endl;

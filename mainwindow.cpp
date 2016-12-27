@@ -97,6 +97,9 @@ void MainWindow::onObjChangeTW(int row, int col){
         qtdata.objs.erase(qtdata.objs.begin() + row);
         freshObjTW();
     }
+    else{
+        qtdata.objs[row].objFile=ui->objTW->item(row,col)->text().toStdString();
+    }
 }
 
 void MainWindow::onEleChangeTW(int row, int col){

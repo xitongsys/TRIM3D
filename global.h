@@ -96,6 +96,18 @@ struct Face{
     vector<int> vnorm;
 };
 
+class MyPath{
+public:
+    string path, fname;
+    MyPath(string abPath){
+        int ln = abPath.size();
+        int i=ln-1;
+        while(i>=0 && abPath[i]!='/')i--;
+        path=abPath.substr(0, i+1);
+        fname=abPath.substr(i+1, ln - i - 1);
+    }
+};
+
 extern QMutex mutexLock;
 
 #endif // GLOBAL_H
