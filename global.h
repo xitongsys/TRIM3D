@@ -51,8 +51,8 @@ struct Vect{
             return;
         }
         angle1 = acos(x/l);
-        if(x*y<0){
-            angle1 += CPI;
+        if(y<0){
+            angle1 = 2*CPI - angle1;
 
         }
         l = sqrt(x*x + y*y + z*z);

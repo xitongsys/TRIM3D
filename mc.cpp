@@ -112,6 +112,9 @@ int MC::runOne(int i, int j){
                tmp.Rz(a3);
                tmp.Ry(a2); tmp.Rz(a1);
 
+               //cout<<ion.direct.x<<" "<<ion.direct.y<<" "<<ion.direct.z<<endl;
+               //cout<<a1<<" "<<a2<<endl;
+
                record[rc][k].direct = tmp;
                record[rc][k].energy = (E - dEE - dNE);
 
@@ -146,7 +149,7 @@ int MC::runOne(int i, int j){
 
 }
 
-
+/*
 void MC::run(){
     double EF=5;//eV
     for(int i=0; i<(int)ions.size(); i++){
@@ -274,3 +277,4 @@ void MC::run(){
     }
 
 }
+*/

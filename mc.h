@@ -12,7 +12,7 @@ public:
 
 public:
     MC(string inFile, string sFile);
-    void run();
+   // void run();
     int runOne(int i, int j);
     double randMC();
 };
