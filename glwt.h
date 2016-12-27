@@ -11,6 +11,7 @@
 #include <QVector>
 #include <QOpenGLShaderProgram>
 #include "logo.h"
+#include "object3d.h"
 
 
 class GLWT : public QOpenGLWidget, public DrawInfo, QOpenGLFunctions{
@@ -44,6 +45,7 @@ protected:
     void resizeGL(int w, int h);
     void paintGL();
     void drawObj();
+    void drawAxes();
     int drawAtom();
     void setupVertexAttribs();
 };

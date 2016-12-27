@@ -142,6 +142,41 @@ void GLWT::resizeGL(int w, int h){
     m_proj.perspective(60, double(w)/h, 0.01, 999999999.0f);
 }
 
+void GLWT::drawAxes(){
+    {
+        double dx=pmc->xmax - pmc->xmin + INT_MAX;
+        m_data.push_back(0); m_data.push_back(0); m_data.push_back(0);
+        m_data.push_back(1); m_data.push_back(1); m_data.push_back(1);
+        m_data.push_back(1); m_data.push_back(0); m_data.push_back(0); m_data.push_back(1);
+        m_data.push_back(pmc->xmax + dx); m_data.push_back(0); m_data.push_back(0);
+        m_data.push_back(1); m_data.push_back(1); m_data.push_back(1);
+        m_data.push_back(1); m_data.push_back(0); m_data.push_back(0); m_data.push_back(1);
+    }
+
+    {
+        double dy=pmc->ymax - pmc->ymin + INT_MAX;
+        m_data.push_back(0); m_data.push_back(0); m_data.push_back(0);
+        m_data.push_back(1); m_data.push_back(1); m_data.push_back(1);
+        m_data.push_back(0); m_data.push_back(1); m_data.push_back(0); m_data.push_back(1);
+        m_data.push_back(0); m_data.push_back(pmc->ymax+dy); m_data.push_back(0);
+        m_data.push_back(1); m_data.push_back(1); m_data.push_back(1);
+        m_data.push_back(0); m_data.push_back(1); m_data.push_back(0); m_data.push_back(1);
+
+    }
+
+    {
+        double dz=pmc->zmax - pmc->zmin + INT_MAX;
+        m_data.push_back(0); m_data.push_back(0); m_data.push_back(0);
+        m_data.push_back(1); m_data.push_back(1); m_data.push_back(1);
+        m_data.push_back(0); m_data.push_back(0); m_data.push_back(1); m_data.push_back(1);
+        m_data.push_back(0); m_data.push_back(0); m_data.push_back(pmc->zmax+dz);
+        m_data.push_back(1); m_data.push_back(1); m_data.push_back(1);
+        m_data.push_back(0); m_data.push_back(0); m_data.push_back(1); m_data.push_back(1);
+
+    }
+}
+
+
 void GLWT::drawObj(){
     if(pmc==NULL) return;
     int lo = pmc->objs.size();
@@ -289,7 +324,8 @@ void GLWT::paintGL(){
 
     m_vbo.bind();
     m_data.clear();
-    int atomNum = drawAtom();
+    drawAxes();
+    drawAtom();
     drawObj();
     m_vbo.allocate(m_data.constData(), m_data.size()*sizeof(GLfloat));
     setupVertexAttribs();
@@ -323,7 +359,8 @@ void GLWT::paintGL(){
     //glDrawArrays(GL_TRIANGLES, 0, m_logo.vertexCount());
     //glDrawArrays(GL_POINTS, 0, atomNum);
     //glDrawArrays(GL_TRIANGLES, atomNum*10, (m_data.size()-atomNum*10)/10);
-    glDrawArrays(GL_TRIANGLES, 0, m_data.size()/10);
+    glDrawArrays(GL_LINES, 0, 6);
+    glDrawArrays(GL_TRIANGLES, 6, (m_data.size()/10) - 6);
     m_program->release();
 }
 
