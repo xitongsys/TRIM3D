@@ -100,6 +100,7 @@ void MainWindow::onObjChangeTW(int row, int col){
     else{
         qtdata.objs[row].objFile=ui->objTW->item(row,col)->text().toStdString();
     }
+    this->on_actionLoad_triggered();
 }
 
 void MainWindow::onEleChangeTW(int row, int col){
@@ -274,6 +275,8 @@ void MainWindow::on_actionOpen_triggered(){
         fd->close();
     }
 
+    this->on_actionLoad_triggered();
+
 }
 
 void MainWindow::on_actionExit_triggered()
@@ -313,7 +316,7 @@ void MainWindow::on_actionLoad_triggered(){
 
     pmc = new MC(qtdata.filePath, "SCOEF.88");
     ui->openGLWidget->pmc = pmc;
-    ui->openGLWidget->resetView();
+    //ui->openGLWidget->resetView();
     ui->openGLWidget->repaint();
 }
 

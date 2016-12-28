@@ -68,9 +68,8 @@ void GLWT::resetView(){
     if(pmc==NULL) return;
     angleX=0; angleY=0; angleZ=0;
     transX = 0; transY = 0;
-    transZ = -(pmc->zmax - pmc->zmin)*5;
-
-    this->repaint();
+    //transZ = -(pmc->zmax - pmc->zmin)*2;
+    transZ = 0;
 }
 
 void GLWT::mouseMoveEvent(QMouseEvent *event){
@@ -338,7 +337,7 @@ void GLWT::paintGL(){
     QMatrix4x4 transM; transM.setToIdentity();
     transM.translate(x,y,z);
 
-    z = -(pmc->zmax) + transZ;
+    z = -(pmc->zmax-pmc->zmin) + transZ;
     m_camera.setToIdentity();
     m_camera.translate(0,0,z);
 
