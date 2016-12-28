@@ -88,10 +88,13 @@ public:
         ifstream fi(path.c_str());
         if(!fi.is_open()) return;
 
-        QDir dir(path.c_str());
-        string abPath=dir.absolutePath().toStdString();
+        QString stmp; stmp = stmp.fromLocal8Bit(path.c_str());
+        QDir dir(stmp);
+        string abPath=dir.absolutePath().toLocal8Bit().toStdString();
         MyPath mp(abPath);
-        QDir::setCurrent(mp.path.c_str());
+        stmp = stmp.fromLocal8Bit(mp.path.c_str());
+
+        QDir::setCurrent(stmp);
 
         char buff[1024];
         while(!fi.eof()){
@@ -147,10 +150,13 @@ public:
         of.open(filePath.c_str());
         if(!of.is_open()) return;
 
-        QDir dir(filePath.c_str());
-        string abPath=dir.absolutePath().toStdString();
+
+        QString stmp; stmp=stmp.fromLocal8Bit(filePath.c_str());
+        QDir dir(stmp);
+        string abPath=dir.absolutePath().toLocal8Bit().toStdString();
         MyPath mp(abPath);
-        QDir::setCurrent(mp.path.c_str());
+        stmp = stmp.fromLocal8Bit(mp.path.c_str());
+        QDir::setCurrent(stmp);
         QFile scoefFile(":/SCOEF.88");
         scoefFile.copy("SCOEF.88");
 

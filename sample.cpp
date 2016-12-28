@@ -4,6 +4,8 @@
 #include <climits>
 #include <memory.h>
 #include <sstream>
+#include <iostream>
+using namespace std;
 
 Sample::Sample(){
     xmin = INT_MAX; xmax = INT_MIN;

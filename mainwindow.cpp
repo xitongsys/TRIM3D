@@ -41,10 +41,12 @@ void MainWindow::slot_fresh(int curi, int curj){
     recoilNum = pmc->recoilNum;
     stringstream ss; ss<<ionNum;
     string str; ss>>str;
-    ui->ionNumEd->setText(str.c_str());
+    QString stmp; stmp = stmp.fromLocal8Bit(str.c_str());
+    ui->ionNumEd->setText(stmp);
     ss.clear(); ss.str("");
     ss<<(recoilNum); ss>>str;
-    ui->reNumEd->setText(str.c_str());
+    stmp=stmp.fromLocal8Bit(str.c_str());
+    ui->reNumEd->setText(stmp);
 
     int sum=0, sumcur=0;
     for(int i=0; i<(int)pmc->ions.size(); i++){
@@ -68,7 +70,7 @@ void MainWindow::onObjCellClick(int row, int col){
 }
 
 void MainWindow::onIonChangeTW(int row, int col){
-    string str = ui->ionTW->item(row,col)->text().toStdString();
+    string str = ui->ionTW->item(row,col)->text().toLocal8Bit().toStdString();
     stringstream ss; ss<<str;
     if(row==0){
         if(str.size()==0){
@@ -98,7 +100,7 @@ void MainWindow::onObjChangeTW(int row, int col){
         freshObjTW();
     }
     else{
-        qtdata.objs[row].objFile=ui->objTW->item(row,col)->text().toStdString();
+        qtdata.objs[row].objFile=ui->objTW->item(row,col)->text().toLocal8Bit().toStdString();
     }
     this->on_actionLoad_triggered();
 }
@@ -106,7 +108,7 @@ void MainWindow::onObjChangeTW(int row, int col){
 void MainWindow::onEleChangeTW(int row, int col){
     int oi = ui->objTW->currentRow();
     if(oi>=0 && oi<(int)qtdata.objs.size()){
-        string str = ui->eleTW->item(row,col)->text().toStdString();
+        string str = ui->eleTW->item(row,col)->text().toLocal8Bit().toStdString();
         if(col==0){
             if(str.size()==0){
                 qtdata.objs[oi].delEle(row);
@@ -144,7 +146,8 @@ void MainWindow::freshObjTW(){
     int lo = qtdata.objs.size();
     ui->objTW->setRowCount(lo);
     for(int i=0; i<lo; i++){
-        ui->objTW->setItem(i, 0, new QTableWidgetItem(qtdata.objs[i].objFile.c_str()));
+        QString stmp; stmp = stmp.fromLocal8Bit(qtdata.objs[i].objFile.c_str());
+        ui->objTW->setItem(i, 0, new QTableWidgetItem(stmp));
     }
 }
 
@@ -162,22 +165,28 @@ void MainWindow::freshEleTW(){
         stringstream ss;
         string str;
         str=qtdata.objs[curR].elements[i].name;
-        ui->eleTW->setItem(i, 0, new QTableWidgetItem(str.c_str()));
+        QString stmp; stmp = stmp.fromLocal8Bit(str.c_str());
+        ui->eleTW->setItem(i, 0, new QTableWidgetItem(stmp));
         ss.clear(); ss.str(""); ss<<qtdata.objs[curR].elements[i].Z;
         ss>>str;
-        ui->eleTW->setItem(i, 1, new QTableWidgetItem(str.c_str()));
+        stmp=stmp.fromLocal8Bit(str.c_str());
+        ui->eleTW->setItem(i, 1, new QTableWidgetItem(stmp));
         ss.clear(); ss.str(""); ss<<qtdata.objs[curR].elements[i].M;
         ss>>str;
-        ui->eleTW->setItem(i, 2, new QTableWidgetItem(str.c_str()));
+        stmp=stmp.fromLocal8Bit(str.c_str());
+        ui->eleTW->setItem(i, 2, new QTableWidgetItem(stmp));
         ss.clear(); ss.str(""); ss<<qtdata.objs[curR].elements[i].density;
         ss>>str;
-        ui->eleTW->setItem(i, 3, new QTableWidgetItem(str.c_str()));
+        stmp=stmp.fromLocal8Bit(str.c_str());
+        ui->eleTW->setItem(i, 3, new QTableWidgetItem(stmp));
         ss.clear(); ss.str(""); ss<<qtdata.objs[curR].elements[i].fraction;
         ss>>str;
-        ui->eleTW->setItem(i, 4, new QTableWidgetItem(str.c_str()));
+        stmp=stmp.fromLocal8Bit(str.c_str());
+        ui->eleTW->setItem(i, 4, new QTableWidgetItem(stmp));
         ss.clear(); ss.str(""); ss<<qtdata.objs[curR].elements[i].disE;
         ss>>str;
-        ui->eleTW->setItem(i, 5, new QTableWidgetItem(str.c_str()));
+        stmp=stmp.fromLocal8Bit(str.c_str());
+        ui->eleTW->setItem(i, 5, new QTableWidgetItem(stmp));
     }
 }
 
@@ -186,29 +195,40 @@ void MainWindow::freshIonTW(){
     ui->ionTW->setColumnCount(li);
     for(int i=0; i<li; i++){
         stringstream ss;
-        string str;
+        string str; QString stmp;
         ss<<qtdata.ions[i].name; ss>>str;
-        ui->ionTW->setItem(0,i, new QTableWidgetItem(str.c_str()));
+        stmp=stmp.fromLocal8Bit(str.c_str());
+        ui->ionTW->setItem(0,i, new QTableWidgetItem(stmp));
         ss.clear(); ss.str(""); ss<<qtdata.ions[i].Z; ss>>str;
-        ui->ionTW->setItem(1,i, new QTableWidgetItem(str.c_str()));
+        stmp=stmp.fromLocal8Bit(str.c_str());
+        ui->ionTW->setItem(1,i, new QTableWidgetItem(stmp));
         ss.clear(); ss.str(""); ss<<qtdata.ions[i].M; ss>>str;
-        ui->ionTW->setItem(2,i, new QTableWidgetItem(str.c_str()));
+        stmp=stmp.fromLocal8Bit(str.c_str());
+        ui->ionTW->setItem(2,i, new QTableWidgetItem(stmp));
         ss.clear(); ss.str(""); ss<<qtdata.ions[i].number; ss>>str;
-        ui->ionTW->setItem(3,i, new QTableWidgetItem(str.c_str()));
+        stmp=stmp.fromLocal8Bit(str.c_str());
+        ui->ionTW->setItem(3,i, new QTableWidgetItem(stmp));
         ss.clear(); ss.str(""); ss<<qtdata.ions[i].x; ss>>str;
-        ui->ionTW->setItem(4,i, new QTableWidgetItem(str.c_str()));
+        stmp=stmp.fromLocal8Bit(str.c_str());
+        ui->ionTW->setItem(4,i, new QTableWidgetItem(stmp));
         ss.clear(); ss.str(""); ss<<qtdata.ions[i].y; ss>>str;
-        ui->ionTW->setItem(5,i, new QTableWidgetItem(str.c_str()));
+        stmp=stmp.fromLocal8Bit(str.c_str());
+        ui->ionTW->setItem(5,i, new QTableWidgetItem(stmp));
         ss.clear(); ss.str(""); ss<<qtdata.ions[i].z; ss>>str;
-        ui->ionTW->setItem(6,i, new QTableWidgetItem(str.c_str()));
+        stmp=stmp.fromLocal8Bit(str.c_str());
+        ui->ionTW->setItem(6,i, new QTableWidgetItem(stmp));
         ss.clear(); ss.str(""); ss<<qtdata.ions[i].vx; ss>>str;
-        ui->ionTW->setItem(7,i, new QTableWidgetItem(str.c_str()));
+        stmp=stmp.fromLocal8Bit(str.c_str());
+        ui->ionTW->setItem(7,i, new QTableWidgetItem(stmp));
         ss.clear(); ss.str(""); ss<<qtdata.ions[i].vy; ss>>str;
-        ui->ionTW->setItem(8,i, new QTableWidgetItem(str.c_str()));
+        stmp=stmp.fromLocal8Bit(str.c_str());
+        ui->ionTW->setItem(8,i, new QTableWidgetItem(stmp));
         ss.clear(); ss.str(""); ss<<qtdata.ions[i].vz; ss>>str;
-        ui->ionTW->setItem(9,i, new QTableWidgetItem(str.c_str()));
+        stmp=stmp.fromLocal8Bit(str.c_str());
+        ui->ionTW->setItem(9,i, new QTableWidgetItem(stmp));
         ss.clear(); ss.str(""); ss<<qtdata.ions[i].energy; ss>>str;
-        ui->ionTW->setItem(10,i, new QTableWidgetItem(str.c_str()));
+        stmp=stmp.fromLocal8Bit(str.c_str());
+        ui->ionTW->setItem(10,i, new QTableWidgetItem(stmp));
     }
 }
 
@@ -223,7 +243,7 @@ void MainWindow::onAddObjBt(){
         flist=fd->selectedFiles();
         for(int i=0; i<flist.size(); i++){
             QString fname = flist[i];
-            qtdata.objs.push_back(QTObj(fname.toStdString()));
+            qtdata.objs.push_back(QTObj(fname.toLocal8Bit().toStdString()));
         }
 
         freshObjTW();
@@ -266,7 +286,7 @@ void MainWindow::on_actionOpen_triggered(){
         flist=fd->selectedFiles();
         QString fname = flist[0];
         this->on_actionNew_triggered();
-        qtdata.loadInput(fname.toStdString());
+        qtdata.loadInput(fname.toLocal8Bit().toStdString());
         freshIonTW();
         freshObjTW();
         this->setWindowTitle(fname);
@@ -297,12 +317,13 @@ void MainWindow::on_actionSave_triggered(){
         if(fd->exec()==QDialog::Accepted){
             QStringList flist = fd->selectedFiles();
             QString name = flist[0];
-            qtdata.filePath = name.toStdString();
+            qtdata.filePath = name.toLocal8Bit().toStdString();
             qtdata.saveInput();
         }
     }
 
-    this->setWindowTitle(qtdata.filePath.c_str());
+    QString stmp; stmp=stmp.fromLocal8Bit(qtdata.filePath.c_str());
+    this->setWindowTitle(stmp);
 
 }
 
@@ -343,7 +364,7 @@ void MainWindow::on_actionExport_data_triggered() {
     if(fd->exec()==QDialog::Accepted){
         QStringList flist=fd->selectedFiles();
         QString name=flist[0];
-        qtdata.saveExport(name.toStdString(), pmc);
+        qtdata.saveExport(name.toLocal8Bit().toStdString(), pmc);
     }
 }
 
