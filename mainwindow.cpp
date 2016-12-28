@@ -377,7 +377,10 @@ void MainWindow::on_actionAbout_triggered(){
 
 }
 
-void MainWindow::on_ifShowCB_clicked() { }
+
+void MainWindow::on_ifShowCB_clicked() {
+
+}
 
 void MainWindow::on_minusAtomSizeBT_clicked(){
     ui->openGLWidget->atomSize *= 0.9;
