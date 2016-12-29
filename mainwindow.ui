@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>609</width>
-    <height>687</height>
+    <height>869</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -36,7 +36,7 @@
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <layout class="QGridLayout" name="gridLayout_6">
         <item row="0" column="0">
          <widget class="QTabWidget" name="tabWidget">
@@ -593,9 +593,6 @@
     <addaction name="actionStop"/>
     <addaction name="separator"/>
     <addaction name="actionColor"/>
-    <addaction name="actionAdd_Structure"/>
-    <addaction name="actionAdd_Element"/>
-    <addaction name="actionAdd_Ions"/>
    </widget>
    <widget class="QMenu" name="menuData">
     <property name="title">
