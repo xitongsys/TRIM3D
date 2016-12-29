@@ -401,3 +401,17 @@ void MainWindow::on_actionColor_triggered(){
 void MainWindow::freshGL(){
     ui->openGLWidget->repaint();
 }
+
+void MainWindow::on_zoomInBT_clicked()
+{
+    double dz=(pmc->zmax - pmc->zmin)/10.0;
+    ui->openGLWidget->transZ += dz;
+    ui->openGLWidget->repaint();
+}
+
+void MainWindow::on_zoomOutBT_clicked()
+{
+    double dz=(pmc->zmax - pmc->zmin)/10.0;
+    ui->openGLWidget->transZ -= dz;
+    ui->openGLWidget->repaint();
+}

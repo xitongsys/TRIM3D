@@ -1,22 +1,26 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/new.svg</file>
-        <file>images/open.svg</file>
-        <file>images/pause.svg</file>
-        <file>images/refresh.svg</file>
-        <file>images/start.svg</file>
-        <file>images/exit.svg</file>
-        <file>images/save.svg</file>
-        <file>images/perview.svg</file>
-        <file>images/helpcontent.svg</file>
-        <file>images/add.svg</file>
-        <file>images/load.svg</file>
-        <file>images/stop.svg</file>
         <file>SCOEF.88</file>
-        <file>images/export.svg</file>
-        <file>images/helpabout.svg</file>
         <file>images/ico.png</file>
         <file>images/mainIcon/ico128x128.png</file>
         <file>images/color.png</file>
+        <file>images/export.png</file>
+        <file>images/exit.png</file>
+        <file>images/add.png</file>
+        <file>images/load.png</file>
+        <file>images/helpcontent.png</file>
+        <file>images/helpabout.png</file>
+        <file>images/open.png</file>
+        <file>images/new.png</file>
+        <file>images/refresh.png</file>
+        <file>images/perview.png</file>
+        <file>images/pause.png</file>
+        <file>images/stop.png</file>
+        <file>images/start.png</file>
+        <file>images/save.png</file>
+        <file>images/zoomout.png</file>
+        <file>images/zoomin.png</file>
+        <file>images/atomMinus.png</file>
+        <file>images/atomAdd.png</file>
     </qresource>
 </RCC>

@@ -59,6 +59,10 @@ private slots:
     void on_actionColor_triggered();
 
 
+    void on_zoomInBT_clicked();
+
+    void on_zoomOutBT_clicked();
+
 public:
     void freshGL();
 };
