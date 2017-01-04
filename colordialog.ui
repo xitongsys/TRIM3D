@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>666</width>
+    <width>539</width>
     <height>482</height>
    </rect>
   </property>
@@ -20,50 +20,30 @@
    <item row="0" column="0">
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
-      <widget class="QLabel" name="label">
+      <widget class="QPushButton" name="bgBT">
        <property name="text">
         <string>Background</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QPushButton" name="bgBT">
+    </layout>
+   </item>
+   <item row="2" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="applyBT">
        <property name="text">
-        <string/>
+        <string>Apply</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
-      <widget class="QSpinBox" name="bgASB">
-       <property name="maximum">
-        <number>100</number>
+     <item>
+      <widget class="QDialogButtonBox" name="buttonBox">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
        </property>
-       <property name="singleStep">
-        <number>5</number>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Structure</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QPushButton" name="structureBT">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="2">
-      <widget class="QSpinBox" name="objASB">
-       <property name="maximum">
-        <number>100</number>
-       </property>
-       <property name="singleStep">
-        <number>5</number>
+       <property name="standardButtons">
+        <set>QDialogButtonBox::Ok</set>
        </property>
       </widget>
      </item>
@@ -97,8 +77,13 @@
      </item>
      <item row="1" column="0" colspan="2">
       <widget class="QTableWidget" name="presWT">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
        <attribute name="horizontalHeaderDefaultSectionSize">
-        <number>150</number>
+        <number>100</number>
        </attribute>
        <column>
         <property name="text">
@@ -117,30 +102,14 @@
        </column>
        <column>
         <property name="text">
-         <string>Slice</string>
+         <string>Resolution</string>
         </property>
        </column>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="2" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QPushButton" name="applyBT">
-       <property name="text">
-        <string>Apply</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QDialogButtonBox" name="buttonBox">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="standardButtons">
-        <set>QDialogButtonBox::Ok</set>
-       </property>
+       <column>
+        <property name="text">
+         <string>Transparent</string>
+        </property>
+       </column>
       </widget>
      </item>
     </layout>

@@ -21,14 +21,6 @@ ColorDialog::ColorDialog(QWidget *parent) :
     char buf[1024];
     sprintf(buf, "QPushButton{background-color:rgb(%d,%d,%d);}", r,g,b);
     ui->bgBT->setStyleSheet(buf);
-    ui->bgASB->setValue(pp->pDrawInfo->bgColor.a*100);
-
-    r = pp->pDrawInfo->objColor.r*255;
-    g = pp->pDrawInfo->objColor.g*255;
-    b = pp->pDrawInfo->objColor.b*255;
-    sprintf(buf, "QPushButton{background-color:rgb(%d,%d,%d);}", r,g,b);
-    ui->structureBT->setStyleSheet(buf);
-    ui->objASB->setValue(pp->pDrawInfo->objColor.a*100);
 
     freshPres();
 
@@ -50,9 +42,11 @@ void ColorDialog::freshPres(){
         ss.clear(); ss.str(""); ss<<pp->pDrawInfo->pres[i].col.g; ss>>g;
         ss.clear(); ss.str(""); ss<<pp->pDrawInfo->pres[i].col.b; ss>>b;
         ss.clear(); ss.str(""); ss<<pp->pDrawInfo->pres[i].col.a; ss>>a;
-        str=r + " " + g + " " + b + " " + a;
+        str=r + " " + g + " " + b;
         stmp=stmp.fromLocal8Bit(str.c_str());
         ui->presWT->setItem(i, 1, new QTableWidgetItem(stmp));
+        stmp=stmp.fromLocal8Bit(a.c_str());
+        ui->presWT->setItem(i, 4, new QTableWidgetItem(stmp));
 
 
         ss.clear(); ss.str("");
@@ -92,29 +86,10 @@ void ColorDialog::on_ColorDialog_accepted()
 }
 
 
-void ColorDialog::on_structureBT_clicked()
-{
-    QColor c = QColorDialog::getColor();
-    char buf[1024];
-    sprintf(buf, "QPushButton{background-color:rgb(%d,%d,%d);}", c.red(), c.green(), c.blue());
-    ui->structureBT->setStyleSheet(buf);
-    pp->pDrawInfo->objColor.r = (float)c.red()/255;
-    pp->pDrawInfo->objColor.g = (float)c.green()/255;
-    pp->pDrawInfo->objColor.b = (float)c.blue()/255;
-}
-
 void ColorDialog::on_applyBT_clicked(){
     pp->freshGL();
 }
 
-void ColorDialog::on_bgASB_editingFinished(){
-    pp->pDrawInfo->bgColor.a = float(ui->bgASB->value())/100;
-}
-
-void ColorDialog::on_objASB_editingFinished()
-{
-    pp->pDrawInfo->objColor.a = float(ui->objASB->value())/100;
-}
 
 void ColorDialog::on_addPresBT_clicked()
 {
@@ -149,6 +124,12 @@ void ColorDialog::on_presWT_cellChanged(int row, int column)
         int s; stringstream ss; ss<<str;
         ss>>s;
         pp->pDrawInfo->pres[row].slice = s;
+    }
+
+    if(column==4){
+        double alpha; stringstream ss; ss<<str;
+        ss>>alpha;
+        pp->pDrawInfo->pres[row].col.a = alpha;
     }
 
 }

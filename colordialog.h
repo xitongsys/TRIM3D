@@ -23,23 +23,10 @@ public:
 
 private slots:
     void on_bgBT_clicked();
-
     void on_ColorDialog_accepted();
-
-    void on_structureBT_clicked();
-
     void on_applyBT_clicked();
-
-    void on_bgASB_editingFinished();
-
-    void on_objASB_editingFinished();
-
-
     void on_addPresBT_clicked();
-
     void on_presWT_cellChanged(int row, int column);
-
-
     void on_presWT_cellClicked(int row, int column);
 
 private:

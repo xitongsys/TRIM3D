@@ -84,32 +84,12 @@ public:
         cmdv.push_back(")");
     }
 
-
-    bool check(Atom &atom){
-        vector<string> cmdtmp=cmdv;
-
-        int ln=cmdv.size();
-        for(int i=0; i<ln; i++){
-            stringstream ss;
-            if(cmdtmp[i]=="x"){ss<<atom.pos.x;}
-            else if(cmdtmp[i]=="y"){ss<<atom.pos.y;}
-            else if(cmdtmp[i]=="z"){ss<<atom.pos.z;}
-            else if(cmdtmp[i]=="cosX"){ss<<atom.direct.x;}
-            else if(cmdtmp[i]=="cosY"){ss<<atom.direct.y;}
-            else if(cmdtmp[i]=="cosZ"){ss<<atom.direct.z;}
-            else if(cmdtmp[i]=="M"){ss<<atom.mass;}
-            else if(cmdtmp[i]=="Z"){ss<<atom.Z;}
-            else if(cmdtmp[i]=="T"){ss<<atom.type;}
-            else if(cmdtmp[i]=="E"){ss<<atom.energy;}
-            else if(cmdtmp[i]=="all") return true;
-            ss>>cmdtmp[i];
-        }
-
+    void mid2post(vector<string> &mid, vector<string> &postfix){
         stack<string> sk;
-        vector<string> postfix;
-        ln=cmdtmp.size();
+
+        int ln=mid.size();
         for(int i=0; i<ln; i++){
-            string str=cmdtmp[i];
+            string str=mid[i];
             if(order.find(str)!=order.end()){
                 if(str=="("){
                     sk.push(str);
@@ -119,7 +99,7 @@ public:
                         postfix.push_back(sk.top());
                         sk.pop();
                     }
-                    if(sk.empty() || sk.top()!="(") return false;
+                    if(sk.empty() || sk.top()!="(") return;
                     sk.pop();
                 }
                 else{
@@ -130,20 +110,18 @@ public:
                     sk.push(str);
                 }
 
-
-
             }
 
             else{
                 postfix.push_back(str);
             }
         }
+    }
 
-        if(!sk.empty()) return false;
-
+    bool calPostfix(vector<string> &postfix){
         stack<double> skcal;
 
-        ln=postfix.size();
+        int ln=postfix.size();
         for(int i=0; i<ln; i++){
             string str=postfix[i];
             double v1,v2;
@@ -224,6 +202,51 @@ public:
 
         if(skcal.empty()) return false;
         return skcal.top();
+    }
+
+    bool checkObj(int obj){
+        vector<string> cmdtmp=cmdv;
+
+        int ln=cmdv.size();
+        for(int i=0; i<ln; i++){
+            stringstream ss;
+            if(cmdtmp[i]=="obj"){ss<<obj;ss>>cmdtmp[i];}
+            else if(cmdtmp[i]=="all") return true;
+        }
+
+        vector<string> postfix;
+        mid2post(cmdtmp, postfix);
+
+        return calPostfix(postfix);
+
+    }
+
+
+    bool check(Atom &atom){
+        vector<string> cmdtmp=cmdv;
+
+        int ln=cmdv.size();
+        for(int i=0; i<ln; i++){
+            stringstream ss;
+            if(cmdtmp[i]=="x"){ss<<atom.pos.x;}
+            else if(cmdtmp[i]=="y"){ss<<atom.pos.y;}
+            else if(cmdtmp[i]=="z"){ss<<atom.pos.z;}
+            else if(cmdtmp[i]=="cosX"){ss<<atom.direct.x;}
+            else if(cmdtmp[i]=="cosY"){ss<<atom.direct.y;}
+            else if(cmdtmp[i]=="cosZ"){ss<<atom.direct.z;}
+            else if(cmdtmp[i]=="M"){ss<<atom.mass;}
+            else if(cmdtmp[i]=="Z"){ss<<atom.Z;}
+            else if(cmdtmp[i]=="T"){ss<<atom.type;}
+            else if(cmdtmp[i]=="E"){ss<<atom.energy;}
+            else if(cmdtmp[i]=="all") return true;
+            else{continue;}
+            ss>>cmdtmp[i];
+        }
+
+        vector<string> postfix;
+        mid2post(cmdtmp, postfix);
+
+        return calPostfix(postfix);
 
     }
 
@@ -234,7 +257,6 @@ public:
     vector<Present> pres;
 
     Color4f bgColor;
-    Color4f objColor;
 
     double angleX, angleY, angleZ;
     double transX, transY, transZ;
@@ -250,8 +272,8 @@ public:
     DrawInfo(){
 
         bgColor=Color4f(0.8, 0.8, 0.8, 1.0);
-        objColor=Color4f(0.1, 0.8, 0.8, 0.5);
-        pres.push_back(Present("all",Color4f(randTmp(), randTmp(), randTmp(),1.0),2.0, 4));
+        pres.push_back(Present("Z>0",Color4f(randTmp(), randTmp(), randTmp(),1.0),2.0, 4));
+        pres.push_back(Present("obj>=0",Color4f(randTmp(), randTmp(), randTmp(),0.5),2.0, 4));
 
         angleX = 0; angleY = 0; angleZ=0;
         transX = 0; transY = 0; transZ = 0;

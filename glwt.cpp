@@ -182,77 +182,84 @@ void GLWT::drawObj(){
     if(pmc==NULL) return;
     int lo = pmc->objs.size();
     for(int i=0; i<lo; i++){
-        Object3D *pobj = &(pmc->objs[i]);
-        int lf = pobj->faces.size();
-        for(int i=0; i<lf; i++){
-            int v0 = pobj->faces[i].vertex[0];
-            int n0 = pobj->faces[i].vnorm[0];
+        for(int p=0; p<(int)pres.size(); p++){
+            if(!pres[p].checkObj(i))continue;
 
-            for(int j=2; j<(int)pobj->faces[i].vertex.size(); j++){
-                GLfloat x,y,z;
-                x = pobj->points[v0].x;
-                y = pobj->points[v0].y;
-                z = pobj->points[v0].z;
-                m_data.push_back(x);
-                m_data.push_back(y);
-                m_data.push_back(z);
-                if(n0>=0){
-                    x = pobj->vnorms[n0].x;
-                    y = pobj->vnorms[n0].y;
-                    z = pobj->vnorms[n0].z;
+            Object3D *pobj = &(pmc->objs[i]);
+            int lf = pobj->faces.size();
+            for(int i=0; i<lf; i++){
+                int v0 = pobj->faces[i].vertex[0];
+                int n0 = pobj->faces[i].vnorm[0];
+
+                for(int j=2; j<(int)pobj->faces[i].vertex.size(); j++){
+                    GLfloat x,y,z;
+                    x = pobj->points[v0].x;
+                    y = pobj->points[v0].y;
+                    z = pobj->points[v0].z;
                     m_data.push_back(x);
                     m_data.push_back(y);
                     m_data.push_back(z);
-                }
-                m_data.push_back(objColor.r);
-                m_data.push_back(objColor.g);
-                m_data.push_back(objColor.b);
-                m_data.push_back(objColor.a);
+                    if(n0>=0){
+                        x = pobj->vnorms[n0].x;
+                        y = pobj->vnorms[n0].y;
+                        z = pobj->vnorms[n0].z;
+                        m_data.push_back(x);
+                        m_data.push_back(y);
+                        m_data.push_back(z);
+                    }
+                    m_data.push_back(pres[p].col.r);
+                    m_data.push_back(pres[p].col.g);
+                    m_data.push_back(pres[p].col.b);
+                    m_data.push_back(pres[p].col.a);
 
-                int vi = pobj->faces[i].vertex[j-1];
-                int ni = pobj->faces[i].vnorm[j-1];
-                x = pobj->points[vi].x;
-                y = pobj->points[vi].y;
-                z = pobj->points[vi].z;
-                m_data.push_back(x);
-                m_data.push_back(y);
-                m_data.push_back(z);
-                if(ni>=0){
-                    x = pobj->vnorms[ni].x;
-                    y = pobj->vnorms[ni].y;
-                    z = pobj->vnorms[ni].z;
+                    int vi = pobj->faces[i].vertex[j-1];
+                    int ni = pobj->faces[i].vnorm[j-1];
+                    x = pobj->points[vi].x;
+                    y = pobj->points[vi].y;
+                    z = pobj->points[vi].z;
                     m_data.push_back(x);
                     m_data.push_back(y);
                     m_data.push_back(z);
-                }
-                m_data.push_back(objColor.r);
-                m_data.push_back(objColor.g);
-                m_data.push_back(objColor.b);
-                m_data.push_back(objColor.a);
+                    if(ni>=0){
+                        x = pobj->vnorms[ni].x;
+                        y = pobj->vnorms[ni].y;
+                        z = pobj->vnorms[ni].z;
+                        m_data.push_back(x);
+                        m_data.push_back(y);
+                        m_data.push_back(z);
+                    }
+                    m_data.push_back(pres[p].col.r);
+                    m_data.push_back(pres[p].col.g);
+                    m_data.push_back(pres[p].col.b);
+                    m_data.push_back(pres[p].col.a);
 
 
-                vi = pobj->faces[i].vertex[j];
-                ni = pobj->faces[i].vnorm[j];
-                x = pobj->points[vi].x;
-                y = pobj->points[vi].y;
-                z = pobj->points[vi].z;
-                m_data.push_back(x);
-                m_data.push_back(y);
-                m_data.push_back(z);
-                if(ni>=0){
-                    x = pobj->vnorms[ni].x;
-                    y = pobj->vnorms[ni].y;
-                    z = pobj->vnorms[ni].z;
+                    vi = pobj->faces[i].vertex[j];
+                    ni = pobj->faces[i].vnorm[j];
+                    x = pobj->points[vi].x;
+                    y = pobj->points[vi].y;
+                    z = pobj->points[vi].z;
                     m_data.push_back(x);
                     m_data.push_back(y);
                     m_data.push_back(z);
-                }
-                m_data.push_back(objColor.r);
-                m_data.push_back(objColor.g);
-                m_data.push_back(objColor.b);
-                m_data.push_back(objColor.a);
+                    if(ni>=0){
+                        x = pobj->vnorms[ni].x;
+                        y = pobj->vnorms[ni].y;
+                        z = pobj->vnorms[ni].z;
+                        m_data.push_back(x);
+                        m_data.push_back(y);
+                        m_data.push_back(z);
+                    }
+                    m_data.push_back(pres[p].col.r);
+                    m_data.push_back(pres[p].col.g);
+                    m_data.push_back(pres[p].col.b);
+                    m_data.push_back(pres[p].col.a);
 
+                }
             }
+
+
+
         }
     }
 }
