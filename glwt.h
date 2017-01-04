@@ -12,9 +12,10 @@
 #include <QOpenGLShaderProgram>
 #include "logo.h"
 #include "object3d.h"
+#include "geometry.h"
 
 
-class GLWT : public QOpenGLWidget, public DrawInfo, QOpenGLFunctions{
+class GLWT : public QOpenGLWidget, public DrawInfo, public Geometry, public QOpenGLFunctions{
 
 public:
     QOpenGLVertexArrayObject m_vao;

@@ -38,7 +38,8 @@ HEADERS  += mainwindow.h \
     drawinfo.h \
     threadcal.h \
     logo.h \
-    colordialog.h
+    colordialog.h \
+    geometry.h
 
 FORMS    += mainwindow.ui \
     colordialog.ui

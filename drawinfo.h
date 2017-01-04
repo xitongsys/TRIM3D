@@ -1,22 +1,10 @@
 #ifndef DRAWINFO_H
 #define DRAWINFO_H
 
+#include "global.h"
 #include <vector>
 using namespace std;
 
-class Color4f{
-
-public:
-    double r,g,b,a;
-
-    Color4f(double rr, double gg, double bb, double aa){
-        r = rr; g = gg; b = bb; a = aa;
-    }
-    Color4f(){
-        r=0; g=0; b=0; a=1;
-    }
-
-};
 
 class DrawInfo{
 public:

@@ -5,6 +5,8 @@
 #include <QtGui>
 #include <QOpenGLShaderProgram>
 #include <iostream>
+
+
 using namespace std;
 
 
@@ -258,13 +260,19 @@ void GLWT::drawObj(){
 int GLWT::drawAtom(){
     mutexLock.lock();
     int num=0;
+    vector<double> mem;
     double R = atomSize;
      for(int i=0; i<(int)pmc->record.size(); i++){
          for(int j=0; j<(int)pmc->record[i].size(); j++){
             int Z = pmc->record[i][j].Z;
-            double x = pmc->record[i][j].pos.x;
-            double y = pmc->record[i][j].pos.y;
-            double z = pmc->record[i][j].pos.z;
+
+            drawSphere(mem, pmc->record[i][j].pos, AtomColorTable[Z], R, 6);
+            for(int k=0; k<mem.size(); k++){
+                m_data.push_back(mem[k]);
+            }
+
+
+/*
 
             for(int angle=0; angle<360; angle+=90){
                 Vect pv[3];
@@ -295,12 +303,16 @@ int GLWT::drawAtom(){
                 }
             }
 
+            */
+
             /*
             m_data.push_back(x); m_data.push_back(y); m_data.push_back(z);
             m_data.push_back(1); m_data.push_back(0); m_data.push_back(0);
             m_data.push_back(AtomColorTable[Z].r); m_data.push_back(AtomColorTable[Z].g);
             m_data.push_back(AtomColorTable[Z].b); m_data.push_back(AtomColorTable[Z].a);
             */
+
+
             num++;
          }
      }
