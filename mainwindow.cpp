@@ -383,12 +383,10 @@ void MainWindow::on_ifShowCB_clicked() {
 }
 
 void MainWindow::on_minusAtomSizeBT_clicked(){
-    ui->openGLWidget->atomSize *= 0.9;
     ui->openGLWidget->repaint();
 }
 
 void MainWindow::on_addAtomSizeBT_clicked(){
-    ui->openGLWidget->atomSize *= 1.1;
     ui->openGLWidget->repaint();
 }
 

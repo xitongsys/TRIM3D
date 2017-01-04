@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "mainwindow.h"
+#include <QTableWidgetItem>
 
 namespace Ui {
 class ColorDialog;
@@ -18,15 +19,12 @@ public:
 public:
     explicit ColorDialog(QWidget *parent = 0);
     ~ColorDialog();
+    void freshPres();
 
 private slots:
     void on_bgBT_clicked();
 
     void on_ColorDialog_accepted();
-
-    void on_atomZCB_activated(const QString &arg1);
-
-    void on_atomColorBT_clicked();
 
     void on_structureBT_clicked();
 
@@ -36,7 +34,13 @@ private slots:
 
     void on_objASB_editingFinished();
 
-    void on_atomASB_editingFinished();
+
+    void on_addPresBT_clicked();
+
+    void on_presWT_cellChanged(int row, int column);
+
+
+    void on_presWT_cellClicked(int row, int column);
 
 private:
     Ui::ColorDialog *ui;

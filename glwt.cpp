@@ -261,59 +261,24 @@ int GLWT::drawAtom(){
     mutexLock.lock();
     int num=0;
     vector<double> mem;
-    double R = atomSize;
      for(int i=0; i<(int)pmc->record.size(); i++){
          for(int j=0; j<(int)pmc->record[i].size(); j++){
-            int Z = pmc->record[i][j].Z;
+             for(int p=0; p<pres.size(); p++){
+                 if(pres[p].check(pmc->record[i][j])){
+                     int Z = pmc->record[i][j].Z;
 
-            drawSphere(mem, pmc->record[i][j].pos, AtomColorTable[Z], R, 6);
-            for(int k=0; k<mem.size(); k++){
-                m_data.push_back(mem[k]);
-            }
-
-
-/*
-
-            for(int angle=0; angle<360; angle+=90){
-                Vect pv[3];
-                Vect nv(1,1,1);
-                pv[0]=Vect(R,0,0); pv[1]=Vect(0,R,0); pv[2]=Vect(0,0,R);
-                for(int k=0; k<3; k++){
-                    double angleTmp = float(angle)/180.0*CPI;
-                    pv[k].Rz(angleTmp);
-                    nv.Rz(angleTmp);
-                    m_data.push_back(pv[k].x+x); m_data.push_back(pv[k].y+y); m_data.push_back(pv[k].z+z);
-                    m_data.push_back(nv.x); m_data.push_back(nv.y); m_data.push_back(nv.z);
-                    m_data.push_back(AtomColorTable[Z].r); m_data.push_back(AtomColorTable[Z].g);
-                    m_data.push_back(AtomColorTable[Z].b); m_data.push_back(AtomColorTable[Z].a);
-                }
-            }
-            for(int angle=0; angle<360; angle+=90){
-                Vect pv[3];
-                Vect nv(1,1,-1);
-                pv[0]=Vect(R,0,0); pv[1]=Vect(0,0,-R); pv[2]=Vect(0,R,0);
-                for(int k=0; k<3; k++){
-                    double angleTmp = float(angle)/180.0*CPI;
-                    pv[k].Rz(angleTmp);
-                    nv.Rz(angleTmp);
-                    m_data.push_back(pv[k].x+x); m_data.push_back(pv[k].y+y); m_data.push_back(pv[k].z+z);
-                    m_data.push_back(nv.x); m_data.push_back(nv.y); m_data.push_back(nv.z);
-                    m_data.push_back(AtomColorTable[Z].r); m_data.push_back(AtomColorTable[Z].g);
-                    m_data.push_back(AtomColorTable[Z].b); m_data.push_back(AtomColorTable[Z].a);
-                }
-            }
-
-            */
-
-            /*
-            m_data.push_back(x); m_data.push_back(y); m_data.push_back(z);
-            m_data.push_back(1); m_data.push_back(0); m_data.push_back(0);
-            m_data.push_back(AtomColorTable[Z].r); m_data.push_back(AtomColorTable[Z].g);
-            m_data.push_back(AtomColorTable[Z].b); m_data.push_back(AtomColorTable[Z].a);
-            */
+                     drawSphere(mem, pmc->record[i][j].pos, pres[p].col, pres[p].R, pres[p].slice);
+                     for(int k=0; k<mem.size(); k++){
+                         m_data.push_back(mem[k]);
+                     }
 
 
-            num++;
+                     num++;
+
+                 }
+
+             }
+
          }
      }
     mutexLock.unlock();

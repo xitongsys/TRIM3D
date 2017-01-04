@@ -3,6 +3,7 @@
 #include <QColorDialog>
 #include "mainwindow.h"
 #include <iostream>
+#include <sstream>
 using namespace std;
 
 ColorDialog::ColorDialog(QWidget *parent) :
@@ -11,13 +12,6 @@ ColorDialog::ColorDialog(QWidget *parent) :
 {
     pp = (MainWindow*)parent;
     ui->setupUi(this);
-    for(int i=1; i<=99; i++){
-        stringstream ss;
-        ss<<i; string str; ss>>str;
-        ui->atomZCB->addItem(str.c_str());
-    }
-    this->on_atomZCB_activated("1");
-    ui->atomASB->setValue(pp->pDrawInfo->AtomColorTable[1].a*100);
 
 
     int r,g,b;
@@ -36,7 +30,45 @@ ColorDialog::ColorDialog(QWidget *parent) :
     ui->structureBT->setStyleSheet(buf);
     ui->objASB->setValue(pp->pDrawInfo->objColor.a*100);
 
+    freshPres();
 
+}
+
+void ColorDialog::freshPres(){
+    int lp=pp->pDrawInfo->pres.size();
+    ui->presWT->setRowCount(lp);
+    for(int i=0; i<lp; i++){
+        stringstream ss;
+        string str;
+
+        str=pp->pDrawInfo->pres[i].cmd;
+        QString stmp; stmp=stmp.fromLocal8Bit(str.c_str());
+        ui->presWT->setItem(i, 0, new QTableWidgetItem(stmp));
+
+        string r,g,b,a;
+        ss.clear(); ss.str(""); ss<<pp->pDrawInfo->pres[i].col.r; ss>>r;
+        ss.clear(); ss.str(""); ss<<pp->pDrawInfo->pres[i].col.g; ss>>g;
+        ss.clear(); ss.str(""); ss<<pp->pDrawInfo->pres[i].col.b; ss>>b;
+        ss.clear(); ss.str(""); ss<<pp->pDrawInfo->pres[i].col.a; ss>>a;
+        str=r + " " + g + " " + b + " " + a;
+        stmp=stmp.fromLocal8Bit(str.c_str());
+        ui->presWT->setItem(i, 1, new QTableWidgetItem(stmp));
+
+
+        ss.clear(); ss.str("");
+        ss<<pp->pDrawInfo->pres[i].R;
+        ss>>str;
+        stmp=stmp.fromLocal8Bit(str.c_str());
+        ui->presWT->setItem(i, 2, new QTableWidgetItem(stmp));
+
+
+        ss.clear(); ss.str("");
+        ss<<pp->pDrawInfo->pres[i].slice;
+        ss>>str;
+        stmp=stmp.fromLocal8Bit(str.c_str());
+        ui->presWT->setItem(i, 3, new QTableWidgetItem(stmp));
+
+    }
 }
 
 ColorDialog::~ColorDialog()
@@ -59,31 +91,6 @@ void ColorDialog::on_ColorDialog_accepted()
    pp->freshGL();
 }
 
-void ColorDialog::on_atomZCB_activated(const QString &arg1){
-    int r,g,b;
-    stringstream ss; ss<<arg1.toStdString();
-    int Z; ss>>Z;
-    r = pp->pDrawInfo->AtomColorTable[Z].r*255;
-    g = pp->pDrawInfo->AtomColorTable[Z].g*255;
-    b = pp->pDrawInfo->AtomColorTable[Z].b*255;
-    char buf[1024];
-    sprintf(buf, "QPushButton{background-color:rgb(%d,%d,%d);}", r, g, b);
-    ui->atomColorBT->setStyleSheet(buf);
-}
-
-void ColorDialog::on_atomColorBT_clicked(){
-    int Z;
-    string Zs=ui->atomZCB->currentText().toStdString();
-    stringstream ss; ss<<Zs; ss>>Z;
-    QColor c = QColorDialog::getColor();
-    char buf[1024];
-    sprintf(buf, "QPushButton{background-color:rgb(%d,%d,%d);}", c.red(), c.green(), c.blue());
-    ui->atomColorBT->setStyleSheet(buf);
-    pp->pDrawInfo->AtomColorTable[Z].r = (float)c.red()/255;
-    pp->pDrawInfo->AtomColorTable[Z].g = (float)c.green()/255;
-    pp->pDrawInfo->AtomColorTable[Z].b = (float)c.blue()/255;
-
-}
 
 void ColorDialog::on_structureBT_clicked()
 {
@@ -109,9 +116,50 @@ void ColorDialog::on_objASB_editingFinished()
     pp->pDrawInfo->objColor.a = float(ui->objASB->value())/100;
 }
 
-void ColorDialog::on_atomASB_editingFinished()
+void ColorDialog::on_addPresBT_clicked()
 {
-   stringstream ss(ui->atomZCB->currentText().toStdString());
-   int Z; ss>>Z;
-   pp->pDrawInfo->AtomColorTable[Z].a = float(ui->atomASB->value())/100;
+    pp->pDrawInfo->pres.push_back(Present("all", Color4f(1,1,1,1),2.0, 5));
+    freshPres();
+
+}
+
+void ColorDialog::on_presWT_cellChanged(int row, int column)
+{
+    if(column==1) return;
+    string str=ui->presWT->item(row,column)->text().toStdString();
+
+    if(column==0 && str.size()==0){
+        pp->pDrawInfo->pres.erase(pp->pDrawInfo->pres.begin() + row);
+        freshPres();
+        return;
+    }
+
+    if(column==0){
+        pp->pDrawInfo->pres[row].cmd = str;
+        pp->pDrawInfo->pres[row].cmdSplit();
+    }
+
+    if(column==2){
+        double R; stringstream ss; ss<<str;
+        ss>>R;
+        pp->pDrawInfo->pres[row].R = R;
+    }
+
+    if(column==3){
+        int s; stringstream ss; ss<<str;
+        ss>>s;
+        pp->pDrawInfo->pres[row].slice = s;
+    }
+
+}
+
+
+void ColorDialog::on_presWT_cellClicked(int row, int column)
+{
+    if(column==1){
+        QColor c=QColorDialog::getColor();
+        Color4f color((float)c.red()/255, (float)c.green()/255, (float)c.blue()/255, (float)c.alpha()/255);
+        pp->pDrawInfo->pres[row].col = color;
+        freshPres();
+    }
 }

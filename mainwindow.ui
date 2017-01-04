@@ -46,7 +46,7 @@
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <layout class="QGridLayout" name="gridLayout_2">
          <item row="0" column="0">
           <widget class="QPushButton" name="addObjBT">
@@ -101,7 +101,7 @@
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <layout class="QGridLayout" name="gridLayout">
          <item row="0" column="1">
           <spacer name="horizontalSpacer">
@@ -217,7 +217,7 @@
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <layout class="QGridLayout" name="gridLayout_3">
          <item row="0" column="0">
           <widget class="QPushButton" name="addIonBT">
@@ -375,7 +375,7 @@
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <layout class="QGridLayout" name="gridLayout_4">
          <item row="0" column="0">
           <widget class="QCheckBox" name="ifShowCB">
@@ -485,26 +485,6 @@
      </widget>
     </item>
    </layout>
-   <zorder>objTW</zorder>
-   <zorder>eleTW</zorder>
-   <zorder>ionTW</zorder>
-   <zorder>addObjBT</zorder>
-   <zorder>addEleBT</zorder>
-   <zorder>addIonBT</zorder>
-   <zorder>openGLWidget</zorder>
-   <zorder>progressBar</zorder>
-   <zorder>ifShowCB</zorder>
-   <zorder>ionNumEd</zorder>
-   <zorder>label_2</zorder>
-   <zorder>reNumEd</zorder>
-   <zorder>label_3</zorder>
-   <zorder>minusAtomSizeBT</zorder>
-   <zorder>addAtomSizeBT</zorder>
-   <zorder>eleTW</zorder>
-   <zorder>horizontalSpacer</zorder>
-   <zorder>horizontalSpacer_2</zorder>
-   <zorder>horizontalSpacer_3</zorder>
-   <zorder>horizontalSpacer_4</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -512,7 +492,7 @@
      <x>0</x>
      <y>0</y>
      <width>907</width>
-     <height>23</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -674,7 +654,7 @@
      <normaloff>:/images/color.png</normaloff>:/images/color.png</iconset>
    </property>
    <property name="text">
-    <string>Color</string>
+    <string>Color and Display</string>
    </property>
   </action>
  </widget>
