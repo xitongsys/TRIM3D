@@ -9,6 +9,7 @@
 #include "atom.h"
 #include <iostream>
 #include <map>
+#include <set>
 
 using namespace std;
 
@@ -24,6 +25,7 @@ public:
     vector<string> cmdv;
     map<string, int> order;
 
+
     Present(string cmdd, Color4f coll, double RR, int slicee){
         order["("]=7; order[")"]=7;
         order["*"]=6; order["/"]=6; order["%"]=6;
@@ -32,8 +34,6 @@ public:
         order["=="]=3;order["!="]=3;
         order["&&"]=2;
         order["||"]=1;
-
-
 
         cmd = cmdd; col=coll; R=RR; slice=slicee;
         cmdSplit();
@@ -195,7 +195,8 @@ public:
 
             else{
                 stringstream ss; ss<<str;
-                double val; ss>>val;
+                double val;
+                if(!(ss>>val))return false;
                 skcal.push(val);
             }
         }
@@ -211,7 +212,7 @@ public:
         for(int i=0; i<ln; i++){
             stringstream ss;
             if(cmdtmp[i]=="obj"){ss<<obj;ss>>cmdtmp[i];}
-            else if(cmdtmp[i]=="all") return true;
+            else if(cmdtmp[i]=="allobj") return true;
         }
 
         vector<string> postfix;
@@ -238,7 +239,7 @@ public:
             else if(cmdtmp[i]=="Z"){ss<<atom.Z;}
             else if(cmdtmp[i]=="T"){ss<<atom.type;}
             else if(cmdtmp[i]=="E"){ss<<atom.energy;}
-            else if(cmdtmp[i]=="all") return true;
+            else if(cmdtmp[i]=="allatom") return true;
             else{continue;}
             ss>>cmdtmp[i];
         }

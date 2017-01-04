@@ -94,7 +94,7 @@ void ColorDialog::on_applyBT_clicked(){
 
 void ColorDialog::on_addPresBT_clicked()
 {
-    pp->pDrawInfo->pres.push_back(Present("all", Color4f(1,1,1,1),2.0, 5));
+    pp->pDrawInfo->pres.push_back(Present("allatom", Color4f(1,1,1,1),2.0, 5));
     freshPres();
 
 }
@@ -144,7 +144,8 @@ void ColorDialog::on_presWT_cellClicked(int row, int column)
         QColor c=QColorDialog::getColor(QColor(r,g,b));
         if(!c.isValid()) return;
 
-        Color4f color((float)c.red()/255, (float)c.green()/255, (float)c.blue()/255, (float)c.alpha()/255);
+        double alpha=pp->pDrawInfo->pres[row].col.a;
+        Color4f color((float)c.red()/255, (float)c.green()/255, (float)c.blue()/255, alpha);
         pp->pDrawInfo->pres[row].col = color;
         freshPres();
     }
