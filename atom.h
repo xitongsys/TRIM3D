@@ -5,7 +5,7 @@
 #include "phyconst.h"
 
 
-enum IonType{ INCIDENT, RECOIL, TARGET};
+enum IonType{ INCIDENT=0, RECOIL=1, TARGET=2, VACANCY=3, SPUTTER=4};
 
 class Atom{
 public:

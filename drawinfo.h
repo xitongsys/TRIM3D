@@ -8,6 +8,7 @@
 #include <stack>
 #include "atom.h"
 #include <iostream>
+#include <map>
 
 using namespace std;
 
@@ -21,26 +22,64 @@ public:
     int slice;
     Color4f col;
     vector<string> cmdv;
-
-
+    map<string, int> order;
 
     Present(string cmdd, Color4f coll, double RR, int slicee){
+        order["("]=7; order[")"]=7;
+        order["*"]=6; order["/"]=6; order["%"]=6;
+        order["+"]=5; order["-"]=5;
+        order[">"]=4;order["<"]=4;order["<="]=4;order[">="]=4;
+        order["=="]=3;order["!="]=3;
+        order["&&"]=2;
+        order["||"]=1;
+
+
+
         cmd = cmdd; col=coll; R=RR; slice=slicee;
         cmdSplit();
     }
 
-    void cmdSplit(){
+    void cmdSplit(){       
+        string cmdtmp;
+        int ln = cmd.size();
+        for(int i=0; i<ln; i++){
+            if(cmd[i]!=' ' && cmd[i]!='\t'){
+                cmdtmp.push_back(cmd[i]);
+            }
+        }
+        cmd=cmdtmp;
+
         cmdv.clear();
         cmdv.push_back("(");
+
         int i=0, j=0;
-        int ln=cmd.size();
+        ln=cmd.size();
+        cmd += " ";
+
+        string str1,str2,str3;
+
         while(i<ln && j<ln){
-            while(i<ln && cmd[i]==' ')i++;
             j=i;
-            while(j<ln && cmd[j]!=' ')j++;
-            string tmp=cmd.substr(i, j-i);
-            if(tmp.size()>0) cmdv.push_back(tmp);
-            i=j;
+            while(j<ln){
+                str1=cmd.substr(j, 1); str2=cmd.substr(j,2);
+                if(order.find(str1)!=order.end() || order.find(str2)!=order.end())break;
+                j++;
+            }
+            str3=cmd.substr(i, j-i);
+            if(str3.size()>0) cmdv.push_back(str3);
+
+            if(order.find(str2)!=order.end()){
+                cmdv.push_back(str2);
+                i=j+2;
+            }
+            else if(order.find(str1)!=order.end()){
+                cmdv.push_back(str1);
+                i=j+1;
+            }
+            else{
+                i=j;
+            }
+
         }
         cmdv.push_back(")");
     }
@@ -71,24 +110,30 @@ public:
         ln=cmdtmp.size();
         for(int i=0; i<ln; i++){
             string str=cmdtmp[i];
-            if(str=="||" || str=="&&" || str=="==" || str==">" || str=="<" || str==">=" || str=="<=" || str=="!="){
-                while(!sk.empty() && sk.top()!="("){
-                    postfix.push_back(sk.top());
+            if(order.find(str)!=order.end()){
+                if(str=="("){
+                    sk.push(str);
+                }
+                else if(str==")"){
+                    while(!sk.empty() && sk.top()!="("){
+                        postfix.push_back(sk.top());
+                        sk.pop();
+                    }
+                    if(sk.empty() || sk.top()!="(") return false;
                     sk.pop();
                 }
-                sk.push(str);
-            }
-            else if(str=="("){
-                sk.push(str);
-            }
-            else if(str==")"){
-                while(!sk.empty() && sk.top()!="("){
-                    postfix.push_back(sk.top());
-                    sk.pop();
+                else{
+                    while(!sk.empty() && order[sk.top()]>order[str] && sk.top()!="("){
+                        postfix.push_back(sk.top());
+                        sk.pop();
+                    }
+                    sk.push(str);
                 }
-                if(sk.empty() || sk.top()!="(") return false;
-                sk.pop();
+
+
+
             }
+
             else{
                 postfix.push_back(str);
             }
@@ -149,6 +194,27 @@ public:
                 skcal.push(v1 != v2);
 
             }
+            else if(str=="+"){
+                v2=skcal.top(); skcal.pop();
+                v1=skcal.top(); skcal.pop();
+                skcal.push(v1 + v2);
+            }
+            else if(str=="-"){
+                v2=skcal.top(); skcal.pop();
+                v1=skcal.top(); skcal.pop();
+                skcal.push(v1 - v2);
+            }
+            else if(str=="*"){
+                v2=skcal.top(); skcal.pop();
+                v1=skcal.top(); skcal.pop();
+                skcal.push(v1 * v2);
+            }
+            else if(str=="/"){
+                v2=skcal.top(); skcal.pop();
+                v1=skcal.top(); skcal.pop();
+                skcal.push(v1 / v2);
+            }
+
             else{
                 stringstream ss; ss<<str;
                 double val; ss>>val;
@@ -156,6 +222,7 @@ public:
             }
         }
 
+        if(skcal.empty()) return false;
         return skcal.top();
 
     }

@@ -102,6 +102,9 @@ int MC::runOne(int i, int j){
                    record[rc].push_back(recoil);
                    recoilNum++;
 
+                   Atom vacancy(objs[oi].elements[ei].name, Z2, M2, ion.pos, Vect(0,0,0), 0, VACANCY);
+                   record[rc].push_back(vacancy);
+
                }
 
                record[rc][k].pos.x += LS*record[rc][k].direct.x;
@@ -130,6 +133,9 @@ int MC::runOne(int i, int j){
                    }
                }
                if(pos.dis(nP)>=INT_MAX){
+                   if(record[rc][k].type==RECOIL){
+                       record[rc][k].type=SPUTTER;
+                   }
                    k++;
                    break;
                }
