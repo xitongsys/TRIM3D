@@ -603,7 +603,7 @@
      <normaloff>:/images/color.png</normaloff>:/images/color.png</iconset>
    </property>
    <property name="text">
-    <string>Color and Display</string>
+    <string>Color </string>
    </property>
   </action>
  </widget>

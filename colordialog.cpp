@@ -71,7 +71,8 @@ ColorDialog::~ColorDialog()
 }
 
 void ColorDialog::on_bgBT_clicked(){
-    QColor c = QColorDialog::getColor();
+    QColor c=QColorDialog::getColor(QColor(pp->pDrawInfo->bgColor.r*255, pp->pDrawInfo->bgColor.g*255, pp->pDrawInfo->bgColor.b*255));
+    if(!c.isValid()) return;
     char buf[1024];
     sprintf(buf, "QPushButton{background-color:rgb(%d,%d,%d);}", c.red(), c.green(), c.blue());
     ui->bgBT->setStyleSheet(buf);
@@ -138,7 +139,11 @@ void ColorDialog::on_presWT_cellChanged(int row, int column)
 void ColorDialog::on_presWT_cellClicked(int row, int column)
 {
     if(column==1){
-        QColor c=QColorDialog::getColor();
+        Color4f col=pp->pDrawInfo->pres[row].col;
+        int r=255*col.r, g=255*col.g, b=255*col.b;
+        QColor c=QColorDialog::getColor(QColor(r,g,b));
+        if(!c.isValid()) return;
+
         Color4f color((float)c.red()/255, (float)c.green()/255, (float)c.blue()/255, (float)c.alpha()/255);
         pp->pDrawInfo->pres[row].col = color;
         freshPres();
