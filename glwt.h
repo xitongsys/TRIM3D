@@ -10,7 +10,6 @@
 #include <QOpenGLFunctions>
 #include <QVector>
 #include <QOpenGLShaderProgram>
-#include "logo.h"
 #include "object3d.h"
 #include "geometry.h"
 
@@ -27,8 +26,6 @@ public:
     int m_normalMatrixLoc;
     QMatrix4x4 m_proj, m_camera, m_world;
     QVector<GLfloat> m_data;
-
-    Logo m_logo;
 
 public:
     MC *pmc;
