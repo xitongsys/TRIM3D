@@ -4,6 +4,7 @@
 #include <QMessageBox>
 #include <QColorDialog>
 #include "colordialog.h"
+#include "helpwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -26,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->toolBar->addAction(ui->actionStop);
     ui->toolBar->addAction(ui->actionExport_data);
     ui->toolBar->addAction(ui->actionColor);
+    ui->toolBar->addAction(ui->actionContent);
     ui->toolBar->addAction(ui->actionAbout);
 
     pmc = NULL;
@@ -405,4 +407,9 @@ void MainWindow::on_actionColor_triggered(){
 
 void MainWindow::freshGL(){
     ui->openGLWidget->repaint();
+}
+
+void MainWindow::on_actionContent_triggered()
+{
+    hw.show();
 }

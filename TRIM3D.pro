@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     glwt.cpp \
     threadcal.cpp \
     logo.cpp \
-    colordialog.cpp
+    colordialog.cpp \
+    helpwindow.cpp
 
 HEADERS  += mainwindow.h \
     global.h \
@@ -39,10 +40,12 @@ HEADERS  += mainwindow.h \
     threadcal.h \
     logo.h \
     colordialog.h \
-    geometry.h
+    geometry.h \
+    helpwindow.h
 
 FORMS    += mainwindow.ui \
-    colordialog.ui
+    colordialog.ui \
+    helpwindow.ui
 
 CONFIG += mobility
 MOBILITY = 

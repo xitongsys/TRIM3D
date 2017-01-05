@@ -474,6 +474,7 @@
     <property name="title">
      <string>Help</string>
     </property>
+    <addaction name="actionContent"/>
     <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuFile"/>
@@ -604,6 +605,18 @@
    </property>
    <property name="text">
     <string>Color </string>
+   </property>
+  </action>
+  <action name="actionContent">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/images/helpcontent.svg</normaloff>:/images/helpcontent.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Content</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
    </property>
   </action>
  </widget>

@@ -5,6 +5,7 @@
 #include "mc.h"
 #include "qtdata.h"
 #include "threadcal.h"
+#include "helpwindow.h"
 
 namespace Ui {
 class MainWindow;
@@ -19,6 +20,7 @@ public:
     QTInputData qtdata;
     ThreadCal tc;
     DrawInfo *pDrawInfo;
+    HelpWindow hw;
 
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -58,6 +60,8 @@ private slots:
     void on_addAtomSizeBT_clicked();
     void on_actionColor_triggered();
 
+
+    void on_actionContent_triggered();
 
 public:
     void freshGL();
