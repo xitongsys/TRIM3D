@@ -15,8 +15,9 @@ public:
     volatile int curi, curj;
 
     ThreadCal();
-    void load(MC *pmcp, GLWT *pglp);
+    void load(MC *pm, GLWT *pglp);
     void stop();
+    bool isStop();
 
 
 signals:

@@ -57,6 +57,9 @@ void MainWindow::slot_fresh(int curi, int curj){
     }
     sumcur += curj + 1;
     ui->progressBar->setValue((int)((float)sumcur/sum * 100));
+    if(tc.isStop()){
+        ui->actionRun->setEnabled(true);
+    }
 
 }
 
@@ -351,9 +354,13 @@ void MainWindow::on_actionRun_triggered(){
     }
     tc.load(pmc, ui->openGLWidget);
     tc.start();
+    ui->actionRun->setDisabled(true);
 }
 
-void MainWindow::on_actionStop_triggered(){ tc.stop(); }
+void MainWindow::on_actionStop_triggered(){
+    tc.stop();
+    ui->actionRun->setEnabled(true);
+}
 
 void MainWindow::on_actionExport_data_triggered() {
     if(pmc==NULL) return;
