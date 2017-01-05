@@ -9,7 +9,7 @@ HelpWindow::HelpWindow(QWidget *parent) :
     ui(new Ui::HelpWindow)
 {
     ui->setupUi(this);
-    QFile file("help/help.html");
+    QFile file(":/help/help.html");
     file.open(QIODevice::ReadOnly);
     //string str=file.readAll().toStdString();
 

@@ -19,5 +19,12 @@
         <file>images/mainIcon/ico128x128.png</file>
         <file>images/color.png</file>
         <file>images/logoTitle.png</file>
+        <file>help/color.png</file>
+        <file>help/export.png</file>
+        <file>help/help.html</file>
+        <file>help/input.png</file>
+        <file>help/logoTitle_noborder.png</file>
+        <file>help/mainwindow.png</file>
+        <file>help/structure.png</file>
     </qresource>
 </RCC>
