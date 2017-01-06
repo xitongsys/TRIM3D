@@ -444,7 +444,7 @@
      <x>0</x>
      <y>0</y>
      <width>1016</width>
-     <height>26</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -495,8 +495,10 @@
     </widget>
     <addaction name="actionColor"/>
     <addaction name="menuAxes"/>
+    <addaction name="separator"/>
     <addaction name="actionPerspective"/>
     <addaction name="actionOrthographic"/>
+    <addaction name="separator"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuControl"/>
@@ -642,21 +644,48 @@
    </property>
   </action>
   <action name="actionAxesLine">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>AxesLine</string>
    </property>
   </action>
   <action name="actionAxes_3D">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Axes</string>
    </property>
   </action>
   <action name="actionPerspective">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Perspective</string>
    </property>
   </action>
   <action name="actionOrthographic">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Orthographic</string>
    </property>

@@ -425,12 +425,20 @@ void MainWindow::on_actionAxes_3D_triggered()
 
 void MainWindow::on_actionPerspective_triggered()
 {
-    ui->openGLWidget->projType=1;
+    ui->openGLWidget->projType*=-1;
+    ui->actionPerspective->setDisabled(true);
+    ui->actionOrthographic->setEnabled(true);
+    ui->actionOrthographic->setChecked(false);
+
     ui->openGLWidget->repaint();
 }
 
+
 void MainWindow::on_actionOrthographic_triggered()
 {
-    ui->openGLWidget->projType=-1;
+    ui->openGLWidget->projType*=-1;
+    ui->actionPerspective->setEnabled(true);
+    ui->actionOrthographic->setDisabled(true);
+    ui->actionPerspective->setChecked(false);
     ui->openGLWidget->repaint();
 }
