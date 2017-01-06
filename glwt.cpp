@@ -167,10 +167,10 @@ void GLWT::setProj(int w, int h){
         m_proj.perspective(60, double(w)/h, 0.01, 999999999.0f);
     }
     else{
-        double xL=pmc->xmax - pmc->xmin, yL=pmc->ymax-pmc->ymin, zL=pmc->zmax-pmc->zmin;
-        double y=(pmc->ymax + pmc->ymin)/2;
-        double dYL=(double)h/w*(3*xL + 2*orthDX);
-        m_proj.ortho(pmc->xmin-xL - orthDX ,pmc->xmax+xL + orthDX, y - dYL/2, y + dYL/2, 9999999999.0, -999999999.0);
+        double xL=pmc->xmax - pmc->xmin, yL=pmc->ymax-pmc->ymin;
+        xL=3*xL + 2*orthDX;
+        yL=(double)h/w*xL;
+        m_proj.ortho(-xL/2, xL/2, - yL/2, yL/2, -9999999.0f, 9999999.0f);
     }
 }
 
@@ -397,7 +397,6 @@ void GLWT::paintGL(){
     m_world=rM*m_world;
     angleX=0; angleY=0; angleZ=0;
 
-
     m_program->bind();
     m_program->setUniformValue(m_projMatrixLoc, m_proj);
 
@@ -424,18 +423,13 @@ void GLWT::paintGL(){
         double xL=pmc->xmax-pmc->xmin;
         xL=xL*3 + 2*orthDX;
         double yL=(double)h/w*xL;
-
         transM.translate(-xL/2 + xL/10, -yL/2 + yL/10, 0);
         m_program->setUniformValue(m_mvMatrixLoc, transM*m_world);
-
-
     }
 
     if(ifDrawAxes3D==1){
         glDrawArrays(GL_TRIANGLES, 6, axesPNum-6);
     }
-
-
     m_program->release();
 }
 
