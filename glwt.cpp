@@ -362,7 +362,9 @@ void GLWT::paintGL(){
     //glDrawArrays(GL_TRIANGLES, 0, m_logo.vertexCount());
     //glDrawArrays(GL_POINTS, 0, atomNum);
     //glDrawArrays(GL_TRIANGLES, atomNum*10, (m_data.size()-atomNum*10)/10);
-    glDrawArrays(GL_LINES, 0, 6);
+    if(ifDrawAxesLine==1){
+        glDrawArrays(GL_LINES, 0, 6);
+    }
     glDrawArrays(GL_TRIANGLES, axesPNum, (m_data.size()/10) - axesPNum);
 
     int w=this->width(), h=this->height();
@@ -372,7 +374,10 @@ void GLWT::paintGL(){
     transM.setToIdentity();
     transM.translate(-xL/2+10, -yL/2+10, -zL);
     m_program->setUniformValue(m_mvMatrixLoc, transM*m_world);
-    glDrawArrays(GL_TRIANGLES, 6, axesPNum-6);
+
+    if(ifDrawAxes3D==1){
+        glDrawArrays(GL_TRIANGLES, 6, axesPNum-6);
+    }
 
 
     m_program->release();

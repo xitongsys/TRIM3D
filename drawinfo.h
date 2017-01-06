@@ -263,6 +263,8 @@ public:
     double transX, transY, transZ;
     float MR[16];
 
+    int ifDrawAxesLine, ifDrawAxes3D;
+
     double randTmp(){
         int MOD=1000;
         double rnd = rand()%MOD;
@@ -280,6 +282,8 @@ public:
         transX = 0; transY = 0; transZ = 0;
         memset(MR, 0, sizeof(MR));
         MR[0]=1; MR[5]=1; MR[10]=1; MR[15]=1;
+
+        ifDrawAxes3D=1; ifDrawAxesLine=1;
 
     }
 

@@ -61,6 +61,10 @@ private slots:
 
     void on_actionContent_triggered();
 
+    void on_actionAxesLine_triggered();
+
+    void on_actionAxes_3D_triggered();
+
 public:
     void freshGL();
 };

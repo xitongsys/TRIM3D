@@ -464,8 +464,6 @@
     <addaction name="actionLoad"/>
     <addaction name="actionRun"/>
     <addaction name="actionStop"/>
-    <addaction name="separator"/>
-    <addaction name="actionColor"/>
    </widget>
    <widget class="QMenu" name="menuData">
     <property name="title">
@@ -480,8 +478,27 @@
     <addaction name="actionContent"/>
     <addaction name="actionAbout"/>
    </widget>
+   <widget class="QMenu" name="menuDisplay">
+    <property name="title">
+     <string>Display</string>
+    </property>
+    <widget class="QMenu" name="menuAxes">
+     <property name="title">
+      <string>Axes</string>
+     </property>
+     <property name="icon">
+      <iconset resource="res.qrc">
+       <normaloff>:/images/axes.svg</normaloff>:/images/axes.svg</iconset>
+     </property>
+     <addaction name="actionAxes_3D"/>
+     <addaction name="actionAxesLine"/>
+    </widget>
+    <addaction name="actionColor"/>
+    <addaction name="menuAxes"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuControl"/>
+   <addaction name="menuDisplay"/>
    <addaction name="menuData"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -620,6 +637,16 @@
    </property>
    <property name="shortcut">
     <string>F1</string>
+   </property>
+  </action>
+  <action name="actionAxesLine">
+   <property name="text">
+    <string>AxesLine</string>
+   </property>
+  </action>
+  <action name="actionAxes_3D">
+   <property name="text">
+    <string>Axes</string>
    </property>
   </action>
  </widget>

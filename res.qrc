@@ -30,5 +30,6 @@
         <file>help/macosx.png</file>
         <file>help/linux.png</file>
         <file>help/android.png</file>
+        <file>images/axes.svg</file>
     </qresource>
 </RCC>
