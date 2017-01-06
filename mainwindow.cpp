@@ -422,3 +422,15 @@ void MainWindow::on_actionAxes_3D_triggered()
     ui->openGLWidget->ifDrawAxes3D *= -1;
     ui->openGLWidget->repaint();
 }
+
+void MainWindow::on_actionPerspective_triggered()
+{
+    ui->openGLWidget->projType=1;
+    ui->openGLWidget->repaint();
+}
+
+void MainWindow::on_actionOrthographic_triggered()
+{
+    ui->openGLWidget->projType=-1;
+    ui->openGLWidget->repaint();
+}

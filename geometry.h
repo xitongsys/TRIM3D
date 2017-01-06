@@ -237,32 +237,32 @@ public:
 
     }
 
-    void drawAxes3D(vector<double> &mem){
+    void drawAxes3D(vector<double> &mem, double size){
         Vect pos; Color4f col; double R, H, Ry, Rz;
         int slice=20;
         //x
-        pos=Vect(5, 0, 0); col=Color4f(1, 0, 0, 1);
-        R=2; H=2; Ry=CPI/2; Rz=0;
+        pos=Vect(2*size, 0, 0); col=Color4f(1, 0, 0, 1);
+        R=size; H=size; Ry=CPI/2; Rz=0;
         drawCone(mem, pos,col, R, H, slice, Ry, Rz);
         pos=Vect(0, 0, 0); col=Color4f(1, 0, 0, 1);
-        R=1; H=5; Ry=CPI/2; Rz=0;
+        R=size/2; H=size*2; Ry=CPI/2; Rz=0;
         drawCylinder(mem, pos, col, R, H, slice, Ry, Rz);
 
         //y
-        pos=Vect(0, 5, 0); col=Color4f(0, 1, 0, 1);
-        R=2; H=2; Ry=CPI/2; Rz=CPI/2;
+        pos=Vect(0, 2*size, 0); col=Color4f(0, 1, 0, 1);
+        R=size; H=size; Ry=CPI/2; Rz=CPI/2;
         drawCone(mem, pos,col, R, H, slice, Ry, Rz);
         pos=Vect(0, 0, 0); col=Color4f(0, 1, 0, 1);
-        R=1; H=5; Ry=CPI/2; Rz=CPI/2;
+        R=size/2; H=2*size; Ry=CPI/2; Rz=CPI/2;
         drawCylinder(mem, pos, col, R, H, slice, Ry, Rz);
 
 
         //z
-        pos=Vect(0,0,5); col=Color4f(0,0,1,1);
-        R=2; H=2; Ry=0; Rz=0;
+        pos=Vect(0,0,size*2); col=Color4f(0,0,1,1);
+        R=size; H=size; Ry=0; Rz=0;
         drawCone(mem, pos,col, R, H, slice, Ry, Rz);
         pos=Vect(0,0,0); col=Color4f(0,0,1,1);
-        R=1; H=5; Ry=0; Rz=0;
+        R=size/2; H=size*2; Ry=0; Rz=0;
         drawCylinder(mem, pos, col, R, H, slice, Ry, Rz);
 
 

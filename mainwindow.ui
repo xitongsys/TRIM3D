@@ -495,6 +495,8 @@
     </widget>
     <addaction name="actionColor"/>
     <addaction name="menuAxes"/>
+    <addaction name="actionPerspective"/>
+    <addaction name="actionOrthographic"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuControl"/>
@@ -647,6 +649,16 @@
   <action name="actionAxes_3D">
    <property name="text">
     <string>Axes</string>
+   </property>
+  </action>
+  <action name="actionPerspective">
+   <property name="text">
+    <string>Perspective</string>
+   </property>
+  </action>
+  <action name="actionOrthographic">
+   <property name="text">
+    <string>Orthographic</string>
    </property>
   </action>
  </widget>

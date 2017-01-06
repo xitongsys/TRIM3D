@@ -31,6 +31,7 @@ public:
     MC *pmc;
     int ifshow;
 
+
 public:
     GLWT(QWidget *parent);
 
@@ -40,6 +41,7 @@ public:
     void cleanup();
 
 protected:
+    void setProj(int w, int h);
     void initializeGL();
     void resizeGL(int w, int h);
     void paintGL();

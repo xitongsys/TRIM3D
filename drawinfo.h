@@ -263,7 +263,10 @@ public:
     double transX, transY, transZ;
     float MR[16];
 
+    double orthDX;//for orth projection
+
     int ifDrawAxesLine, ifDrawAxes3D;
+    int projType;
 
     double randTmp(){
         int MOD=1000;
@@ -283,7 +286,10 @@ public:
         memset(MR, 0, sizeof(MR));
         MR[0]=1; MR[5]=1; MR[10]=1; MR[15]=1;
 
+        orthDX=0;
+
         ifDrawAxes3D=1; ifDrawAxesLine=1;
+        projType=1;
 
     }
 

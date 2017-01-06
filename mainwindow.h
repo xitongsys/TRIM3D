@@ -65,6 +65,10 @@ private slots:
 
     void on_actionAxes_3D_triggered();
 
+    void on_actionPerspective_triggered();
+
+    void on_actionOrthographic_triggered();
+
 public:
     void freshGL();
 };

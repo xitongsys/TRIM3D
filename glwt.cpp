@@ -56,13 +56,26 @@ void GLWT::cleanup(){
 void GLWT::wheelEvent(QWheelEvent *event){
     if(pmc==NULL) return;
     int num = event->delta();
-    double dz=(pmc->zmax - pmc->zmin)/10.0;
-    if(num>0){
-        transZ += dz;
+
+    if(projType==1){
+        double dz=(pmc->zmax - pmc->zmin)/10.0;
+        if(num>0){
+            transZ += dz;
+        }
+        else{
+            transZ -= dz;
+        }
     }
-    else{
-        transZ -= dz;
+    else if(projType==-1){
+        double dx=(pmc->xmax - pmc->xmin)/10.0;
+        if(num>0){
+            orthDX -= dx;
+        }
+        else{
+            orthDX += dx;
+        }
     }
+
     this->repaint();
     event->accept();
 }
@@ -140,9 +153,27 @@ void GLWT::setupVertexAttribs(){
 }
 
 void GLWT::resizeGL(int w, int h){
-    m_proj.setToIdentity();
-    m_proj.perspective(60, double(w)/h, 0.01, 999999999.0f);
+    if(pmc==NULL)return;
+    setProj(w,h);
+
 }
+
+
+void GLWT::setProj(int w, int h){
+
+    m_proj.setToIdentity();
+
+    if(projType==1){
+        m_proj.perspective(60, double(w)/h, 0.01, 999999999.0f);
+    }
+    else{
+        double xL=pmc->xmax - pmc->xmin, yL=pmc->ymax-pmc->ymin, zL=pmc->zmax-pmc->zmin;
+        double y=(pmc->ymax + pmc->ymin)/2;
+        double dYL=(double)h/w*(3*xL + 2*orthDX);
+        m_proj.ortho(pmc->xmin-xL - orthDX ,pmc->xmax+xL + orthDX, y - dYL/2, y + dYL/2, 9999999999.0, -999999999.0);
+    }
+}
+
 
 long GLWT::drawAxes(){
     long pnum=0;
@@ -180,7 +211,18 @@ long GLWT::drawAxes(){
     pnum+=6;
 
     vector<double> mem;
-    drawAxes3D(mem);
+    if(projType==1){
+        drawAxes3D(mem,2);
+    }
+    else{
+        int w,h;
+        w=this->width(); h=this->height();
+        double xL=pmc->xmax - pmc->xmin;
+        xL=3*xL + 2*orthDX;
+        double yL=(double)h/w*xL;
+
+        drawAxes3D(mem, min(xL,yL)/30.0);
+    }
     pnum+=mem.size()/10;
     for(int i=0; i<mem.size(); i++){
         m_data.push_back(mem[i]);
@@ -311,16 +353,19 @@ long GLWT::drawAtom(){
 }
 
 void GLWT::paintGL(){
-
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_ALPHA_TEST);
     glEnable(GL_CULL_FACE);
+
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
     glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
 
     if(pmc==NULL) return;
     if(ifshow==0) return;
+
+    setProj(this->width(), this->height());
 
 
     QOpenGLVertexArrayObject::Binder vaoBinder(&m_vao);
@@ -355,25 +400,36 @@ void GLWT::paintGL(){
 
     m_program->bind();
     m_program->setUniformValue(m_projMatrixLoc, m_proj);
+
     m_program->setUniformValue(m_mvMatrixLoc, m_camera*m_world*transM);
     QMatrix3x3 normalMatrix = m_world.normalMatrix();
     m_program->setUniformValue(m_normalMatrixLoc, normalMatrix);
 
-    //glDrawArrays(GL_TRIANGLES, 0, m_logo.vertexCount());
-    //glDrawArrays(GL_POINTS, 0, atomNum);
-    //glDrawArrays(GL_TRIANGLES, atomNum*10, (m_data.size()-atomNum*10)/10);
     if(ifDrawAxesLine==1){
         glDrawArrays(GL_LINES, 0, 6);
     }
     glDrawArrays(GL_TRIANGLES, axesPNum, (m_data.size()/10) - axesPNum);
 
     int w=this->width(), h=this->height();
-    double xL=20*7, yL=(double)h/w*xL;
-    double zL=yL/2/tan(CPI/6);
 
-    transM.setToIdentity();
-    transM.translate(-xL/2+10, -yL/2+10, -zL);
-    m_program->setUniformValue(m_mvMatrixLoc, transM*m_world);
+    if(projType==1){
+        double xL=20*7, yL=(double)h/w*xL;
+        double zL=yL/2/tan(CPI/6);
+        transM.setToIdentity();
+        transM.translate(-xL/2+10, -yL/2+10, -zL);
+        m_program->setUniformValue(m_mvMatrixLoc, transM*m_world);
+    }
+    else{
+        transM.setToIdentity();
+        double xL=pmc->xmax-pmc->xmin;
+        xL=xL*3 + 2*orthDX;
+        double yL=(double)h/w*xL;
+
+        transM.translate(-xL/2 + xL/10, -yL/2 + yL/10, 0);
+        m_program->setUniformValue(m_mvMatrixLoc, transM*m_world);
+
+
+    }
 
     if(ifDrawAxes3D==1){
         glDrawArrays(GL_TRIANGLES, 6, axesPNum-6);
