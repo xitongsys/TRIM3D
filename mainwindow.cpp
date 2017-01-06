@@ -380,7 +380,7 @@ void MainWindow::on_actionExport_data_triggered() {
 void MainWindow::on_actionAbout_triggered(){
     QMessageBox message(this);
     message.setWindowTitle("About TRIM3D");
-    message.setText("Trim3D v1.0\n\n Mady by zxt\nEmail: xitongsys@gmail.com\nSource: https://github.com/xitongsys/TRIM3D");
+    message.setText("Trim3D v1.0\n\n developed by Zhang Xitong\nEmail: xitongsys@gmail.com\n");
     message.setIconPixmap(QPixmap(":/images/mainIcon/ico128x128.png"));
     message.exec();
 
@@ -388,15 +388,12 @@ void MainWindow::on_actionAbout_triggered(){
 
 
 void MainWindow::on_ifShowCB_clicked() {
-
-}
-
-void MainWindow::on_minusAtomSizeBT_clicked(){
-    ui->openGLWidget->repaint();
-}
-
-void MainWindow::on_addAtomSizeBT_clicked(){
-    ui->openGLWidget->repaint();
+    if(ui->ifShowCB->checkState()){
+        ui->openGLWidget->ifshow=1;
+    }
+    else{
+        ui->openGLWidget->ifshow=0;
+    }
 }
 
 void MainWindow::on_actionColor_triggered(){

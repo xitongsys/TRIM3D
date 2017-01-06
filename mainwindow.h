@@ -56,8 +56,6 @@ private slots:
     void on_actionExport_data_triggered();
     void on_actionAbout_triggered();
     void on_ifShowCB_clicked();
-    void on_minusAtomSizeBT_clicked();
-    void on_addAtomSizeBT_clicked();
     void on_actionColor_triggered();
 
 

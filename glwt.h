@@ -29,6 +29,7 @@ public:
 
 public:
     MC *pmc;
+    int ifshow;
 
 public:
     GLWT(QWidget *parent);

@@ -26,5 +26,9 @@
         <file>help/logoTitle_noborder.png</file>
         <file>help/mainwindow.png</file>
         <file>help/structure.png</file>
+        <file>help/windows.png</file>
+        <file>help/macosx.png</file>
+        <file>help/linux.png</file>
+        <file>help/android.png</file>
     </qresource>
 </RCC>

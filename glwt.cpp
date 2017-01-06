@@ -43,6 +43,7 @@ static const char *fragmentShaderSource =
 GLWT::GLWT(QWidget *parent):QOpenGLWidget(parent){
     pmc=NULL;
     this->setMouseTracking(true);
+    ifshow=1;
 }
 
 void GLWT::cleanup(){
@@ -302,6 +303,8 @@ void GLWT::paintGL(){
     glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
 
     if(pmc==NULL) return;
+    if(ifshow==0) return;
+
 
     QOpenGLVertexArrayObject::Binder vaoBinder(&m_vao);
 
