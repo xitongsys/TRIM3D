@@ -144,7 +144,8 @@ void GLWT::resizeGL(int w, int h){
     m_proj.perspective(60, double(w)/h, 0.01, 999999999.0f);
 }
 
-void GLWT::drawAxes(){
+long GLWT::drawAxes(){
+    long pnum=0;
     {
         double dx=pmc->xmax - pmc->xmin + INT_MAX;
         m_data.push_back(0); m_data.push_back(0); m_data.push_back(0);
@@ -176,11 +177,23 @@ void GLWT::drawAxes(){
         m_data.push_back(0); m_data.push_back(0); m_data.push_back(1); m_data.push_back(1);
 
     }
+    pnum+=6;
+
+    vector<double> mem;
+    drawAxes3D(mem);
+    pnum+=mem.size()/10;
+    for(int i=0; i<mem.size(); i++){
+        m_data.push_back(mem[i]);
+    }
+
+    return pnum;
+
+
 }
 
-
-void GLWT::drawObj(){
-    if(pmc==NULL) return;
+long GLWT::drawObj(){
+    long pnum=0;
+    if(pmc==NULL) return 0;
     int lo = pmc->objs.size();
     for(int i=0; i<lo; i++){
         for(int p=0; p<(int)pres.size(); p++){
@@ -256,6 +269,8 @@ void GLWT::drawObj(){
                     m_data.push_back(pres[p].col.b);
                     m_data.push_back(pres[p].col.a);
 
+                    pnum+=3;
+
                 }
             }
 
@@ -263,25 +278,27 @@ void GLWT::drawObj(){
 
         }
     }
+
+    return pnum;
 }
 
-int GLWT::drawAtom(){
+long GLWT::drawAtom(){
+    long pnum=0;
     mutexLock.lock();
-    int num=0;
     vector<double> mem;
      for(int i=0; i<(int)pmc->record.size(); i++){
          for(int j=0; j<(int)pmc->record[i].size(); j++){
              for(int p=0; p<pres.size(); p++){
                  if(pres[p].check(pmc->record[i][j])){
                      int Z = pmc->record[i][j].Z;
-
+                     mem.clear();
                      drawSphere(mem, pmc->record[i][j].pos, pres[p].col, pres[p].R, pres[p].slice);
+                     //drawCylinder(mem, pmc->record[i][j].pos, pres[p].col, pres[p].R, pres[p].R, pres[p].slice, CPI/4, CPI/4);
+                     //drawAxes3D(mem);
                      for(int k=0; k<mem.size(); k++){
                          m_data.push_back(mem[k]);
                      }
-
-
-                     num++;
+                     pnum+=mem.size()/10;
 
                  }
 
@@ -290,7 +307,7 @@ int GLWT::drawAtom(){
          }
      }
     mutexLock.unlock();
-    return num;
+    return pnum;
 }
 
 void GLWT::paintGL(){
@@ -310,9 +327,9 @@ void GLWT::paintGL(){
 
     m_vbo.bind();
     m_data.clear();
-    drawAxes();
-    drawAtom();
-    drawObj();
+    long axesPNum = drawAxes();
+    long atomPNum = drawAtom();
+    long objPNum = drawObj();
     m_vbo.allocate(m_data.constData(), m_data.size()*sizeof(GLfloat));
     setupVertexAttribs();
     m_vbo.release();
@@ -346,7 +363,18 @@ void GLWT::paintGL(){
     //glDrawArrays(GL_POINTS, 0, atomNum);
     //glDrawArrays(GL_TRIANGLES, atomNum*10, (m_data.size()-atomNum*10)/10);
     glDrawArrays(GL_LINES, 0, 6);
-    glDrawArrays(GL_TRIANGLES, 6, (m_data.size()/10) - 6);
+    glDrawArrays(GL_TRIANGLES, axesPNum, (m_data.size()/10) - axesPNum);
+
+    int w=this->width(), h=this->height();
+    double xL=20*7, yL=(double)h/w*xL;
+    double zL=yL/2/tan(CPI/6);
+
+    transM.setToIdentity();
+    transM.translate(-xL/2+10, -yL/2+10, -zL);
+    m_program->setUniformValue(m_mvMatrixLoc, transM*m_world);
+    glDrawArrays(GL_TRIANGLES, 6, axesPNum-6);
+
+
     m_program->release();
 }
 

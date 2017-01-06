@@ -43,9 +43,9 @@ protected:
     void initializeGL();
     void resizeGL(int w, int h);
     void paintGL();
-    void drawObj();
-    void drawAxes();
-    int drawAtom();
+    long drawObj();
+    long drawAxes();
+    long drawAtom();
     void setupVertexAttribs();
 };
 
