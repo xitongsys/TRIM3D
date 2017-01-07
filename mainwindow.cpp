@@ -426,9 +426,10 @@ void MainWindow::on_actionAxes_3D_triggered()
 void MainWindow::on_actionPerspective_triggered()
 {
     ui->openGLWidget->projType*=-1;
+    ui->actionOrthographic->setChecked(false);
     ui->actionPerspective->setDisabled(true);
     ui->actionOrthographic->setEnabled(true);
-    ui->actionOrthographic->setChecked(false);
+
 
     ui->openGLWidget->repaint();
 }
@@ -437,8 +438,36 @@ void MainWindow::on_actionPerspective_triggered()
 void MainWindow::on_actionOrthographic_triggered()
 {
     ui->openGLWidget->projType*=-1;
+    ui->actionPerspective->setChecked(false);
     ui->actionPerspective->setEnabled(true);
     ui->actionOrthographic->setDisabled(true);
-    ui->actionPerspective->setChecked(false);
+
     ui->openGLWidget->repaint();
+}
+
+void MainWindow::on_zoomOut_clicked()
+{
+    if(ui->openGLWidget->projType==1){
+        double dz=(pmc->zmax - pmc->zmin)/10.0;
+        ui->openGLWidget->transZ -= dz;
+    }
+    else if(ui->openGLWidget->projType==-1){
+        double dx=(pmc->xmax - pmc->xmin)/10.0;
+        ui->openGLWidget->orthDX += dx;
+    }
+    ui->openGLWidget->repaint();
+}
+
+void MainWindow::on_zoomIn_clicked()
+{
+    if(ui->openGLWidget->projType==1){
+        double dz=(pmc->zmax - pmc->zmin)/10.0;
+        ui->openGLWidget->transZ += dz;
+    }
+    else if(ui->openGLWidget->projType==-1){
+        double dx=(pmc->xmax - pmc->xmin)/10.0;
+        ui->openGLWidget->orthDX -= dx;
+    }
+    ui->openGLWidget->repaint();
+
 }

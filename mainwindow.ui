@@ -377,6 +377,54 @@
        </widget>
        <widget class="QWidget" name="layoutWidget">
         <layout class="QGridLayout" name="gridLayout_4">
+         <item row="0" column="5">
+          <widget class="QProgressBar" name="progressBar">
+           <property name="minimumSize">
+            <size>
+             <width>200</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="value">
+            <number>0</number>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QLineEdit" name="reNumEd">
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="7">
+          <widget class="QPushButton" name="zoomIn">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="res.qrc">
+             <normaloff>:/images/zoomin.png</normaloff>:/images/zoomin.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0" colspan="8">
+          <widget class="GLWT" name="openGLWidget"/>
+         </item>
+         <item row="0" column="3">
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>Recoils</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLineEdit" name="ionNumEd">
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
          <item row="0" column="0">
           <widget class="QCheckBox" name="ifShowCB">
            <property name="text">
@@ -394,42 +442,16 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="2">
-          <widget class="QLineEdit" name="ionNumEd">
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="3">
-          <widget class="QLabel" name="label_3">
+         <item row="0" column="6">
+          <widget class="QPushButton" name="zoomOut">
            <property name="text">
-            <string>Recoils</string>
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="res.qrc">
+             <normaloff>:/images/zoomout.png</normaloff>:/images/zoomout.png</iconset>
            </property>
           </widget>
-         </item>
-         <item row="0" column="4">
-          <widget class="QLineEdit" name="reNumEd">
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="5">
-          <widget class="QProgressBar" name="progressBar">
-           <property name="minimumSize">
-            <size>
-             <width>200</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="value">
-            <number>0</number>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0" colspan="7">
-          <widget class="GLWT" name="openGLWidget"/>
          </item>
         </layout>
        </widget>

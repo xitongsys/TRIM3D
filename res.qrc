@@ -31,5 +31,7 @@
         <file>help/linux.png</file>
         <file>help/android.png</file>
         <file>images/axes.svg</file>
+        <file>images/zoomout.png</file>
+        <file>images/zoomin.png</file>
     </qresource>
 </RCC>

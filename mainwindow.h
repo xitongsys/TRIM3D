@@ -69,6 +69,10 @@ private slots:
 
     void on_actionOrthographic_triggered();
 
+    void on_zoomOut_clicked();
+
+    void on_zoomIn_clicked();
+
 public:
     void freshGL();
 };

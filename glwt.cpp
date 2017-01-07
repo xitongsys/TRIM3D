@@ -169,6 +169,7 @@ void GLWT::setProj(int w, int h){
     else{
         double xL=pmc->xmax - pmc->xmin, yL=pmc->ymax-pmc->ymin;
         xL=3*xL + 2*orthDX;
+        xL=max(xL,0.0);
         yL=(double)h/w*xL;
         m_proj.ortho(-xL/2, xL/2, - yL/2, yL/2, -9999999.0f, 9999999.0f);
     }
