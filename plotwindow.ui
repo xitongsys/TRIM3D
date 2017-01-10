@@ -14,98 +14,121 @@
    <string>Plot</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout_3">
+   <layout class="QGridLayout" name="gridLayout_5">
     <item row="0" column="0">
-     <widget class="QSplitter" name="splitter">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <widget class="QWidget" name="">
-       <layout class="QGridLayout" name="gridLayout_2">
-        <item row="0" column="0">
-         <widget class="QTableWidget" name="plotTW">
-          <column>
-           <property name="text">
-            <string>Plot</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Color</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Type</string>
-           </property>
-          </column>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QPushButton" name="addPlot">
-          <property name="text">
-           <string>Add Plot</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="">
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="1" column="0">
-         <widget class="QSlider" name="horizontalSlider">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QSlider" name="horizontalSlider_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0" colspan="2">
-         <widget class="PlotWT" name="plotWT" native="true">
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 141, 141);</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </widget>
+     <layout class="QGridLayout" name="gridLayout_4">
+      <item row="0" column="0" colspan="3">
+       <widget class="QSplitter" name="splitter">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <widget class="QWidget" name="layoutWidget">
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0">
+           <widget class="QTableWidget" name="plotPresTW">
+            <column>
+             <property name="text">
+              <string>Plot</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Color</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Transparent</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Type</string>
+             </property>
+            </column>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QPushButton" name="addPlot">
+            <property name="text">
+             <string>Add Plot</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="">
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Slice</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="sliceEd"/>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <layout class="QGridLayout" name="gridLayout">
+            <item row="0" column="0" colspan="2">
+             <widget class="PlotWT" name="plotWT" native="true">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 141, 141);</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QSlider" name="horizontalSlider">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QSlider" name="horizontalSlider_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="exportTextBT">
+        <property name="text">
+         <string>Export Txt</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="exportPicBT">
+        <property name="text">
+         <string>Export Pic</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QPushButton" name="plotBT">
+        <property name="text">
+         <string>Plot</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
-  </widget>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>814</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuExport_Data">
-    <property name="title">
-     <string>Export Data</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuExport_Pic">
-    <property name="title">
-     <string>Export Pic</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuCLose">
-    <property name="title">
-     <string>Close</string>
-    </property>
-   </widget>
-   <addaction name="menuExport_Data"/>
-   <addaction name="menuExport_Pic"/>
-   <addaction name="menuCLose"/>
+   <zorder>splitter</zorder>
+   <zorder>sliceEd</zorder>
+   <zorder>plotWT</zorder>
+   <zorder>label</zorder>
+   <zorder>exportTextBT</zorder>
+   <zorder>exportPicBT</zorder>
+   <zorder>plotBT</zorder>
   </widget>
  </widget>
  <customwidgets>

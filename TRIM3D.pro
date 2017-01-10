@@ -47,7 +47,8 @@ HEADERS  += mainwindow.h \
     logowindow.h \
     plotwindow.h \
     plotwt.h \
-    present.h
+    present.h \
+    plotinfo.h
 
 FORMS    += mainwindow.ui \
     colordialog.ui \

@@ -8,7 +8,7 @@
 #include "plotwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
+    QMainWindow(parent),plotW(this, pmc, &plotInfo),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);

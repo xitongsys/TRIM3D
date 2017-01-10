@@ -7,6 +7,7 @@
 #include "threadcal.h"
 #include "helpwindow.h"
 #include "plotwindow.h"
+#include "plotinfo.h"
 
 namespace Ui {
 class MainWindow;
@@ -23,6 +24,8 @@ public:
     DrawInfo *pDrawInfo;
     HelpWindow hw;
     PlotWindow plotW;
+
+    PlotInfo plotInfo;
 
 public:
     explicit MainWindow(QWidget *parent = 0);
