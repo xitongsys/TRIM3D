@@ -364,18 +364,19 @@ void GLWT::paintGL(){
     glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
 
     if(pmc==NULL) return;
-    if(ifshow==0) return;
 
     setProj(this->width(), this->height());
-
 
     QOpenGLVertexArrayObject::Binder vaoBinder(&m_vao);
 
     m_vbo.bind();
     m_data.clear();
-    long axesPNum = drawAxes();
-    long atomPNum = drawAtom();
-    long objPNum = drawObj();
+    long axesPNum=0, atomPNum=0, objPNum=0;
+    axesPNum = drawAxes();
+    if(ifshow==1){
+        atomPNum = drawAtom();
+    }
+    objPNum = drawObj();
     m_vbo.allocate(m_data.constData(), m_data.size()*sizeof(GLfloat));
     setupVertexAttribs();
     m_vbo.release();
@@ -408,6 +409,7 @@ void GLWT::paintGL(){
     if(ifDrawAxesLine==1){
         glDrawArrays(GL_LINES, 0, 6);
     }
+
     glDrawArrays(GL_TRIANGLES, axesPNum, (m_data.size()/10) - axesPNum);
 
     int w=this->width(), h=this->height();

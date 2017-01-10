@@ -466,7 +466,7 @@
      <x>0</x>
      <y>0</y>
      <width>1016</width>
-     <height>23</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -492,6 +492,7 @@
      <string>Data</string>
     </property>
     <addaction name="actionExport_data"/>
+    <addaction name="actionPlot"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -710,6 +711,11 @@
    </property>
    <property name="text">
     <string>Orthographic</string>
+   </property>
+  </action>
+  <action name="actionPlot">
+   <property name="text">
+    <string>Plot</string>
    </property>
   </action>
  </widget>

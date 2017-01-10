@@ -5,6 +5,7 @@
 #include <QColorDialog>
 #include "colordialog.h"
 #include "helpwindow.h"
+#include "plotwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -394,6 +395,7 @@ void MainWindow::on_ifShowCB_clicked() {
     else{
         ui->openGLWidget->ifshow=0;
     }
+    ui->openGLWidget->repaint();
 }
 
 void MainWindow::on_actionColor_triggered(){
@@ -470,4 +472,9 @@ void MainWindow::on_zoomIn_clicked()
     }
     ui->openGLWidget->repaint();
 
+}
+
+void MainWindow::on_actionPlot_triggered()
+{
+    plotW.show();
 }

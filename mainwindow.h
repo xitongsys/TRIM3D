@@ -6,6 +6,7 @@
 #include "qtdata.h"
 #include "threadcal.h"
 #include "helpwindow.h"
+#include "plotwindow.h"
 
 namespace Ui {
 class MainWindow;
@@ -21,6 +22,7 @@ public:
     ThreadCal tc;
     DrawInfo *pDrawInfo;
     HelpWindow hw;
+    PlotWindow plotW;
 
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -72,6 +74,8 @@ private slots:
     void on_zoomOut_clicked();
 
     void on_zoomIn_clicked();
+
+    void on_actionPlot_triggered();
 
 public:
     void freshGL();
