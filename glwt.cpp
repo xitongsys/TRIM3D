@@ -182,8 +182,7 @@ long GLWT::drawSelectBox(){
     double xL=cd.pmc->xmax-cd.pmc->xmin, yL=cd.pmc->ymax-cd.pmc->ymin, zL=cd.pmc->zmax-cd.pmc->zmin;
     double R=2*sqrt(xL*xL + yL*yL + zL*zL);
 
-    //Vect posL=pp->plotW->posL, posR=pp->plotW->posR;
-    Vect posL(0,0,0), posR(0,0,0);
+    Vect posL=cd.plotInfo.posL, posR=cd.plotInfo.posR;
 
     Vect dir=posR-posL;
     double Ry=0,Rz=0;
@@ -194,7 +193,7 @@ long GLWT::drawSelectBox(){
     drawCylinder(mem, posL, color, R, H, 4, Ry, Rz);
     pnum = mem.size()/10;
     for(int i=0; i<mem.size(); i++){
-        //m_data.push_back(mem[i]);
+        m_data.push_back(mem[i]);
     }
     return pnum;
 

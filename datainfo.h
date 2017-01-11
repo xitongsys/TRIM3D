@@ -7,6 +7,7 @@
 #include "drawinfo.h"
 #include "qtdata.h"
 #include "threadcal.h"
+#include "plotinfo.h"
 
 class DataInfo
 {
@@ -17,6 +18,7 @@ public:
 
     DrawInfo drawInfo;
     QTInputData qtdata;
+    PlotInfo plotInfo;
 
 
 public:

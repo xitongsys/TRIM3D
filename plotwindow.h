@@ -12,7 +12,7 @@ namespace Ui {
 class PlotWindow;
 }
 
-class PlotWindow : public QMainWindow, public PlotInfo
+class PlotWindow : public QMainWindow
 {
     Q_OBJECT
 
@@ -21,6 +21,8 @@ public:
     ~PlotWindow();
 
     MainWindow *pp;
+
+    void freshPW();
 
 private:
     Ui::PlotWindow *ui;
