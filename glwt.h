@@ -12,9 +12,11 @@
 #include <QOpenGLShaderProgram>
 #include "object3d.h"
 #include "geometry.h"
+#include "mainwindow.h"
 
+class MainWindow;
 
-class GLWT : public QOpenGLWidget, public DrawInfo, public Geometry, public QOpenGLFunctions{
+class GLWT : public QOpenGLWidget, public Geometry, public QOpenGLFunctions{
 
 public:
     QOpenGLVertexArrayObject m_vao;
@@ -28,9 +30,7 @@ public:
     QVector<GLfloat> m_data;
 
 public:
-    MC *pmc;
-    int ifshow;
-
+    MainWindow *pp;
 
 public:
     GLWT(QWidget *parent);
@@ -48,6 +48,7 @@ protected:
     long drawObj();
     long drawAxes();
     long drawAtom();
+    long drawSelectBox();
     void setupVertexAttribs();
 };
 

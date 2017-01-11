@@ -6,9 +6,10 @@
 #include "colordialog.h"
 #include "helpwindow.h"
 #include "plotwindow.h"
+#include "datainfo.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),plotW(this, pmc, &plotInfo),
+    QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -31,8 +32,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->toolBar->addAction(ui->actionContent);
     ui->toolBar->addAction(ui->actionAbout);
 
-    pmc = NULL;
-    connect(&tc, SIGNAL(signal_fresh(int,int)), this, SLOT(slot_fresh(int,int)));
+    connect(cd.tc, SIGNAL(signal_fresh(int,int)), this, SLOT(slot_fresh(int,int)));
+
+    plotW=new PlotWindow(this);
 }
 
 void MainWindow::slot_fresh(int curi, int curj){
@@ -40,8 +42,8 @@ void MainWindow::slot_fresh(int curi, int curj){
         ui->openGLWidget->repaint();
     }
     int ionNum=0, recoilNum=0;
-    ionNum = pmc->incidentNum;
-    recoilNum = pmc->recoilNum;
+    ionNum = cd.pmc->incidentNum;
+    recoilNum = cd.pmc->recoilNum;
     stringstream ss; ss<<ionNum;
     string str; ss>>str;
     QString stmp; stmp = stmp.fromLocal8Bit(str.c_str());
@@ -52,15 +54,15 @@ void MainWindow::slot_fresh(int curi, int curj){
     ui->reNumEd->setText(stmp);
 
     int sum=0, sumcur=0;
-    for(int i=0; i<(int)pmc->ions.size(); i++){
-        sum += pmc->ionNum[i];
+    for(int i=0; i<(int)cd.pmc->ions.size(); i++){
+        sum += cd.pmc->ionNum[i];
         if(i<curi){
-            sumcur += pmc->ionNum[i];
+            sumcur += cd.pmc->ionNum[i];
         }
     }
     sumcur += curj + 1;
     ui->progressBar->setValue((int)((float)sumcur/sum * 100));
-    if(tc.isStop()){
+    if(cd.tc->isStop()){
         ui->actionRun->setEnabled(true);
     }
 
@@ -80,116 +82,116 @@ void MainWindow::onIonChangeTW(int row, int col){
     stringstream ss; ss<<str;
     if(row==0){
         if(str.size()==0){
-            qtdata.ions.erase(row + qtdata.ions.begin());
+            cd.qtdata.ions.erase(row + cd.qtdata.ions.begin());
             freshIonTW();
             return;
         }
         else{
-            qtdata.ions[col].name = str;
+            cd.qtdata.ions[col].name = str;
         }
     }
-    else if(row==1){ ss>>qtdata.ions[col].Z; }
-    else if(row==2){ ss>>qtdata.ions[col].M; }
-    else if(row==3){ ss>>qtdata.ions[col].number; }
-    else if(row==4){ ss>>qtdata.ions[col].x; }
-    else if(row==5){ ss>>qtdata.ions[col].y; }
-    else if(row==6){ ss>>qtdata.ions[col].z; }
-    else if(row==7){ ss>>qtdata.ions[col].vx; }
-    else if(row==8){ ss>>qtdata.ions[col].vy; }
-    else if(row==9){ ss>>qtdata.ions[col].vz; }
-    else if(row==10){ ss>>qtdata.ions[col].energy; }
+    else if(row==1){ ss>>cd.qtdata.ions[col].Z; }
+    else if(row==2){ ss>>cd.qtdata.ions[col].M; }
+    else if(row==3){ ss>>cd.qtdata.ions[col].number; }
+    else if(row==4){ ss>>cd.qtdata.ions[col].x; }
+    else if(row==5){ ss>>cd.qtdata.ions[col].y; }
+    else if(row==6){ ss>>cd.qtdata.ions[col].z; }
+    else if(row==7){ ss>>cd.qtdata.ions[col].vx; }
+    else if(row==8){ ss>>cd.qtdata.ions[col].vy; }
+    else if(row==9){ ss>>cd.qtdata.ions[col].vz; }
+    else if(row==10){ ss>>cd.qtdata.ions[col].energy; }
 }
 
 void MainWindow::onObjChangeTW(int row, int col){
     if(ui->objTW->item(row,col)->text().size()==0){
-        qtdata.objs.erase(qtdata.objs.begin() + row);
+        cd.qtdata.objs.erase(cd.qtdata.objs.begin() + row);
         freshObjTW();
     }
     else{
-        qtdata.objs[row].objFile=ui->objTW->item(row,col)->text().toLocal8Bit().toStdString();
+        cd.qtdata.objs[row].objFile=ui->objTW->item(row,col)->text().toLocal8Bit().toStdString();
     }
     this->on_actionLoad_triggered();
 }
 
 void MainWindow::onEleChangeTW(int row, int col){
     int oi = ui->objTW->currentRow();
-    if(oi>=0 && oi<(int)qtdata.objs.size()){
+    if(oi>=0 && oi<(int)cd.qtdata.objs.size()){
         string str = ui->eleTW->item(row,col)->text().toLocal8Bit().toStdString();
         if(col==0){
             if(str.size()==0){
-                qtdata.objs[oi].delEle(row);
+                cd.qtdata.objs[oi].delEle(row);
                 freshEleTW();
                 return;
             }
             else{
-                qtdata.objs[oi].elements[row].name = str;
+                cd.qtdata.objs[oi].elements[row].name = str;
             }
         }
         else if(col==1){
             stringstream ss; ss<<str;
-            ss>>qtdata.objs[oi].elements[row].Z;
+            ss>>cd.qtdata.objs[oi].elements[row].Z;
         }
         else if(col==2){
             stringstream ss; ss<<str;
-            ss>>qtdata.objs[oi].elements[row].M;
+            ss>>cd.qtdata.objs[oi].elements[row].M;
         }
         else if(col==3){
             stringstream ss; ss<<str;
-            ss>>qtdata.objs[oi].elements[row].density;
+            ss>>cd.qtdata.objs[oi].elements[row].density;
         }
         else if(col==4){
             stringstream ss; ss<<str;
-            ss>>qtdata.objs[oi].elements[row].fraction;
+            ss>>cd.qtdata.objs[oi].elements[row].fraction;
         }
         else if(col==5){
             stringstream ss; ss<<str;
-            ss>>qtdata.objs[oi].elements[row].disE;
+            ss>>cd.qtdata.objs[oi].elements[row].disE;
         }
     }
 }
 
 void MainWindow::freshObjTW(){
-    int lo = qtdata.objs.size();
+    int lo = cd.qtdata.objs.size();
     ui->objTW->setRowCount(lo);
     for(int i=0; i<lo; i++){
-        QString stmp; stmp = stmp.fromLocal8Bit(qtdata.objs[i].objFile.c_str());
+        QString stmp; stmp = stmp.fromLocal8Bit(cd.qtdata.objs[i].objFile.c_str());
         ui->objTW->setItem(i, 0, new QTableWidgetItem(stmp));
     }
 }
 
 void MainWindow::freshEleTW(){
     int curR = ui->objTW->currentRow();
-    int lo = qtdata.objs.size();
+    int lo = cd.qtdata.objs.size();
     if(curR<0 || curR>=lo){
         ui->eleTW->setRowCount(0);
         return;
     }
 
-    int le = qtdata.objs[curR].elements.size();
+    int le = cd.qtdata.objs[curR].elements.size();
     ui->eleTW->setRowCount(le);
     for(int i=0; i<le; i++){
         stringstream ss;
         string str;
-        str=qtdata.objs[curR].elements[i].name;
+        str=cd.qtdata.objs[curR].elements[i].name;
         QString stmp; stmp = stmp.fromLocal8Bit(str.c_str());
         ui->eleTW->setItem(i, 0, new QTableWidgetItem(stmp));
-        ss.clear(); ss.str(""); ss<<qtdata.objs[curR].elements[i].Z;
+        ss.clear(); ss.str(""); ss<<cd.qtdata.objs[curR].elements[i].Z;
         ss>>str;
         stmp=stmp.fromLocal8Bit(str.c_str());
         ui->eleTW->setItem(i, 1, new QTableWidgetItem(stmp));
-        ss.clear(); ss.str(""); ss<<qtdata.objs[curR].elements[i].M;
+        ss.clear(); ss.str(""); ss<<cd.qtdata.objs[curR].elements[i].M;
         ss>>str;
         stmp=stmp.fromLocal8Bit(str.c_str());
         ui->eleTW->setItem(i, 2, new QTableWidgetItem(stmp));
-        ss.clear(); ss.str(""); ss<<qtdata.objs[curR].elements[i].density;
+        ss.clear(); ss.str(""); ss<<cd.qtdata.objs[curR].elements[i].density;
         ss>>str;
         stmp=stmp.fromLocal8Bit(str.c_str());
         ui->eleTW->setItem(i, 3, new QTableWidgetItem(stmp));
-        ss.clear(); ss.str(""); ss<<qtdata.objs[curR].elements[i].fraction;
+        ss.clear(); ss.str(""); ss<<cd.qtdata.objs[curR].elements[i].fraction;
         ss>>str;
         stmp=stmp.fromLocal8Bit(str.c_str());
         ui->eleTW->setItem(i, 4, new QTableWidgetItem(stmp));
-        ss.clear(); ss.str(""); ss<<qtdata.objs[curR].elements[i].disE;
+        ss.clear(); ss.str(""); ss<<cd.qtdata.objs[curR].elements[i].disE;
         ss>>str;
         stmp=stmp.fromLocal8Bit(str.c_str());
         ui->eleTW->setItem(i, 5, new QTableWidgetItem(stmp));
@@ -197,42 +199,42 @@ void MainWindow::freshEleTW(){
 }
 
 void MainWindow::freshIonTW(){
-    int li = qtdata.ions.size();
+    int li = cd.qtdata.ions.size();
     ui->ionTW->setColumnCount(li);
     for(int i=0; i<li; i++){
         stringstream ss;
         string str; QString stmp;
-        ss<<qtdata.ions[i].name; ss>>str;
+        ss<<cd.qtdata.ions[i].name; ss>>str;
         stmp=stmp.fromLocal8Bit(str.c_str());
         ui->ionTW->setItem(0,i, new QTableWidgetItem(stmp));
-        ss.clear(); ss.str(""); ss<<qtdata.ions[i].Z; ss>>str;
+        ss.clear(); ss.str(""); ss<<cd.qtdata.ions[i].Z; ss>>str;
         stmp=stmp.fromLocal8Bit(str.c_str());
         ui->ionTW->setItem(1,i, new QTableWidgetItem(stmp));
-        ss.clear(); ss.str(""); ss<<qtdata.ions[i].M; ss>>str;
+        ss.clear(); ss.str(""); ss<<cd.qtdata.ions[i].M; ss>>str;
         stmp=stmp.fromLocal8Bit(str.c_str());
         ui->ionTW->setItem(2,i, new QTableWidgetItem(stmp));
-        ss.clear(); ss.str(""); ss<<qtdata.ions[i].number; ss>>str;
+        ss.clear(); ss.str(""); ss<<cd.qtdata.ions[i].number; ss>>str;
         stmp=stmp.fromLocal8Bit(str.c_str());
         ui->ionTW->setItem(3,i, new QTableWidgetItem(stmp));
-        ss.clear(); ss.str(""); ss<<qtdata.ions[i].x; ss>>str;
+        ss.clear(); ss.str(""); ss<<cd.qtdata.ions[i].x; ss>>str;
         stmp=stmp.fromLocal8Bit(str.c_str());
         ui->ionTW->setItem(4,i, new QTableWidgetItem(stmp));
-        ss.clear(); ss.str(""); ss<<qtdata.ions[i].y; ss>>str;
+        ss.clear(); ss.str(""); ss<<cd.qtdata.ions[i].y; ss>>str;
         stmp=stmp.fromLocal8Bit(str.c_str());
         ui->ionTW->setItem(5,i, new QTableWidgetItem(stmp));
-        ss.clear(); ss.str(""); ss<<qtdata.ions[i].z; ss>>str;
+        ss.clear(); ss.str(""); ss<<cd.qtdata.ions[i].z; ss>>str;
         stmp=stmp.fromLocal8Bit(str.c_str());
         ui->ionTW->setItem(6,i, new QTableWidgetItem(stmp));
-        ss.clear(); ss.str(""); ss<<qtdata.ions[i].vx; ss>>str;
+        ss.clear(); ss.str(""); ss<<cd.qtdata.ions[i].vx; ss>>str;
         stmp=stmp.fromLocal8Bit(str.c_str());
         ui->ionTW->setItem(7,i, new QTableWidgetItem(stmp));
-        ss.clear(); ss.str(""); ss<<qtdata.ions[i].vy; ss>>str;
+        ss.clear(); ss.str(""); ss<<cd.qtdata.ions[i].vy; ss>>str;
         stmp=stmp.fromLocal8Bit(str.c_str());
         ui->ionTW->setItem(8,i, new QTableWidgetItem(stmp));
-        ss.clear(); ss.str(""); ss<<qtdata.ions[i].vz; ss>>str;
+        ss.clear(); ss.str(""); ss<<cd.qtdata.ions[i].vz; ss>>str;
         stmp=stmp.fromLocal8Bit(str.c_str());
         ui->ionTW->setItem(9,i, new QTableWidgetItem(stmp));
-        ss.clear(); ss.str(""); ss<<qtdata.ions[i].energy; ss>>str;
+        ss.clear(); ss.str(""); ss<<cd.qtdata.ions[i].energy; ss>>str;
         stmp=stmp.fromLocal8Bit(str.c_str());
         ui->ionTW->setItem(10,i, new QTableWidgetItem(stmp));
     }
@@ -249,7 +251,7 @@ void MainWindow::onAddObjBt(){
         flist=fd->selectedFiles();
         for(int i=0; i<flist.size(); i++){
             QString fname = flist[i];
-            qtdata.objs.push_back(QTObj(fname.toLocal8Bit().toStdString()));
+            cd.qtdata.objs.push_back(QTObj(fname.toLocal8Bit().toStdString()));
         }
 
         freshObjTW();
@@ -262,20 +264,20 @@ void MainWindow::onAddObjBt(){
 
 void MainWindow::onAddEleBt(){
     int oi = ui->objTW->currentRow();
-    if(oi>=0 && oi<(int)qtdata.objs.size()){
-        qtdata.objs[oi].addEle(QTEle("H",1,1.0087,0.05,1.0,5));
+    if(oi>=0 && oi<(int)cd.qtdata.objs.size()){
+        cd.qtdata.objs[oi].addEle(QTEle("H",1,1.0087,0.05,1.0,5));
         freshEleTW();
     }
 
 }
 
 void MainWindow::onAddIonBt(){
-    qtdata.ions.push_back(QTIon("H", 1, 1.0087, 1, 0,0,0, 0,0,1, 1000));
+    cd.qtdata.ions.push_back(QTIon("H", 1, 1.0087, 1, 0,0,0, 0,0,1, 1000));
     freshIonTW();
 }
 
 void MainWindow::on_actionNew_triggered(){
-    qtdata.clear();
+    cd.qtdata.clear();
     freshEleTW();
     freshIonTW();
     freshObjTW();
@@ -292,7 +294,7 @@ void MainWindow::on_actionOpen_triggered(){
         flist=fd->selectedFiles();
         QString fname = flist[0];
         this->on_actionNew_triggered();
-        qtdata.loadInput(fname.toLocal8Bit().toStdString());
+        cd.qtdata.loadInput(fname.toLocal8Bit().toStdString());
         freshIonTW();
         freshObjTW();
         this->setWindowTitle(fname);
@@ -311,9 +313,9 @@ void MainWindow::on_actionExit_triggered()
 }
 
 void MainWindow::on_actionSave_triggered(){
-    string path = qtdata.filePath;
+    string path = cd.qtdata.filePath;
     if(path.size()!=0){
-        qtdata.saveInput();
+        cd.qtdata.saveInput();
     }
     else{
         QFileDialog *fd=new QFileDialog(this);
@@ -323,50 +325,48 @@ void MainWindow::on_actionSave_triggered(){
         if(fd->exec()==QDialog::Accepted){
             QStringList flist = fd->selectedFiles();
             QString name = flist[0];
-            qtdata.filePath = name.toLocal8Bit().toStdString();
-            qtdata.saveInput();
+            cd.qtdata.filePath = name.toLocal8Bit().toStdString();
+            cd.qtdata.saveInput();
         }
     }
 
-    QString stmp; stmp=stmp.fromLocal8Bit(qtdata.filePath.c_str());
+    QString stmp; stmp=stmp.fromLocal8Bit(cd.qtdata.filePath.c_str());
     this->setWindowTitle(stmp);
 
 }
 
 void MainWindow::on_actionLoad_triggered(){
     this->on_actionSave_triggered();
-    if(pmc!=NULL){
-        ui->openGLWidget->pmc = NULL;
-        delete pmc;
+    if(cd.pmc!=NULL){
+        delete cd.pmc;
     }
-    if(this->qtdata.filePath.size()==0) return;
+    if(cd.qtdata.filePath.size()==0) return;
 
-    pmc = new MC(qtdata.filePath, "SCOEF.88");
-    ui->openGLWidget->pmc = pmc;
+    cd.pmc = new MC(cd.qtdata.filePath, "SCOEF.88");
     //ui->openGLWidget->resetView();
     ui->openGLWidget->repaint();
 }
 
 void MainWindow::on_actionRun_triggered(){
-    if(pmc==NULL) return;
-    tc.stop();
+    if(cd.pmc==NULL) return;
+    cd.tc->stop();
     this->on_actionLoad_triggered();
-    if(pmc->objs.size()<=0 || pmc->ions.size()<=0) return;
-    for(int i=0; i<(int)pmc->objs.size();i++){
-        if(pmc->objs[i].elements.size()<=0)return;
+    if(cd.pmc->objs.size()<=0 || cd.pmc->ions.size()<=0) return;
+    for(int i=0; i<(int)cd.pmc->objs.size();i++){
+        if(cd.pmc->objs[i].elements.size()<=0)return;
     }
-    tc.load(pmc, ui->openGLWidget);
-    tc.start();
+    cd.tc->load(cd.pmc, ui->openGLWidget);
+    cd.tc->start();
     ui->actionRun->setDisabled(true);
 }
 
 void MainWindow::on_actionStop_triggered(){
-    tc.stop();
+    cd.tc->stop();
     ui->actionRun->setEnabled(true);
 }
 
 void MainWindow::on_actionExport_data_triggered() {
-    if(pmc==NULL) return;
+    if(cd.pmc==NULL) return;
     QFileDialog *fd=new QFileDialog(this);
     fd->setWindowTitle("Export data file");
     fd->setNameFilter("all(*.*)");
@@ -374,7 +374,7 @@ void MainWindow::on_actionExport_data_triggered() {
     if(fd->exec()==QDialog::Accepted){
         QStringList flist=fd->selectedFiles();
         QString name=flist[0];
-        qtdata.saveExport(name.toLocal8Bit().toStdString(), pmc);
+        cd.qtdata.saveExport(name.toLocal8Bit().toStdString(), cd.pmc);
     }
 }
 
@@ -390,16 +390,15 @@ void MainWindow::on_actionAbout_triggered(){
 
 void MainWindow::on_ifShowCB_clicked() {
     if(ui->ifShowCB->checkState()){
-        ui->openGLWidget->ifshow=1;
+        cd.drawInfo.ifShow=1;
     }
     else{
-        ui->openGLWidget->ifshow=0;
+        cd.drawInfo.ifShow=0;
     }
     ui->openGLWidget->repaint();
 }
 
 void MainWindow::on_actionColor_triggered(){
-    pDrawInfo=(DrawInfo*)ui->openGLWidget;
     ColorDialog cdlg(this);
     cdlg.exec();
 }
@@ -415,19 +414,19 @@ void MainWindow::on_actionContent_triggered()
 
 void MainWindow::on_actionAxesLine_triggered()
 {
-    ui->openGLWidget->ifDrawAxesLine *=-1;
+    cd.drawInfo.ifDrawAxesLine *=-1;
     ui->openGLWidget->repaint();
 }
 
 void MainWindow::on_actionAxes_3D_triggered()
 {
-    ui->openGLWidget->ifDrawAxes3D *= -1;
+    cd.drawInfo.ifDrawAxes3D *= -1;
     ui->openGLWidget->repaint();
 }
 
 void MainWindow::on_actionPerspective_triggered()
 {
-    ui->openGLWidget->projType*=-1;
+    cd.drawInfo.projType*=-1;
     ui->actionOrthographic->setChecked(false);
     ui->actionPerspective->setDisabled(true);
     ui->actionOrthographic->setEnabled(true);
@@ -439,7 +438,7 @@ void MainWindow::on_actionPerspective_triggered()
 
 void MainWindow::on_actionOrthographic_triggered()
 {
-    ui->openGLWidget->projType*=-1;
+    cd.drawInfo.projType*=-1;
     ui->actionPerspective->setChecked(false);
     ui->actionPerspective->setEnabled(true);
     ui->actionOrthographic->setDisabled(true);
@@ -449,26 +448,26 @@ void MainWindow::on_actionOrthographic_triggered()
 
 void MainWindow::on_zoomOut_clicked()
 {
-    if(ui->openGLWidget->projType==1){
-        double dz=(pmc->zmax - pmc->zmin)/10.0;
-        ui->openGLWidget->transZ -= dz;
+    if(cd.drawInfo.projType==1){
+        double dz=(cd.pmc->zmax - cd.pmc->zmin)/10.0;
+        cd.drawInfo.transZ -= dz;
     }
-    else if(ui->openGLWidget->projType==-1){
-        double dx=(pmc->xmax - pmc->xmin)/10.0;
-        ui->openGLWidget->orthDX += dx;
+    else if(cd.drawInfo.projType==-1){
+        double dx=(cd.pmc->xmax - cd.pmc->xmin)/10.0;
+        cd.drawInfo.orthDX += dx;
     }
     ui->openGLWidget->repaint();
 }
 
 void MainWindow::on_zoomIn_clicked()
 {
-    if(ui->openGLWidget->projType==1){
-        double dz=(pmc->zmax - pmc->zmin)/10.0;
-        ui->openGLWidget->transZ += dz;
+    if(cd.drawInfo.projType==1){
+        double dz=(cd.pmc->zmax - cd.pmc->zmin)/10.0;
+        cd.drawInfo.transZ += dz;
     }
-    else if(ui->openGLWidget->projType==-1){
-        double dx=(pmc->xmax - pmc->xmin)/10.0;
-        ui->openGLWidget->orthDX -= dx;
+    else if(cd.drawInfo.projType==-1){
+        double dx=(cd.pmc->xmax - cd.pmc->xmin)/10.0;
+        cd.drawInfo.orthDX -= dx;
     }
     ui->openGLWidget->repaint();
 
@@ -476,5 +475,5 @@ void MainWindow::on_zoomIn_clicked()
 
 void MainWindow::on_actionPlot_triggered()
 {
-    plotW.show();
+    plotW->show();
 }

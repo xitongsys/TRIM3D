@@ -1,11 +1,11 @@
 #include "mainwindow.h"
 #include <QApplication>
-#include "sample.h"
 #include <QMutex>
 #include "logowindow.h"
-
+#include "datainfo.h"
 
 QMutex mutexLock;
+DataInfo cd;
 
 int main(int argc, char *argv[])
 {

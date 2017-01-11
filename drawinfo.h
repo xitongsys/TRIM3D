@@ -11,9 +11,9 @@
 #include <map>
 #include <set>
 #include "present.h"
+#include <string.h>
+#include <cstdio>
 using namespace std;
-
-
 
 
 class DrawInfo{
@@ -29,6 +29,8 @@ public:
     double orthDX;//for orth projection
 
     int ifDrawAxesLine, ifDrawAxes3D;
+    int ifShow;
+    int ifDrawSelectBox;
     int projType;
 
     double randTmp(){
@@ -52,6 +54,8 @@ public:
         orthDX=0;
 
         ifDrawAxes3D=1; ifDrawAxesLine=1;
+        ifShow=1;
+        ifDrawSelectBox=1;
         projType=1;
 
     }

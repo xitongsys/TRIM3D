@@ -5,6 +5,7 @@
 #include "glwt.h"
 #include "mc.h"
 
+class GLWT;
 
 class ThreadCal : public QThread
 {

@@ -19,6 +19,7 @@ public:
     double fraction;
     double disE;
 
+
     QTEle(string namep, int Zp, double Mp, double densp, double fracp, double disEp){
         name = namep;
         M = Mp;

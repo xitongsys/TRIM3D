@@ -56,6 +56,10 @@ struct Vect{
         return va;
     }
 
+    Vect operator=(Vect v2){
+        x=v2.x; y=v2.y; z=v2.z;
+    }
+
     double dis(Vect& v2){
         return sqrt((x-v2.x)*(x-v2.x) + (y-v2.y)*(y-v2.y) + (z-v2.z)*(z-v2.z));
     }
@@ -125,6 +129,9 @@ public:
 };
 
 extern QMutex mutexLock;
+
+class DataInfo;
+extern DataInfo cd;
 
 #endif // GLOBAL_H
 

@@ -16,7 +16,7 @@ using namespace std;
 
 class PlotInfo{
 public:
-    Vect posL,dirL, posR, dirR;
+    Vect posL,posR;
     vector<Present> plotPresV;
     int slice;
 
@@ -24,7 +24,6 @@ public:
         slice=100;
         plotPresV.clear();
         posL=Vect(0,0,0); posR=Vect(0,0,0);
-        dirL=Vect(1,0,0); dirR=Vect(-1,0,0);
     }
 };
 

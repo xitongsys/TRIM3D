@@ -5,6 +5,7 @@
 #include <QtGui>
 #include <QOpenGLShaderProgram>
 #include <iostream>
+#include "datainfo.h"
 
 
 using namespace std;
@@ -41,9 +42,8 @@ static const char *fragmentShaderSource =
     "}\n";
 
 GLWT::GLWT(QWidget *parent):QOpenGLWidget(parent){
-    pmc=NULL;
     this->setMouseTracking(true);
-    ifshow=1;
+    pp=(MainWindow*)parent;
 }
 
 void GLWT::cleanup(){
@@ -54,25 +54,25 @@ void GLWT::cleanup(){
 }
 
 void GLWT::wheelEvent(QWheelEvent *event){
-    if(pmc==NULL) return;
+    if(cd.pmc==NULL) return;
     int num = event->delta();
 
-    if(projType==1){
-        double dz=(pmc->zmax - pmc->zmin)/10.0;
+    if(cd.drawInfo.projType==1){
+        double dz=(cd.pmc->zmax - cd.pmc->zmin)/10.0;
         if(num>0){
-            transZ += dz;
+            cd.drawInfo.transZ += dz;
         }
         else{
-            transZ -= dz;
+            cd.drawInfo.transZ -= dz;
         }
     }
-    else if(projType==-1){
-        double dx=(pmc->xmax - pmc->xmin)/10.0;
+    else if(cd.drawInfo.projType==-1){
+        double dx=(cd.pmc->xmax - cd.pmc->xmin)/10.0;
         if(num>0){
-            orthDX -= dx;
+            cd.drawInfo.orthDX -= dx;
         }
         else{
-            orthDX += dx;
+            cd.drawInfo.orthDX += dx;
         }
     }
 
@@ -81,15 +81,15 @@ void GLWT::wheelEvent(QWheelEvent *event){
 }
 
 void GLWT::resetView(){
-    if(pmc==NULL) return;
-    angleX=0; angleY=0; angleZ=0;
-    transX = 0; transY = 0;
+    if(cd.pmc==NULL) return;
+    cd.drawInfo.angleX=0; cd.drawInfo.angleY=0; cd.drawInfo.angleZ=0;
+    cd.drawInfo.transX = 0; cd.drawInfo.transY = 0;
     //transZ = -(pmc->zmax - pmc->zmin)*2;
-    transZ = 0;
+    cd.drawInfo.transZ = 0;
 }
 
 void GLWT::mouseMoveEvent(QMouseEvent *event){
-    if(pmc==NULL) return;
+    if(cd.pmc==NULL) return;
     static int x=-1,y=-1;
     int nx = event->x(), ny = event->y();
 
@@ -98,11 +98,11 @@ void GLWT::mouseMoveEvent(QMouseEvent *event){
         return;
     }
     else if(event->buttons()==1){
-        angleX = ny-y;
-        angleY = nx-x;
+        cd.drawInfo.angleX = ny-y;
+        cd.drawInfo.angleY = nx-x;
     }
     else if(event->buttons()==2){
-        angleZ = nx-x;
+        cd.drawInfo.angleZ = nx-x;
     }
 
     this->repaint();
@@ -112,7 +112,7 @@ void GLWT::mouseMoveEvent(QMouseEvent *event){
 
 void GLWT::initializeGL(){
     initializeOpenGLFunctions();
-    glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
+    glClearColor(cd.drawInfo.bgColor.r, cd.drawInfo.bgColor.g, cd.drawInfo.bgColor.b, cd.drawInfo.bgColor.a);
 
     m_program = new QOpenGLShaderProgram;
     m_program->addShaderFromSourceCode(QOpenGLShader::Vertex, vertexShaderSource);
@@ -153,7 +153,7 @@ void GLWT::setupVertexAttribs(){
 }
 
 void GLWT::resizeGL(int w, int h){
-    if(pmc==NULL)return;
+    if(cd.pmc==NULL)return;
     setProj(w,h);
 
 }
@@ -163,12 +163,12 @@ void GLWT::setProj(int w, int h){
 
     m_proj.setToIdentity();
 
-    if(projType==1){
+    if(cd.drawInfo.projType==1){
         m_proj.perspective(60, double(w)/h, 0.01, 999999999.0f);
     }
     else{
-        double xL=pmc->xmax - pmc->xmin, yL=pmc->ymax-pmc->ymin;
-        xL=3*xL + 2*orthDX;
+        double xL=cd.pmc->xmax - cd.pmc->xmin, yL=cd.pmc->ymax-cd.pmc->ymin;
+        xL=3*xL + 2*cd.drawInfo.orthDX;
         xL=max(xL,0.0);
         yL=(double)h/w*xL;
         m_proj.ortho(-xL/2, xL/2, - yL/2, yL/2, -9999999.0f, 9999999.0f);
@@ -176,35 +176,59 @@ void GLWT::setProj(int w, int h){
 }
 
 
+long GLWT::drawSelectBox(){
+    long pnum=0;
+    vector<double> mem;
+    double xL=cd.pmc->xmax-cd.pmc->xmin, yL=cd.pmc->ymax-cd.pmc->ymin, zL=cd.pmc->zmax-cd.pmc->zmin;
+    double R=2*sqrt(xL*xL + yL*yL + zL*zL);
+
+    //Vect posL=pp->plotW->posL, posR=pp->plotW->posR;
+    Vect posL(0,0,0), posR(0,0,0);
+
+    Vect dir=posR-posL;
+    double Ry=0,Rz=0;
+    dir.getAngle(Rz, Ry);
+
+    double H=posL.dis(posR);
+    Color4f color(1,0,0,0.5);
+    drawCylinder(mem, posL, color, R, H, 4, Ry, Rz);
+    pnum = mem.size()/10;
+    for(int i=0; i<mem.size(); i++){
+        //m_data.push_back(mem[i]);
+    }
+    return pnum;
+
+}
+
 long GLWT::drawAxes(){
     long pnum=0;
     {
-        double dx=pmc->xmax - pmc->xmin + INT_MAX;
+        double dx=cd.pmc->xmax - cd.pmc->xmin + INT_MAX;
         m_data.push_back(0); m_data.push_back(0); m_data.push_back(0);
         m_data.push_back(1); m_data.push_back(1); m_data.push_back(1);
         m_data.push_back(1); m_data.push_back(0); m_data.push_back(0); m_data.push_back(1);
-        m_data.push_back(pmc->xmax + dx); m_data.push_back(0); m_data.push_back(0);
+        m_data.push_back(cd.pmc->xmax + dx); m_data.push_back(0); m_data.push_back(0);
         m_data.push_back(1); m_data.push_back(1); m_data.push_back(1);
         m_data.push_back(1); m_data.push_back(0); m_data.push_back(0); m_data.push_back(1);
     }
 
     {
-        double dy=pmc->ymax - pmc->ymin + INT_MAX;
+        double dy=cd.pmc->ymax - cd.pmc->ymin + INT_MAX;
         m_data.push_back(0); m_data.push_back(0); m_data.push_back(0);
         m_data.push_back(1); m_data.push_back(1); m_data.push_back(1);
         m_data.push_back(0); m_data.push_back(1); m_data.push_back(0); m_data.push_back(1);
-        m_data.push_back(0); m_data.push_back(pmc->ymax+dy); m_data.push_back(0);
+        m_data.push_back(0); m_data.push_back(cd.pmc->ymax+dy); m_data.push_back(0);
         m_data.push_back(1); m_data.push_back(1); m_data.push_back(1);
         m_data.push_back(0); m_data.push_back(1); m_data.push_back(0); m_data.push_back(1);
 
     }
 
     {
-        double dz=pmc->zmax - pmc->zmin + INT_MAX;
+        double dz=cd.pmc->zmax - cd.pmc->zmin + INT_MAX;
         m_data.push_back(0); m_data.push_back(0); m_data.push_back(0);
         m_data.push_back(1); m_data.push_back(1); m_data.push_back(1);
         m_data.push_back(0); m_data.push_back(0); m_data.push_back(1); m_data.push_back(1);
-        m_data.push_back(0); m_data.push_back(0); m_data.push_back(pmc->zmax+dz);
+        m_data.push_back(0); m_data.push_back(0); m_data.push_back(cd.pmc->zmax+dz);
         m_data.push_back(1); m_data.push_back(1); m_data.push_back(1);
         m_data.push_back(0); m_data.push_back(0); m_data.push_back(1); m_data.push_back(1);
 
@@ -212,14 +236,14 @@ long GLWT::drawAxes(){
     pnum+=6;
 
     vector<double> mem;
-    if(projType==1){
+    if(cd.drawInfo.projType==1){
         drawAxes3D(mem,2);
     }
     else{
         int w,h;
         w=this->width(); h=this->height();
-        double xL=pmc->xmax - pmc->xmin;
-        xL=3*xL + 2*orthDX;
+        double xL=cd.pmc->xmax - cd.pmc->xmin;
+        xL=3*xL + 2*cd.drawInfo.orthDX;
         double yL=(double)h/w*xL;
 
         drawAxes3D(mem, min(xL,yL)/30.0);
@@ -236,13 +260,13 @@ long GLWT::drawAxes(){
 
 long GLWT::drawObj(){
     long pnum=0;
-    if(pmc==NULL) return 0;
-    int lo = pmc->objs.size();
+    if(cd.pmc==NULL) return 0;
+    int lo = cd.pmc->objs.size();
     for(int i=0; i<lo; i++){
-        for(int p=0; p<(int)pres.size(); p++){
-            if(!pres[p].checkObj(i))continue;
+        for(int p=0; p<(int)cd.drawInfo.pres.size(); p++){
+            if(!cd.drawInfo.pres[p].checkObj(i))continue;
 
-            Object3D *pobj = &(pmc->objs[i]);
+            Object3D *pobj = &(cd.pmc->objs[i]);
             int lf = pobj->faces.size();
             for(int i=0; i<lf; i++){
                 int v0 = pobj->faces[i].vertex[0];
@@ -264,10 +288,10 @@ long GLWT::drawObj(){
                         m_data.push_back(y);
                         m_data.push_back(z);
                     }
-                    m_data.push_back(pres[p].col.r);
-                    m_data.push_back(pres[p].col.g);
-                    m_data.push_back(pres[p].col.b);
-                    m_data.push_back(pres[p].col.a);
+                    m_data.push_back(cd.drawInfo.pres[p].col.r);
+                    m_data.push_back(cd.drawInfo.pres[p].col.g);
+                    m_data.push_back(cd.drawInfo.pres[p].col.b);
+                    m_data.push_back(cd.drawInfo.pres[p].col.a);
 
                     int vi = pobj->faces[i].vertex[j-1];
                     int ni = pobj->faces[i].vnorm[j-1];
@@ -285,10 +309,10 @@ long GLWT::drawObj(){
                         m_data.push_back(y);
                         m_data.push_back(z);
                     }
-                    m_data.push_back(pres[p].col.r);
-                    m_data.push_back(pres[p].col.g);
-                    m_data.push_back(pres[p].col.b);
-                    m_data.push_back(pres[p].col.a);
+                    m_data.push_back(cd.drawInfo.pres[p].col.r);
+                    m_data.push_back(cd.drawInfo.pres[p].col.g);
+                    m_data.push_back(cd.drawInfo.pres[p].col.b);
+                    m_data.push_back(cd.drawInfo.pres[p].col.a);
 
 
                     vi = pobj->faces[i].vertex[j];
@@ -307,10 +331,10 @@ long GLWT::drawObj(){
                         m_data.push_back(y);
                         m_data.push_back(z);
                     }
-                    m_data.push_back(pres[p].col.r);
-                    m_data.push_back(pres[p].col.g);
-                    m_data.push_back(pres[p].col.b);
-                    m_data.push_back(pres[p].col.a);
+                    m_data.push_back(cd.drawInfo.pres[p].col.r);
+                    m_data.push_back(cd.drawInfo.pres[p].col.g);
+                    m_data.push_back(cd.drawInfo.pres[p].col.b);
+                    m_data.push_back(cd.drawInfo.pres[p].col.a);
 
                     pnum+=3;
 
@@ -329,13 +353,13 @@ long GLWT::drawAtom(){
     long pnum=0;
     mutexLock.lock();
     vector<double> mem;
-     for(int i=0; i<(int)pmc->record.size(); i++){
-         for(int j=0; j<(int)pmc->record[i].size(); j++){
-             for(int p=0; p<pres.size(); p++){
-                 if(pres[p].check(pmc->record[i][j])){
-                     int Z = pmc->record[i][j].Z;
+     for(int i=0; i<(int)cd.pmc->record.size(); i++){
+         for(int j=0; j<(int)cd.pmc->record[i].size(); j++){
+             for(int p=0; p<cd.drawInfo.pres.size(); p++){
+                 if(cd.drawInfo.pres[p].check(cd.pmc->record[i][j])){
+                     int Z = cd.pmc->record[i][j].Z;
                      mem.clear();
-                     drawSphere(mem, pmc->record[i][j].pos, pres[p].col, pres[p].R, pres[p].slice);
+                     drawSphere(mem, cd.pmc->record[i][j].pos, cd.drawInfo.pres[p].col, cd.drawInfo.pres[p].R, cd.drawInfo.pres[p].slice);
                      //drawCylinder(mem, pmc->record[i][j].pos, pres[p].col, pres[p].R, pres[p].R, pres[p].slice, CPI/4, CPI/4);
                      //drawAxes3D(mem);
                      for(int k=0; k<mem.size(); k++){
@@ -361,9 +385,9 @@ void GLWT::paintGL(){
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
-    glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
+    glClearColor(cd.drawInfo.bgColor.r, cd.drawInfo.bgColor.g, cd.drawInfo.bgColor.b, cd.drawInfo.bgColor.a);
 
-    if(pmc==NULL) return;
+    if(cd.pmc==NULL) return;
 
     setProj(this->width(), this->height());
 
@@ -372,32 +396,39 @@ void GLWT::paintGL(){
     m_vbo.bind();
     m_data.clear();
     long axesPNum=0, atomPNum=0, objPNum=0;
+    long selectBoxPNum=0;
+
     axesPNum = drawAxes();
-    if(ifshow==1){
+    if(cd.drawInfo.ifShow==1){
         atomPNum = drawAtom();
     }
     objPNum = drawObj();
+
+    if(cd.drawInfo.ifDrawSelectBox==1){
+        selectBoxPNum = drawSelectBox();
+    }
+
     m_vbo.allocate(m_data.constData(), m_data.size()*sizeof(GLfloat));
     setupVertexAttribs();
     m_vbo.release();
 
-    double x = -(pmc->xmax + pmc->xmin)/2;
-    double y = -(pmc->ymax + pmc->ymin)/2;
-    double z = -(pmc->zmax + pmc->zmin)/2;
+    double x = -(cd.pmc->xmax + cd.pmc->xmin)/2;
+    double y = -(cd.pmc->ymax + cd.pmc->ymin)/2;
+    double z = -(cd.pmc->zmax + cd.pmc->zmin)/2;
 
     QMatrix4x4 transM; transM.setToIdentity();
     transM.translate(x,y,z);
 
-    z = -(pmc->zmax-pmc->zmin) + transZ;
+    z = -(cd.pmc->zmax-cd.pmc->zmin) + cd.drawInfo.transZ;
     m_camera.setToIdentity();
     m_camera.translate(0,0,z);
 
     QMatrix4x4 rM; rM.setToIdentity();
-    rM.rotate(angleX, 1, 0, 0);
-    rM.rotate(angleY, 0, 1, 0);
-    rM.rotate(angleZ, 0, 0, 1);
+    rM.rotate(cd.drawInfo.angleX, 1, 0, 0);
+    rM.rotate(cd.drawInfo.angleY, 0, 1, 0);
+    rM.rotate(cd.drawInfo.angleZ, 0, 0, 1);
     m_world=rM*m_world;
-    angleX=0; angleY=0; angleZ=0;
+    cd.drawInfo.angleX=0; cd.drawInfo.angleY=0; cd.drawInfo.angleZ=0;
 
     m_program->bind();
     m_program->setUniformValue(m_projMatrixLoc, m_proj);
@@ -406,7 +437,7 @@ void GLWT::paintGL(){
     QMatrix3x3 normalMatrix = m_world.normalMatrix();
     m_program->setUniformValue(m_normalMatrixLoc, normalMatrix);
 
-    if(ifDrawAxesLine==1){
+    if(cd.drawInfo.ifDrawAxesLine==1){
         glDrawArrays(GL_LINES, 0, 6);
     }
 
@@ -414,7 +445,7 @@ void GLWT::paintGL(){
 
     int w=this->width(), h=this->height();
 
-    if(projType==1){
+    if(cd.drawInfo.projType==1){
         double xL=20*7, yL=(double)h/w*xL;
         double zL=yL/2/tan(CPI/6);
         transM.setToIdentity();
@@ -423,14 +454,14 @@ void GLWT::paintGL(){
     }
     else{
         transM.setToIdentity();
-        double xL=pmc->xmax-pmc->xmin;
-        xL=xL*3 + 2*orthDX;
+        double xL=cd.pmc->xmax-cd.pmc->xmin;
+        xL=xL*3 + 2*cd.drawInfo.orthDX;
         double yL=(double)h/w*xL;
         transM.translate(-xL/2 + xL/10, -yL/2 + yL/10, 0);
         m_program->setUniformValue(m_mvMatrixLoc, transM*m_world);
     }
 
-    if(ifDrawAxes3D==1){
+    if(cd.drawInfo.ifDrawAxes3D==1){
         glDrawArrays(GL_TRIANGLES, 6, axesPNum-6);
     }
     m_program->release();

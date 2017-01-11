@@ -27,7 +27,8 @@ SOURCES += main.cpp\
     logowindow.cpp \
     plotwindow.cpp \
     plotwt.cpp \
-    present.cpp
+    present.cpp \
+    datainfo.cpp
 
 HEADERS  += mainwindow.h \
     global.h \
@@ -48,7 +49,8 @@ HEADERS  += mainwindow.h \
     plotwindow.h \
     plotwt.h \
     present.h \
-    plotinfo.h
+    plotinfo.h \
+    datainfo.h
 
 FORMS    += mainwindow.ui \
     colordialog.ui \

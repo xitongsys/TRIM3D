@@ -1,13 +1,12 @@
 #include "plotwindow.h"
 #include "ui_plotwindow.h"
 
-PlotWindow::PlotWindow(QWidget *parent, MC *pmcc, PlotInfo *pInfoo) :
+PlotWindow::PlotWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::PlotWindow)
 {
     ui->setupUi(this);
-    pmc = pmcc;
-    pInfo = pInfoo;
+    pp=(MainWindow*)parent;
 }
 
 PlotWindow::~PlotWindow()
