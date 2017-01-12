@@ -24,7 +24,7 @@
         </property>
         <widget class="QWidget" name="layoutWidget">
          <layout class="QGridLayout" name="gridLayout_2">
-          <item row="0" column="0">
+          <item row="1" column="0">
            <widget class="QTableWidget" name="plotPresTW">
             <column>
              <property name="text">
@@ -48,10 +48,17 @@
             </column>
            </widget>
           </item>
-          <item row="1" column="0">
+          <item row="2" column="0">
            <widget class="QPushButton" name="addPlot">
             <property name="text">
              <string>Add Plot</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Tips: INCIDENT=0, RECOIL=1, VACANCY=3, SPUTTER=4 </string>
             </property>
            </widget>
           </item>

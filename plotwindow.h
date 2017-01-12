@@ -38,6 +38,10 @@ private slots:
 
     void on_plotBT_clicked();
 
+    void on_plotPresTW_cellChanged(int row, int column);
+
+    void on_plotPresTW_cellClicked(int row, int column);
+
 private:
     Ui::PlotWindow *ui;
 

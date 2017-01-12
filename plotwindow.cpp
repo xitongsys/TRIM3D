@@ -3,6 +3,8 @@
 #include "datainfo.h"
 #include <sstream>
 #include "global.h"
+#include <QColorDialog>
+
 PlotWindow::PlotWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::PlotWindow)
@@ -94,7 +96,7 @@ void PlotWindow::on_rightSD_actionTriggered(int action)
 
 void PlotWindow::on_addPlot_clicked()
 {
-    cd.plotInfo.plotPresV.push_back(Present("allatom", Color4f(1,0,0,1), 0, 0));
+    cd.plotInfo.plotPresV.push_back(Present("allatom", Color4f(1,0,0,0.5), 0, 0));
     freshPW();
 
 }
@@ -118,6 +120,8 @@ void PlotWindow::on_sliceEd_textChanged(const QString &arg1)
 }
 
 void PlotWindow::plotGraphe(){
+    if(cd.pmc==NULL) return;
+
     double xL=cd.pmc->xmax-cd.pmc->xmin, yL=cd.pmc->ymax-cd.pmc->ymin, zL=cd.pmc->zmax-cd.pmc->zmin;
     double L=sqrt(xL*xL + yL*yL + zL*zL);
     double cx=(cd.pmc->xmax+cd.pmc->xmin)/2, cy=(cd.pmc->ymax+cd.pmc->ymin)/2, cz=(cd.pmc->zmax+cd.pmc->zmin)/2;
@@ -155,4 +159,49 @@ void PlotWindow::plotGraphe(){
 void PlotWindow::on_plotBT_clicked()
 {
     plotGraphe();
+}
+
+void PlotWindow::on_plotPresTW_cellChanged(int row, int column)
+{
+    if(column==1) return;
+
+    string str=ui->plotPresTW->item(row,column)->text().toStdString();
+    if(column==0 && str.size()==0){
+        cd.plotInfo.plotPresV.erase(cd.plotInfo.plotPresV.begin() + row);
+        freshPW();
+        return;
+    }
+
+    if(column==0){
+        cd.plotInfo.plotPresV[row].cmd = str;
+        cd.plotInfo.plotPresV[row].cmdSplit();
+    }
+
+    if(column==2){
+        double alpha=1; stringstream ss; ss<<str;
+        ss>>alpha;
+        cd.plotInfo.plotPresV[row].col.a = alpha;
+    }
+
+    if(column==3){
+        int type=0; stringstream ss; ss<<str;
+        ss>>type;
+        cd.plotInfo.plotPresV[row].type = type;
+    }
+}
+
+
+void PlotWindow::on_plotPresTW_cellClicked(int row, int column)
+{
+    if(column==1){
+        Color4f col=cd.plotInfo.plotPresV[row].col;
+        int r=255*col.r, g=255*col.g, b=255*col.b;
+        QColor c=QColorDialog::getColor(QColor(r,g,b));
+        if(!c.isValid()) return;
+
+        double alpha=cd.plotInfo.plotPresV[row].col.a;
+        Color4f color((float)c.red()/255, (float)c.green()/255, (float)c.blue()/255, alpha);
+        cd.plotInfo.plotPresV[row].col = color;
+        freshPW();
+    }
 }
