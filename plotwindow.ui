@@ -58,7 +58,8 @@
           <item row="0" column="0">
            <widget class="QLabel" name="label_2">
             <property name="text">
-             <string>Tips: INCIDENT=0, RECOIL=1, VACANCY=3, SPUTTER=4 </string>
+             <string>Tips: INCIDENT=0, RECOIL=1 
+ VACANCY=3, SPUTTER=4 </string>
             </property>
            </widget>
           </item>

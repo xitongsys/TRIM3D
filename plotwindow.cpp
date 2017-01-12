@@ -79,6 +79,7 @@ PlotWindow::~PlotWindow()
 void PlotWindow::on_leftSD_actionTriggered(int action)
 {
 
+    if(cd.pmc==NULL) return;
     double xL=cd.pmc->xmax-cd.pmc->xmin, yL=cd.pmc->ymax-cd.pmc->ymin, zL=cd.pmc->zmax-cd.pmc->zmin;
     double L=sqrt(xL*xL + yL*yL + zL*zL);
 
@@ -92,6 +93,7 @@ void PlotWindow::on_leftSD_actionTriggered(int action)
 
 void PlotWindow::on_rightSD_actionTriggered(int action)
 {
+    if(cd.pmc==NULL) return;
 
     double xL=cd.pmc->xmax-cd.pmc->xmin, yL=cd.pmc->ymax-cd.pmc->ymin, zL=cd.pmc->zmax-cd.pmc->zmin;
     double L=sqrt(xL*xL + yL*yL + zL*zL);

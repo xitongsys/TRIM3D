@@ -400,27 +400,6 @@ void GLWT::paintGL(){
 
     setProj(this->width(), this->height());
 
-    QOpenGLVertexArrayObject::Binder vaoBinder(&m_vao);
-
-    m_vbo.bind();
-    m_data.clear();
-    long axesPNum=0, atomPNum=0, objPNum=0;
-    long selectBoxPNum=0;
-
-    axesPNum = drawAxes();
-    if(cd.drawInfo.ifShow==1){
-        atomPNum = drawAtom();
-    }
-    objPNum = drawObj();
-
-    if(cd.drawInfo.ifDrawSelectBox==1){
-        selectBoxPNum = drawSelectBox();
-    }
-
-    m_vbo.allocate(m_data.constData(), m_data.size()*sizeof(GLfloat));
-    setupVertexAttribs();
-    m_vbo.release();
-
     double x = -(cd.pmc->xmax + cd.pmc->xmin)/2;
     double y = -(cd.pmc->ymax + cd.pmc->ymin)/2;
     double z = -(cd.pmc->zmax + cd.pmc->zmin)/2;
@@ -444,6 +423,29 @@ void GLWT::paintGL(){
     cd.plotInfo.plotDir.z = mr.row(2).x();
 
     cd.drawInfo.angleX=0; cd.drawInfo.angleY=0; cd.drawInfo.angleZ=0;
+
+    QOpenGLVertexArrayObject::Binder vaoBinder(&m_vao);
+
+    m_vbo.bind();
+    m_data.clear();
+    long axesPNum=0, atomPNum=0, objPNum=0;
+    long selectBoxPNum=0;
+
+    axesPNum = drawAxes();
+    if(cd.drawInfo.ifShow==1){
+        atomPNum = drawAtom();
+    }
+    objPNum = drawObj();
+
+    if(cd.drawInfo.ifDrawSelectBox==1){
+        selectBoxPNum = drawSelectBox();
+    }
+
+    m_vbo.allocate(m_data.constData(), m_data.size()*sizeof(GLfloat));
+    setupVertexAttribs();
+    m_vbo.release();
+
+
 
 
     m_program->bind();
