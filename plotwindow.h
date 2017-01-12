@@ -42,6 +42,10 @@ private slots:
 
     void on_plotPresTW_cellClicked(int row, int column);
 
+    void on_exportTextBT_clicked();
+
+    void on_exportPicBT_clicked();
+
 private:
     Ui::PlotWindow *ui;
 

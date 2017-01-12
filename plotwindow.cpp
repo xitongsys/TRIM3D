@@ -4,6 +4,8 @@
 #include <sstream>
 #include "global.h"
 #include <QColorDialog>
+#include <QFileDialog>
+#include <fstream>
 
 PlotWindow::PlotWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -211,5 +213,44 @@ void PlotWindow::on_plotPresTW_cellClicked(int row, int column)
 
         cd.plotInfo.plotPresV[row].col = color;
         freshPW();
+    }
+}
+
+void PlotWindow::on_exportTextBT_clicked()
+{
+    if(cd.pmc==NULL) return;
+    QFileDialog *fd=new QFileDialog(this);
+    fd->setWindowTitle("Export Txt");
+    fd->setNameFilter("all(*.jpg)");
+    fd->setViewMode(QFileDialog::List);
+    if(fd->exec()==QDialog::Accepted){
+        QStringList flist=fd->selectedFiles();
+        QString name=flist[0];
+        ofstream of; of.open(name.toStdString());
+        double step=abs(cd.plotInfo.posR - cd.plotInfo.posL)/cd.plotInfo.slice;
+        for(int i=0; i<cd.plotInfo.slice; i++){
+            of<<step*i<<" ";
+            for(int p=0; p<cd.plotInfo.plotPresV.size();p++){
+                of<<cd.plotData[p][i]<<" ";
+            }
+            of<<endl;
+        }
+
+        of.close();
+    }
+}
+
+void PlotWindow::on_exportPicBT_clicked()
+{
+    if(cd.pmc==NULL) return;
+    QFileDialog *fd=new QFileDialog(this);
+    fd->setWindowTitle("Export Txt");
+    fd->setNameFilter("all(*.*)");
+    fd->setViewMode(QFileDialog::List);
+    if(fd->exec()==QDialog::Accepted){
+        QStringList flist=fd->selectedFiles();
+        QString name=flist[0];
+        name = name + ".jpg";
+        QPixmap::grabWidget((ui->plotWT)).save(name);
     }
 }
