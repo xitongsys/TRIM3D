@@ -24,7 +24,7 @@
       <item row="1" column="2">
        <widget class="QPushButton" name="exportPicBT">
         <property name="text">
-         <string>Export Jpeg</string>
+         <string>Export JPG</string>
         </property>
        </widget>
       </item>
@@ -38,7 +38,7 @@
       <item row="1" column="1">
        <widget class="QPushButton" name="exportTextBT">
         <property name="text">
-         <string>Export Txt</string>
+         <string>Export TXT</string>
         </property>
        </widget>
       </item>

@@ -33,13 +33,6 @@ public:
     int ifDrawSelectBox;
     int projType;
 
-    double randTmp(){
-        int MOD=1000;
-        double rnd = rand()%MOD;
-        rnd /= MOD;
-        return rnd;
-    }
-
     DrawInfo(){
 
         bgColor=Color4f(0.8, 0.8, 0.8, 1.0);
@@ -48,7 +41,7 @@ public:
         pres.push_back(Present("T==3", Color4f(0.5,0.5,0.5,0.5),2,4));
         pres.push_back(Present("T==4", Color4f(0,0,1,1),2,4));
 
-        pres.push_back(Present("obj>=0",Color4f(randTmp(), randTmp(), randTmp(),0.5),2.0, 4));
+        pres.push_back(Present("obj>=0",Color4f(0.5, 1, 0.5, 0.5),2.0, 4));
 
         angleX = 0; angleY = 0; angleZ=0;
         transX = 0; transY = 0; transZ = 0;

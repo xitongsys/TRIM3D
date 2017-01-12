@@ -34,5 +34,6 @@
         <file>images/zoomout.png</file>
         <file>images/zoomin.png</file>
         <file>images/plot.svg</file>
+        <file>help/plotwindow.png</file>
     </qresource>
 </RCC>

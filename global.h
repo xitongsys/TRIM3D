@@ -56,7 +56,7 @@ struct Vect{
         return va;
     }
 
-    Vect operator=(Vect v2){
+    void operator=(Vect v2){
         x=v2.x; y=v2.y; z=v2.z;
     }
 

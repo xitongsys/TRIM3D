@@ -229,7 +229,7 @@ void PlotWindow::on_exportTextBT_clicked()
     if(cd.pmc==NULL) return;
     QFileDialog *fd=new QFileDialog(this);
     fd->setWindowTitle("Export Txt");
-    fd->setNameFilter("all(*.jpg)");
+    fd->setNameFilter("all(*.*)");
     fd->setViewMode(QFileDialog::List);
     if(fd->exec()==QDialog::Accepted){
         QStringList flist=fd->selectedFiles();
@@ -252,8 +252,8 @@ void PlotWindow::on_exportPicBT_clicked()
 {
     if(cd.pmc==NULL) return;
     QFileDialog *fd=new QFileDialog(this);
-    fd->setWindowTitle("Export Txt");
-    fd->setNameFilter("all(*.*)");
+    fd->setWindowTitle("Export JPG");
+    fd->setNameFilter("all(*.jpg)");
     fd->setViewMode(QFileDialog::List);
     if(fd->exec()==QDialog::Accepted){
         QStringList flist=fd->selectedFiles();

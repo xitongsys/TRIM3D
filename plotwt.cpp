@@ -59,11 +59,13 @@ void PlotWT::paintEvent(QPaintEvent *event){
         int x1,y1,x2,y2;
         x1=indent; x2=indent + gW;
         y1=oy - i*(gH/num); y2=y1;
+        painter.setPen(QColor(125,125,125));
         painter.drawLine(x1,y1,x2,y2);
         int label=i*step;
         stringstream ss; ss<<label;
         string str; ss>>str;
-        painter.drawText(x2,y2+5,str.c_str());
+        painter.setPen(QColor(0,0,0));
+        painter.drawText(x2+5,y2+5,str.c_str());
     }
 
 
