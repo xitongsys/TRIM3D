@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->toolBar->addAction(ui->actionLoad);
     ui->toolBar->addAction(ui->actionRun);
     ui->toolBar->addAction(ui->actionStop);
+    ui->toolBar->addAction(ui->actionPlot);
     ui->toolBar->addAction(ui->actionExport_data);
     ui->toolBar->addAction(ui->actionColor);
     ui->toolBar->addAction(ui->actionContent);

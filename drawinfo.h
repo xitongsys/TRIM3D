@@ -43,7 +43,11 @@ public:
     DrawInfo(){
 
         bgColor=Color4f(0.8, 0.8, 0.8, 1.0);
-        pres.push_back(Present("Z>0",Color4f(randTmp(), randTmp(), randTmp(),1.0),2.0, 4));
+        pres.push_back(Present("T==0", Color4f(1,0,0,1),3,4));
+        pres.push_back(Present("T==1", Color4f(0,1,1,1),1,4));
+        pres.push_back(Present("T==3", Color4f(0.5,0.5,0.5,0.5),2,4));
+        pres.push_back(Present("T==4", Color4f(0,0,1,1),2,4));
+
         pres.push_back(Present("obj>=0",Color4f(randTmp(), randTmp(), randTmp(),0.5),2.0, 4));
 
         angleX = 0; angleY = 0; angleZ=0;

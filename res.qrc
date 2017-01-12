@@ -33,5 +33,6 @@
         <file>images/axes.svg</file>
         <file>images/zoomout.png</file>
         <file>images/zoomin.png</file>
+        <file>images/plot.svg</file>
     </qresource>
 </RCC>

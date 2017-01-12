@@ -63,6 +63,14 @@ void ColorDialog::freshPres(){
         stmp=stmp.fromLocal8Bit(str.c_str());
         ui->presWT->setItem(i, 3, new QTableWidgetItem(stmp));
 
+        double dr,dg,db,da;
+        dr = cd.drawInfo.pres[i].col.r;
+        dg = cd.drawInfo.pres[i].col.g;
+        db = cd.drawInfo.pres[i].col.b;
+        da = cd.drawInfo.pres[i].col.a;
+        QColor qcolor(dr*255,dg*255,db*255,da*255);
+        ui->presWT->item(i, 1)->setBackgroundColor(qcolor);
+
     }
 }
 

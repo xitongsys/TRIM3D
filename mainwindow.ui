@@ -491,8 +491,8 @@
     <property name="title">
      <string>Data</string>
     </property>
-    <addaction name="actionExport_data"/>
     <addaction name="actionPlot"/>
+    <addaction name="actionExport_data"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -714,6 +714,10 @@
    </property>
   </action>
   <action name="actionPlot">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/images/plot.svg</normaloff>:/images/plot.svg</iconset>
+   </property>
    <property name="text">
     <string>Plot</string>
    </property>

@@ -42,6 +42,13 @@ void PlotWindow::freshPW(){
         ss>>str;
         ui->plotPresTW->setItem(i, 3, new QTableWidgetItem(str.c_str()));
 
+        double r=cd.plotInfo.plotPresV[i].col.r;
+        double g=cd.plotInfo.plotPresV[i].col.g;
+        double b=cd.plotInfo.plotPresV[i].col.b;
+        double a=cd.plotInfo.plotPresV[i].col.a;
+        QColor qcolor(r*255, g*255, b*255, a*255);
+        ui->plotPresTW->item(i,1)->setBackgroundColor(qcolor);
+
     }
 
     freshSD();
@@ -201,6 +208,7 @@ void PlotWindow::on_plotPresTW_cellClicked(int row, int column)
 
         double alpha=cd.plotInfo.plotPresV[row].col.a;
         Color4f color((float)c.red()/255, (float)c.green()/255, (float)c.blue()/255, alpha);
+
         cd.plotInfo.plotPresV[row].col = color;
         freshPW();
     }
