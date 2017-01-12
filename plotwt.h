@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "mc.h"
 #include "plotinfo.h"
+#include "plotwindow.h"
 
 namespace Ui {
 class PlotWT;
@@ -14,12 +15,11 @@ class PlotWT : public QWidget
     Q_OBJECT
 
 public:
-    explicit PlotWT(QWidget *parent = 0, MC *pmcc=NULL, PlotInfo *pInfoo=NULL);
+    explicit PlotWT(QWidget *parent = 0);
     ~PlotWT();    
     void paintEvent(QPaintEvent *event);
 
-    MC *pmc;
-    PlotInfo *pInfo;
+    PlotWindow *pp;
 
 private:
     Ui::PlotWT *ui;

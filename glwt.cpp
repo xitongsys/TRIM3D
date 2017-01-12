@@ -200,7 +200,7 @@ long GLWT::drawSelectBox(){
 
     double H=posL.dis(posR);
     Color4f color(1,0,0,0.5);
-    drawCylinder(mem, posL, color, R, H, 4, Ry, Rz);
+    drawCylinder(mem, posL, color, R, H, 20, Ry, Rz);
     pnum = mem.size()/10;
     for(int i=0; i<mem.size(); i++){
         m_data.push_back(mem[i]);
@@ -440,11 +440,10 @@ void GLWT::paintGL(){
 
     QMatrix4x4 mr=m_world.inverted();
     cd.plotInfo.plotDir.x = mr.row(0).x();
-    cd.plotInfo.plotDir.y = mr.row(0).y();
-    cd.plotInfo.plotDir.z = mr.row(0).z();
+    cd.plotInfo.plotDir.y = mr.row(1).x();
+    cd.plotInfo.plotDir.z = mr.row(2).x();
 
     cd.drawInfo.angleX=0; cd.drawInfo.angleY=0; cd.drawInfo.angleZ=0;
-
 
 
     m_program->bind();

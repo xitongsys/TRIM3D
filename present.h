@@ -22,7 +22,6 @@ public:
     map<string, int> order;
 
     //for plotWindow
-    vector<string> typeName;
     int type;
     //
 

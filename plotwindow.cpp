@@ -36,7 +36,8 @@ void PlotWindow::freshPW(){
         ss>>str;
         ui->plotPresTW->setItem(i, 2, new QTableWidgetItem(str.c_str()));
 
-        str=cd.plotInfo.plotPresV[i].typeName[cd.plotInfo.plotPresV[i].type];
+        ss.clear(); ss.str(""); ss<<cd.plotInfo.plotPresV[i].type;
+        ss>>str;
         ui->plotPresTW->setItem(i, 3, new QTableWidgetItem(str.c_str()));
 
     }
@@ -52,11 +53,11 @@ void PlotWindow::freshSD(){
 
     double ldis=cd.plotInfo.posL, rdis=cd.plotInfo.posR;
 
-    ui->leftSD->setRange(0, 100);
-    ui->leftSD->setValue((ldis)/(2*L)*100);
+    ui->leftSD->setRange(0, 1000);
+    ui->leftSD->setValue((ldis)/(2*L)*1000);
 
-    ui->rightSD->setRange(0, 100);
-    ui->rightSD->setValue((rdis)/(2*L)*100);
+    ui->rightSD->setRange(0, 1000);
+    ui->rightSD->setValue((rdis)/(2*L)*1000);
 }
 
 PlotWindow::~PlotWindow()
@@ -70,10 +71,11 @@ void PlotWindow::on_leftSD_actionTriggered(int action)
     double xL=cd.pmc->xmax-cd.pmc->xmin, yL=cd.pmc->ymax-cd.pmc->ymin, zL=cd.pmc->zmax-cd.pmc->zmin;
     double L=sqrt(xL*xL + yL*yL + zL*zL);
 
-    double ldis = ui->leftSD->value()*2*L/100.0;
+    double ldis = ui->leftSD->value()*2*L/1000.0;
     cd.plotInfo.posL = ldis;
 
     emit signal_repaint();
+    plotGraphe();
 
 }
 
@@ -83,8 +85,74 @@ void PlotWindow::on_rightSD_actionTriggered(int action)
     double xL=cd.pmc->xmax-cd.pmc->xmin, yL=cd.pmc->ymax-cd.pmc->ymin, zL=cd.pmc->zmax-cd.pmc->zmin;
     double L=sqrt(xL*xL + yL*yL + zL*zL);
 
-    double rdis = ui->rightSD->value()*2*L/100.0;
+    double rdis = ui->rightSD->value()*2*L/1000.0;
     cd.plotInfo.posR = rdis;
 
     emit signal_repaint();
+    plotGraphe();
+}
+
+void PlotWindow::on_addPlot_clicked()
+{
+    cd.plotInfo.plotPresV.push_back(Present("allatom", Color4f(1,0,0,1), 0, 0));
+    freshPW();
+
+}
+
+void PlotWindow::on_sliceEd_textChanged(const QString &arg1)
+{
+    string str;
+    stringstream ss;
+    str=arg1.toStdString();
+    ss<<str;
+    int tmp=0;
+    ss>>tmp;
+    if(tmp<0) tmp=0;
+    else if(tmp>=cd.MAXPLOTSLICE) tmp=cd.MAXPLOTSLICE;
+    cd.plotInfo.slice=tmp;
+
+    ss.clear(); ss.str("");
+    ss<<tmp;
+    ss>>str;
+    ui->sliceEd->setText(str.c_str());
+}
+
+void PlotWindow::plotGraphe(){
+    double xL=cd.pmc->xmax-cd.pmc->xmin, yL=cd.pmc->ymax-cd.pmc->ymin, zL=cd.pmc->zmax-cd.pmc->zmin;
+    double L=sqrt(xL*xL + yL*yL + zL*zL);
+    double cx=(cd.pmc->xmax+cd.pmc->xmin)/2, cy=(cd.pmc->ymax+cd.pmc->ymin)/2, cz=(cd.pmc->zmax+cd.pmc->zmin)/2;
+    Vect cp(cx,cy,cz);
+    Vect dir=cd.plotInfo.plotDir;
+    dir.normalize();
+    Vect vo=dir*(-L); vo=vo + cp;
+    Vect ve=dir*(2*L); ve=vo + ve;
+
+    int slice=cd.plotInfo.slice;
+    double bgn=min(cd.plotInfo.posL, cd.plotInfo.posR), end=max(cd.plotInfo.posL,cd.plotInfo.posR);
+    double step=(end-bgn)/slice;
+
+    memset(cd.plotData, 0, sizeof(cd.plotData));
+
+    for(int p=0; p<cd.plotInfo.plotPresV.size(); p++){
+        for(int i=0; i<cd.pmc->record.size(); i++){
+            for(int j=0; j<cd.pmc->record[i].size(); j++){
+                if(cd.plotInfo.plotPresV[p].check(cd.pmc->record[i][j])){
+                    Vect apos=cd.pmc->record[i][j].pos;
+                    Vect va = apos - vo;
+                    double la = va*dir;
+                    if(la<bgn || la>end) continue;
+                    la = la - bgn;
+                    cd.plotData[p][(int)abs(la/step)]++;
+                }
+            }
+        }
+    }
+
+    ui->plotWT->repaint();
+
+}
+
+void PlotWindow::on_plotBT_clicked()
+{
+    plotGraphe();
 }

@@ -8,6 +8,7 @@
 #include "qtdata.h"
 #include "threadcal.h"
 #include "plotinfo.h"
+#include <vector>
 
 class DataInfo
 {
@@ -19,6 +20,9 @@ public:
     DrawInfo drawInfo;
     QTInputData qtdata;
     PlotInfo plotInfo;
+
+    const static int MAXPLOTPRES=100, MAXPLOTSLICE=10000;
+    int plotData[MAXPLOTPRES][MAXPLOTSLICE];
 
 
 public:
