@@ -87,7 +87,7 @@ void PlotWindow::on_leftSD_actionTriggered(int action)
     cd.plotInfo.posL = ldis;
 
     emit signal_repaint();
-    plotGraphe();
+    //plotGraphe();
 
 }
 
@@ -102,7 +102,7 @@ void PlotWindow::on_rightSD_actionTriggered(int action)
     cd.plotInfo.posR = rdis;
 
     emit signal_repaint();
-    plotGraphe();
+    //plotGraphe();
 }
 
 void PlotWindow::on_addPlot_clicked()
