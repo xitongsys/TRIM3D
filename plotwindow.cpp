@@ -192,6 +192,12 @@ void PlotWindow::on_plotPresTW_cellChanged(int row, int column)
         double alpha=1; stringstream ss; ss<<str;
         ss>>alpha;
         cd.plotInfo.plotPresV[row].col.a = alpha;
+        double r=cd.plotInfo.plotPresV[row].col.r;
+        double g=cd.plotInfo.plotPresV[row].col.g;
+        double b=cd.plotInfo.plotPresV[row].col.b;
+        double a=cd.plotInfo.plotPresV[row].col.a;
+        QColor qcolor(r*255, g*255, b*255, a*255);
+        ui->plotPresTW->item(row,1)->setBackgroundColor(qcolor);
     }
 
     if(column==3){

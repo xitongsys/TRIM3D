@@ -52,13 +52,16 @@ void PlotWT::paintEvent(QPaintEvent *event){
     painter.drawText(ox+gW,oy+indent/2,str.c_str());
 
     painter.setPen(QColor(125,125,125));
-    for(int i=1; i<10; i++){
+    double step=1, num=ymax;
+    if(ymax>=10){step=ymax/10; num=10;}
+
+    for(int i=1; i<num; i++){
         int x1,y1,x2,y2;
         x1=indent; x2=indent + gW;
-        y1=oy - i*(gH/10); y2=y1;
+        y1=oy - i*(gH/num); y2=y1;
         painter.drawLine(x1,y1,x2,y2);
-        int num=i*(ymax/10);
-        stringstream ss; ss<<num;
+        int label=i*step;
+        stringstream ss; ss<<label;
         string str; ss>>str;
         painter.drawText(x2,y2+5,str.c_str());
     }

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>814</width>
-    <height>557</height>
+    <height>410</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,14 +21,42 @@
    <layout class="QGridLayout" name="gridLayout_5">
     <item row="0" column="0">
      <layout class="QGridLayout" name="gridLayout_4">
-      <item row="0" column="0" colspan="3">
+      <item row="1" column="2">
+       <widget class="QPushButton" name="exportPicBT">
+        <property name="text">
+         <string>Export Jpeg</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QPushButton" name="plotBT">
+        <property name="text">
+         <string>Plot</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="exportTextBT">
+        <property name="text">
+         <string>Export Txt</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="addPlot">
+        <property name="text">
+         <string>Add Plot</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="4">
        <widget class="QSplitter" name="splitter">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
         <widget class="QWidget" name="layoutWidget">
          <layout class="QGridLayout" name="gridLayout_2">
-          <item row="1" column="0">
+          <item row="0" column="0">
            <widget class="QTableWidget" name="plotPresTW">
             <column>
              <property name="text">
@@ -52,21 +80,6 @@
             </column>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QPushButton" name="addPlot">
-            <property name="text">
-             <string>Add Plot</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>Tips: INCIDENT=0, RECOIL=1 
- VACANCY=3, SPUTTER=4 </string>
-            </property>
-           </widget>
-          </item>
          </layout>
         </widget>
         <widget class="QWidget" name="layoutWidget">
@@ -78,10 +91,7 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="sliceEd"/>
-          </item>
-          <item row="1" column="0" colspan="2">
+          <item row="2" column="0" colspan="4">
            <layout class="QGridLayout" name="gridLayout">
             <item row="0" column="0" colspan="2">
              <widget class="PlotWT" name="plotWT" native="true">
@@ -96,7 +106,7 @@
                <number>0</number>
               </property>
               <property name="maximum">
-               <number>99</number>
+               <number>1000</number>
               </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -105,6 +115,9 @@
             </item>
             <item row="1" column="1">
              <widget class="QSlider" name="rightSD">
+              <property name="maximum">
+               <number>1000</number>
+              </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -112,29 +125,31 @@
             </item>
            </layout>
           </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="sliceEd">
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
          </layout>
         </widget>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QPushButton" name="exportTextBT">
-        <property name="text">
-         <string>Export Txt</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QPushButton" name="exportPicBT">
-        <property name="text">
-         <string>Export Jpeg</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="QPushButton" name="plotBT">
-        <property name="text">
-         <string>Plot</string>
-        </property>
        </widget>
       </item>
      </layout>

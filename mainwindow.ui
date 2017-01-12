@@ -597,7 +597,10 @@
      <normaloff>:/images/load.svg</normaloff>:/images/load.svg</iconset>
    </property>
    <property name="text">
-    <string>Load</string>
+    <string>Fresh</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
    </property>
   </action>
   <action name="actionRun">

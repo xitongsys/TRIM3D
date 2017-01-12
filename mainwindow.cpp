@@ -24,12 +24,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->toolBar->addAction(ui->actionNew);
     ui->toolBar->addAction(ui->actionOpen);
     ui->toolBar->addAction(ui->actionSave);
+    ui->toolBar->addSeparator();
     ui->toolBar->addAction(ui->actionLoad);
     ui->toolBar->addAction(ui->actionRun);
     ui->toolBar->addAction(ui->actionStop);
+    ui->toolBar->addSeparator();
+    ui->toolBar->addAction(ui->actionColor);
     ui->toolBar->addAction(ui->actionPlot);
     ui->toolBar->addAction(ui->actionExport_data);
-    ui->toolBar->addAction(ui->actionColor);
+    ui->toolBar->addSeparator();
     ui->toolBar->addAction(ui->actionContent);
     ui->toolBar->addAction(ui->actionAbout);
 

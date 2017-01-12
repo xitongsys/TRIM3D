@@ -140,6 +140,14 @@ void ColorDialog::on_presWT_cellChanged(int row, int column)
         double alpha; stringstream ss; ss<<str;
         ss>>alpha;
         cd.drawInfo.pres[row].col.a = alpha;
+
+        cd.drawInfo.pres[row].col.a = alpha;
+        double r=cd.drawInfo.pres[row].col.r;
+        double g=cd.drawInfo.pres[row].col.g;
+        double b=cd.drawInfo.pres[row].col.b;
+        double a=cd.drawInfo.pres[row].col.a;
+        QColor qcolor(r*255, g*255, b*255, a*255);
+        ui->presWT->item(row,1)->setBackground(qcolor);
     }
 
 }
