@@ -46,6 +46,7 @@ public slots:
     void onIonChangeTW(int,int);
 
     void slot_fresh(int curi, int curj);
+    void slot_repaint();
 
 private slots:
     void on_actionNew_triggered();

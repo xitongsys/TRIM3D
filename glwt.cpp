@@ -181,11 +181,21 @@ long GLWT::drawSelectBox(){
     vector<double> mem;
     double xL=cd.pmc->xmax-cd.pmc->xmin, yL=cd.pmc->ymax-cd.pmc->ymin, zL=cd.pmc->zmax-cd.pmc->zmin;
     double R=2*sqrt(xL*xL + yL*yL + zL*zL);
+    double L=R/2;
+    double cx=(cd.pmc->xmax+cd.pmc->xmin)/2, cy=(cd.pmc->ymax+cd.pmc->ymin)/2, cz=(cd.pmc->zmax+cd.pmc->zmin)/2;
+    Vect cp(cx,cy,cz);
+    Vect dir=cd.plotInfo.plotDir;
 
-    Vect posL=cd.plotInfo.posL, posR=cd.plotInfo.posR;
+    Vect vo=dir*(-L); vo=vo + cp;
 
-    Vect dir=posR-posL;
+    Vect posL=dir*cd.plotInfo.posL, posR=dir*cd.plotInfo.posR;
+    posL = vo + posL; posR = vo + posR;
+
     double Ry=0,Rz=0;
+    Vect tmp=posR-posL;
+    if(tmp*dir<0){
+        dir=dir*-1.0;
+    }
     dir.getAngle(Rz, Ry);
 
     double H=posL.dis(posR);
@@ -427,7 +437,15 @@ void GLWT::paintGL(){
     rM.rotate(cd.drawInfo.angleY, 0, 1, 0);
     rM.rotate(cd.drawInfo.angleZ, 0, 0, 1);
     m_world=rM*m_world;
+
+    QMatrix4x4 mr=m_world.inverted();
+    cd.plotInfo.plotDir.x = mr.row(0).x();
+    cd.plotInfo.plotDir.y = mr.row(0).y();
+    cd.plotInfo.plotDir.z = mr.row(0).z();
+
     cd.drawInfo.angleX=0; cd.drawInfo.angleY=0; cd.drawInfo.angleZ=0;
+
+
 
     m_program->bind();
     m_program->setUniformValue(m_projMatrixLoc, m_proj);

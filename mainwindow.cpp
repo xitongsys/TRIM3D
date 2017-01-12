@@ -32,9 +32,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->toolBar->addAction(ui->actionContent);
     ui->toolBar->addAction(ui->actionAbout);
 
-    connect(cd.tc, SIGNAL(signal_fresh(int,int)), this, SLOT(slot_fresh(int,int)));
-
     plotW=new PlotWindow(this);
+
+    connect(cd.tc, SIGNAL(signal_fresh(int,int)), this, SLOT(slot_fresh(int,int)));
+    connect(plotW, SIGNAL(signal_repaint()), this, SLOT(slot_repaint()));
+
+
 }
 
 void MainWindow::slot_fresh(int curi, int curj){
@@ -476,4 +479,9 @@ void MainWindow::on_zoomIn_clicked()
 void MainWindow::on_actionPlot_triggered()
 {
     plotW->show();
+    plotW->freshPW();
+}
+
+void MainWindow::slot_repaint(){
+    ui->openGLWidget->repaint();
 }

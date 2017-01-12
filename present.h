@@ -21,6 +21,11 @@ public:
     vector<string> cmdv;
     map<string, int> order;
 
+    //for plotWindow
+    vector<string> typeName;
+    int type;
+    //
+
     void cmdSplit();
     void mid2post(vector<string> &mid, vector<string> &postfix);
     bool calPostfix(vector<string> &postfix);

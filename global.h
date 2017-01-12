@@ -60,6 +60,18 @@ struct Vect{
         x=v2.x; y=v2.y; z=v2.z;
     }
 
+    double operator*(Vect &v2){
+        return x*v2.x + y*v2.y + z*v2.z;
+    }
+
+    Vect operator*(double d){
+        Vect va;
+        va.x = x*d;
+        va.y = y*d;
+        va.z = z*d;
+        return va;
+    }
+
     double dis(Vect& v2){
         return sqrt((x-v2.x)*(x-v2.x) + (y-v2.y)*(y-v2.y) + (z-v2.z)*(z-v2.z));
     }

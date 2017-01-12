@@ -11,6 +11,15 @@ Present::Present(string cmdd, Color4f coll, double RR, int slicee){
 
     cmd = cmdd; col=coll; R=RR; slice=slicee;
     cmdSplit();
+
+
+    type=0;
+    typeName.push_back("Solid Line");
+    typeName.push_back("Dash Line");
+    typeName.push_back("Point");
+    typeName.push_back("Column");
+
+
 }
 
 void Present::cmdSplit(){

@@ -79,14 +79,20 @@
              </widget>
             </item>
             <item row="1" column="0">
-             <widget class="QSlider" name="horizontalSlider">
+             <widget class="QSlider" name="leftSD">
+              <property name="minimum">
+               <number>0</number>
+              </property>
+              <property name="maximum">
+               <number>99</number>
+              </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QSlider" name="horizontalSlider_2">
+             <widget class="QSlider" name="rightSD">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>

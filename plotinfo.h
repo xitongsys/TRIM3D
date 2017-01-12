@@ -16,14 +16,16 @@ using namespace std;
 
 class PlotInfo{
 public:
-    Vect posL,posR;
+    double posL,posR;
+    Vect plotDir;
     vector<Present> plotPresV;
     int slice;
 
     PlotInfo(){
         slice=100;
         plotPresV.clear();
-        posL=Vect(0,0,0); posR=Vect(0,0,0);
+        posL=0; posR=1;
+        plotDir=Vect(1,0,0);
     }
 };
 

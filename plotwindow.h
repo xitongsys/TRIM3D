@@ -23,9 +23,18 @@ public:
     MainWindow *pp;
 
     void freshPW();
+    void freshSD();
+
+private slots:
+    void on_leftSD_actionTriggered(int action);
+
+    void on_rightSD_actionTriggered(int action);
 
 private:
     Ui::PlotWindow *ui;
+
+signals:
+    void signal_repaint();
 };
 
 #endif // PLOTWINDOW_H
