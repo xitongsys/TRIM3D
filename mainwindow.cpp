@@ -388,7 +388,7 @@ void MainWindow::on_actionExport_data_triggered() {
 void MainWindow::on_actionAbout_triggered(){
     QMessageBox message(this);
     message.setWindowTitle("About TRIM3D");
-    message.setText("Trim3D v1.0\n\n developed by Zhang Xitong\nEmail: xitongsys@gmail.com\n");
+    message.setText("Trim3D v2.0\n\n developed by Zhang Xitong\nEmail: xitongsys@gmail.com\n");
     message.setIconPixmap(QPixmap(":/images/mainIcon/ico128x128.png"));
     message.exec();
 
