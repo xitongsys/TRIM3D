@@ -86,6 +86,17 @@ void PlotWT::paintEvent(QPaintEvent *event){
             if(cd.plotInfo.plotPresV[p].type==0){
                 painter.drawRect(x,y,gW/slice, oy-y);
             }
+            else if(cd.plotInfo.plotPresV[p].type==1){
+                if(xi+1<slice){
+                    int xii=xi+1;
+                    int x2 = ox + ((double)xii/slice)*gW;
+                    int y2 = oy - ((double)cd.plotData[p][xii]/ymax)*gH;
+                    painter.drawLine(x,y,x2,y2);
+                }
+            }
+            else if(cd.plotInfo.plotPresV[p].type==2){
+                painter.drawRect(x-2,y-2,4,4);
+            }
         }
     }
 
