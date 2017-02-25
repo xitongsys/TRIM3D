@@ -52,7 +52,7 @@ double Stopping::hstop(int Z1, double M1, int Z2, double M2, double E){//E:keV/a
         sE = sE*pow(E/pE0, VELPWR);
     }
 
-    return sE;//eV-A2
+    return sE*10;//eV-A2
 }
 
 double Stopping::hestop(int Z1, double M1, int Z2, double M2, double E){//E:keV/amu
@@ -64,12 +64,12 @@ double Stopping::hestop(int Z1, double M1, int Z2, double M2, double E){//E:keV/
     A = (1.0 + (0.007 + 0.00005*Z2)*exp(-pow((7.6-max(0.0, log(HE))),2)));
     HEH = HEH*A*A;
     double SP=hstop(Z1,M1,Z2,M2, HE);
-    double SE = SP*HEH*Z1*Z1;
+    double SE = SP*HEH*4;
 
     if(E <= HE0){
         SE = SE * sqrt(E/HE0);
     }
-    return SE;//eV-A2
+    return SE*10;//eV-A2
 }
 
 double Stopping::histop(int Z1, double M1, int Z2, double M2, double E, double VFERMI, double LFCTR){//E:keV/amu
@@ -132,7 +132,7 @@ double Stopping::nstop(int Z1, double M1, int Z2, double M2,
     double DELTA, CO, C2, S2, CT, ST, EC, DEN;
 
     double MU = M2/M1, MY = M1/M2;
-    double A = 0.5292-0.8853/(pow(Z1, 0.23) + pow(Z2, 0.23));
+    double A = 0.5292*0.8853/(pow(Z1, 0.23) + pow(Z2, 0.23));
     double F = A*M2/(Z1*Z2*14.4*(M1 + M2));
     double E = E0KEV*1000;//eV
     double TMIN = 5;
