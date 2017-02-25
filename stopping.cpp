@@ -100,6 +100,8 @@ double Stopping::histop(int Z1, double M1, int Z2, double M2, double E, double V
     }
     else if(Q < (max(0.0, 1.0 - 0.025*min(16.0, 1.0*Z1)))){
         L1 = B;
+    }else{
+        L1=B*(1.0-Q)/(0.025*min(16.0, 1.0*Z1));
     }
 
     double L = max(L1, L0*LFCTR);
