@@ -117,7 +117,7 @@ double Stopping::histop(int Z1, double M1, int Z2, double M2, double E, double V
         SE = (SP*pow((ZETA*Z1),2))*pow((E/EEE),POWER);
     }
     else{
-        SP = hstop(Z1, M1, Z1, M2, E);
+        SP = hstop(Z1, M1, Z2, M2, E);
         SE = SP*pow((ZETA*Z1),2);
     }
 
