@@ -1,0 +1,36 @@
+====== O (120) into Layer 1                     =======
+        SRIM-2006.02
+=======================================
+      Data  of  TRIM  Calculation      
+=======================================
+Ion =  O ( 8)   Ion Mass= 015.9950
+Energy  = 5000000.E-05 keV
+Ion Angle to Surface = 0 degrees
+============= TARGET MATERIAL ======================================
+  Layer # 1 - Layer 1
+  Layer # 1 - Bottom Depth=     2.E+03 A
+  Layer # 1- Density = 11.29E22 atoms/cm3 = 2.253 g/cm3
+  Layer # 1-  C = 100  Atomic Percent = 50   Mass Percent
+====================================================================
+Target energies for target atom =  C
+    Displacement = 28 eV, Binding = 3 eV, Surface = 7.41 eV
+====================================================================
+Depth Range of Tabulated Data=  000000.E+00  -  200000.E-02  Angstroms
+====================================================================
+Total Ions calculated =  001000
+Average Range         =   90562.E-02 Angstroms
+Average Straggling    =   23208.E-02 Angstroms
+Average Vacancy/Ion   =   25470.E-02
+====================================================================
+Total Backscattered Ions=  0 
+Total Transmitted Ions  =  0 
+====================================================================
+See files SRIM Outputs\*.txt for tables :
+   TDATA.txt    -- Details of the calculation.
+   RANGE.txt    -- Final distribution of Ions/Recoils
+   VACANCY.txt  -- Distribution of Vacancies
+   IONIZ.txt    -- Distribution of Ionization
+   PHONON.txt   -- Distribution of Phonons
+   E2RECOIL.txt -- Energy transferred to recoils
+   NOVAC.txt    -- Replacement collisions
+   LATERAL.txt  -- Lateral Spread of Ions

@@ -1,0 +1,36 @@
+====== Sb (10) into Layer 1                     =======
+        SRIM-2006.02
+=======================================
+      Data  of  TRIM  Calculation      
+=======================================
+Ion = Sb (51)   Ion Mass= 120.9030
+Energy  = 1200000.E-04 keV
+Ion Angle to Surface = 0 degrees
+============= TARGET MATERIAL ======================================
+  Layer # 1 - Layer 1
+  Layer # 1 - Bottom Depth=     2.E+03 A
+  Layer # 1- Density = 4.976E22 atoms/cm3 = 2.321 g/cm3
+  Layer # 1- Si = 100  Atomic Percent = 50   Mass Percent
+====================================================================
+Target energies for target atom = Si
+    Displacement = 15 eV, Binding = 0 eV, Surface = 0 eV
+====================================================================
+Depth Range of Tabulated Data=  000000.E+00  -  200000.E-02  Angstroms
+====================================================================
+Total Ions calculated =  001000
+Average Range         =   64594.E-02 Angstroms
+Average Straggling    =   19415.E-02 Angstroms
+Average Vacancy/Ion   =   28928.E-01
+====================================================================
+Total Backscattered Ions=  0 
+Total Transmitted Ions  =  0 
+====================================================================
+See files SRIM Outputs\*.txt for tables :
+   TDATA.txt    -- Details of the calculation.
+   RANGE.txt    -- Final distribution of Ions/Recoils
+   VACANCY.txt  -- Distribution of Vacancies
+   IONIZ.txt    -- Distribution of Ionization
+   PHONON.txt   -- Distribution of Phonons
+   E2RECOIL.txt -- Energy transferred to recoils
+   NOVAC.txt    -- Replacement collisions
+   LATERAL.txt  -- Lateral Spread of Ions

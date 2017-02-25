@@ -1,6 +1,0 @@
-obj "cubeUp.obj" 1
-C 6 12 0.05 1 5
-obj "cubeDown.obj" 1
-Si 14 28 0.05 1 5
-ion 1
-O 8 15.999 10 0 0 50 0 0 -1 1000
