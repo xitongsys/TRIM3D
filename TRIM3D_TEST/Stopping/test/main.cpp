@@ -22,12 +22,13 @@ int main(){
 	}
 */
 
-
+/*
 	//C_Si
 	double Z1=6,M1=12.011,Z2=14,M2=28.086,ARho=0.04977;
 	for(double e0=1000; e0<1e7; e0+=1000){//1keV-10MeV
 		cout<<e0<<" "<<sp.histop(Z1, M1, Z2, M2, e0/1000/M1, sp.atomInf[Z2][6], sp.atomInf[Z1][7])*ARho<<endl;
 	}
+*/
 
 /*
 	//O_C
@@ -46,6 +47,24 @@ int main(){
 	}
 
 */
+
+/*
+//He_Fe
+	double Z1=2,M1=4.003,Z2=26,M2=55.847,ARho=0.084817;
+	for(double e0=1000; e0<1e7; e0+=1000){//1keV-10MeV
+		cout<<e0<<" "<<sp.histop(Z1, M1, Z2, M2, e0/1000/M1, sp.atomInf[Z2][6], sp.atomInf[Z1][7])*ARho<<endl;
+	}
+
+*/
+
+//He_Si
+	double Z1=2,M1=4.003,Z2=14,M2=28.086,ARho=0.04977;
+	for(double e0=1000; e0<1e7; e0+=1000){//1keV-10MeV
+		cout<<e0<<" "<<sp.histop(Z1, M1, Z2, M2, e0/1000/M1, sp.atomInf[Z2][6], sp.atomInf[Z1][7])*ARho<<endl;
+	}
+
+
+
 
 	return 0;
 }
