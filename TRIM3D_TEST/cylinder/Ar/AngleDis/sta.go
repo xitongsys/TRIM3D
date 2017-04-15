@@ -34,7 +34,7 @@ func main() {
 
 		dl := math.Sqrt(dx*dx + dy*dy + dz*dz)
 		dx = dx/dl
-		angle := math.Acos(dx)
+		angle := math.Acos(-dx)
 		col := int(angle/(PI/float64(staNum)))
 		row := int(t)
 		data[row][col]++
