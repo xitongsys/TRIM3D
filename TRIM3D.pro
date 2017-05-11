@@ -28,7 +28,8 @@ SOURCES += main.cpp\
     plotwindow.cpp \
     plotwt.cpp \
     present.cpp \
-    datainfo.cpp
+    datainfo.cpp \
+    atomtabledialog.cpp
 
 HEADERS  += mainwindow.h \
     global.h \
@@ -50,14 +51,16 @@ HEADERS  += mainwindow.h \
     plotwt.h \
     present.h \
     plotinfo.h \
-    datainfo.h
+    datainfo.h \
+    atomtabledialog.h
 
 FORMS    += mainwindow.ui \
     colordialog.ui \
     helpwindow.ui \
     logowindow.ui \
     plotwindow.ui \
-    plotwt.ui
+    plotwt.ui \
+    atomtabledialog.ui
 
 CONFIG += mobility
 MOBILITY = 

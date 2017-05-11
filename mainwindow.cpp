@@ -3,10 +3,13 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QColorDialog>
+
+#include "atomtabledialog.h"
 #include "colordialog.h"
 #include "helpwindow.h"
 #include "plotwindow.h"
 #include "datainfo.h"
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -288,16 +291,22 @@ void MainWindow::onAddObjBt(){
 
 void MainWindow::onAddEleBt(){
     int oi = ui->objTW->currentRow();
-    if(oi>=0 && oi<(int)cd.qtdata.objs.size()){
-        cd.qtdata.objs[oi].addEle(QTEle("H",1,1.0087,1.0,5));
-        freshEleTW();
+    AtomTableDialog atomDialog(this);
+    if(atomDialog.exec()==QDialog::Accepted){
+        if(oi>=0 && oi<(int)cd.qtdata.objs.size()){
+            cd.qtdata.objs[oi].addEle(QTEle(atomDialog.name, atomDialog.Z, atomDialog.mass, 1.0, atomDialog.disp));
+            freshEleTW();
+        }
     }
-
 }
 
 void MainWindow::onAddIonBt(){
-    cd.qtdata.ions.push_back(QTIon("H", 1, 1.0087, 1, 0,0,0, 0,0,1, 1000));
-    freshIonTW();
+
+    AtomTableDialog atomDialog(this);
+    if(atomDialog.exec()==QDialog::Accepted){
+        cd.qtdata.ions.push_back(QTIon(atomDialog.name, atomDialog.Z, atomDialog.mass, 1, 0,0,0, 0,0,1, 1000));
+        freshIonTW();
+    }
 }
 
 void MainWindow::on_actionNew_triggered(){
@@ -322,12 +331,13 @@ void MainWindow::on_actionOpen_triggered(){
         freshIonTW();
         freshObjTW();
         this->setWindowTitle(fname);
+        this->on_actionLoad_triggered();
     }
     else{
         fd->close();
     }
 
-    this->on_actionLoad_triggered();
+    //this->on_actionLoad_triggered();
 
 }
 

@@ -35,5 +35,6 @@
         <file>images/zoomin.png</file>
         <file>images/plot.svg</file>
         <file>help/plotwindow.png</file>
+        <file>AtomList.txt</file>
     </qresource>
 </RCC>
