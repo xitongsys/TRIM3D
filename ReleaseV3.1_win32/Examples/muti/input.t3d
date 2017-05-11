@@ -1,0 +1,6 @@
+obj "cubeDown.obj" 1 1 1
+C 6 12.01  1 28
+obj "cubeUp.obj" 1 1 1
+Si 14 28.08  1 15
+ion 1
+C 6 12.01 1 0 0 0 0 0 1 1000
