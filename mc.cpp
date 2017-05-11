@@ -64,7 +64,8 @@ int MC::runOne(int i, int j){
                double EEG = sqrt(EPS*EPSDG);
                double PMAX = A/(EEG + sqrt(EEG) + 0.125*pow(EEG,0.1));
                double P = PMAX*sqrt(randMC());
-               double ARHO=objs[oi].densityAve;//atoms/A3
+               double ARHO=objs[oi].densityAve;//atoms/A3t
+
                double LS = 1.0/(CPI*PMAX*PMAX*ARHO);
 
                double dNE=0,angle1=0,angle2=0;

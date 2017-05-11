@@ -15,16 +15,14 @@ public:
     string name;
     int Z;
     double M;
-    double density;
     double fraction;
     double disE;
 
 
-    QTEle(string namep, int Zp, double Mp, double densp, double fracp, double disEp){
+    QTEle(string namep, int Zp, double Mp, double fracp, double disEp){
         name = namep;
         M = Mp;
         Z = Zp;
-        density = densp;
         fraction = fracp;
         disE = disEp;
     }
@@ -33,12 +31,16 @@ public:
 class QTObj{
 public:
     string objFile;
+    double objDensity;
+    double scale;
     vector<QTEle> elements;
     void addEle(QTEle ele){
         elements.push_back(ele);
     }
-    QTObj(string fname){
+    QTObj(string fname, double objDensityy, double scalee){
         objFile = fname;
+        objDensity = objDensityy;
+        scale = scalee;
     }
 
     void delEle(int i){
@@ -117,17 +119,19 @@ public:
                 int lf=fname.size();
                 fname=fname.substr(1, lf-2);
 
-                ss>>eleNum;
+                double objDensity=0, scale=1;
+                ss>>eleNum>>objDensity>>scale;
+
                 string eName; int Z;
-                double mass, density, fraction, disE;
-                objs.push_back(QTObj(fname));
+                double mass, fraction, disE;
+                objs.push_back(QTObj(fname,objDensity, scale));
 
                 for(int i=0; i<eleNum; i++){
                     fi.getline(buff, 1024);
                     str=string(buff);
                     ss.clear(); ss.str(""); ss<<str;
-                    ss>>eName>>Z>>mass>>density>>fraction>>disE;
-                    objs[ln].addEle(QTEle(eName,Z,mass,density,fraction,disE));
+                    ss>>eName>>Z>>mass>>fraction>>disE;
+                    objs[ln].addEle(QTEle(eName,Z,mass,fraction,disE));
                 }
             }
             else if(head=="ion"){
@@ -168,10 +172,10 @@ public:
                 string des=mp.path + mpobj.fname;
                 src.copy(des.c_str());
             }
-            of<<"obj \""<<mpobj.fname<<"\" "<<objs[i].elements.size()<<endl;
+            of<<"obj \""<<mpobj.fname<<"\" "<<objs[i].elements.size()<<" "<<objs[i].objDensity<<" "<<objs[i].scale<<endl;
             for(int j=0; j<(int)objs[i].elements.size(); j++){
                 QTEle ele=objs[i].elements[j];
-                of<<ele.name<<" "<<ele.Z<<" "<<ele.M<<" "<<ele.density<<" "<<ele.fraction<<" "<<ele.disE<<endl;
+                of<<ele.name<<" "<<ele.Z<<" "<<ele.M<<" "<<" "<<ele.fraction<<" "<<ele.disE<<endl;
             }
         }
 

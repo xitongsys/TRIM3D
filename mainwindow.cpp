@@ -115,7 +115,16 @@ void MainWindow::onObjChangeTW(int row, int col){
         freshObjTW();
     }
     else{
-        cd.qtdata.objs[row].objFile=ui->objTW->item(row,col)->text().toLocal8Bit().toStdString();
+        string str=ui->objTW->item(row,col)->text().toLocal8Bit().toStdString();
+        if(col==0){
+            cd.qtdata.objs[row].objFile=str;
+        }else if(col==1){
+            stringstream ss; ss<<str;
+            ss>>cd.qtdata.objs[row].objDensity;
+        }else if(col==2){
+            stringstream ss; ss<<str;
+            ss>>cd.qtdata.objs[row].scale;
+        }
     }
     this->on_actionLoad_triggered();
 }
@@ -144,13 +153,9 @@ void MainWindow::onEleChangeTW(int row, int col){
         }
         else if(col==3){
             stringstream ss; ss<<str;
-            ss>>cd.qtdata.objs[oi].elements[row].density;
-        }
-        else if(col==4){
-            stringstream ss; ss<<str;
             ss>>cd.qtdata.objs[oi].elements[row].fraction;
         }
-        else if(col==5){
+        else if(col==4){
             stringstream ss; ss<<str;
             ss>>cd.qtdata.objs[oi].elements[row].disE;
         }
@@ -163,6 +168,21 @@ void MainWindow::freshObjTW(){
     for(int i=0; i<lo; i++){
         QString stmp; stmp = stmp.fromLocal8Bit(cd.qtdata.objs[i].objFile.c_str());
         ui->objTW->setItem(i, 0, new QTableWidgetItem(stmp));
+
+        cout<<cd.qtdata.objs[i].objFile<<endl;
+
+        stringstream ss;
+        string str;
+        ss.clear(); ss.str(""); ss<<cd.qtdata.objs[i].objDensity;
+        ss>>str;
+        stmp = stmp.fromLocal8Bit(str.c_str());
+        ui->objTW->setItem(i, 1, new QTableWidgetItem(stmp));
+
+        ss.clear(); ss.str(""); ss<<cd.qtdata.objs[i].scale;
+        ss>>str;
+        stmp = stmp.fromLocal8Bit(str.c_str());
+        ui->objTW->setItem(i, 2, new QTableWidgetItem(stmp));
+
     }
 }
 
@@ -190,18 +210,15 @@ void MainWindow::freshEleTW(){
         ss>>str;
         stmp=stmp.fromLocal8Bit(str.c_str());
         ui->eleTW->setItem(i, 2, new QTableWidgetItem(stmp));
-        ss.clear(); ss.str(""); ss<<cd.qtdata.objs[curR].elements[i].density;
-        ss>>str;
-        stmp=stmp.fromLocal8Bit(str.c_str());
-        ui->eleTW->setItem(i, 3, new QTableWidgetItem(stmp));
+
         ss.clear(); ss.str(""); ss<<cd.qtdata.objs[curR].elements[i].fraction;
         ss>>str;
         stmp=stmp.fromLocal8Bit(str.c_str());
-        ui->eleTW->setItem(i, 4, new QTableWidgetItem(stmp));
+        ui->eleTW->setItem(i, 3, new QTableWidgetItem(stmp));
         ss.clear(); ss.str(""); ss<<cd.qtdata.objs[curR].elements[i].disE;
         ss>>str;
         stmp=stmp.fromLocal8Bit(str.c_str());
-        ui->eleTW->setItem(i, 5, new QTableWidgetItem(stmp));
+        ui->eleTW->setItem(i, 4, new QTableWidgetItem(stmp));
     }
 }
 
@@ -253,12 +270,12 @@ void MainWindow::onAddObjBt(){
     fd->setNameFilter("obj file(*.obj)");
     fd->setViewMode(QFileDialog::List);
     QStringList flist;
-    ui->objTW->setColumnWidth(0,200);
+    ui->objTW->setColumnWidth(0,110);
     if(fd->exec()==QDialog::Accepted){
         flist=fd->selectedFiles();
         for(int i=0; i<flist.size(); i++){
             QString fname = flist[i];
-            cd.qtdata.objs.push_back(QTObj(fname.toLocal8Bit().toStdString()));
+            cd.qtdata.objs.push_back(QTObj(fname.toLocal8Bit().toStdString(), 1, 1));
         }
 
         freshObjTW();
@@ -272,7 +289,7 @@ void MainWindow::onAddObjBt(){
 void MainWindow::onAddEleBt(){
     int oi = ui->objTW->currentRow();
     if(oi>=0 && oi<(int)cd.qtdata.objs.size()){
-        cd.qtdata.objs[oi].addEle(QTEle("H",1,1.0087,0.05,1.0,5));
+        cd.qtdata.objs[oi].addEle(QTEle("H",1,1.0087,1.0,5));
         freshEleTW();
     }
 

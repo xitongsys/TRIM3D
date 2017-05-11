@@ -36,6 +36,7 @@ void Sample::loadInput(string fname){
             int ln = objs.size();
             objs.push_back(Object3D());
             string fname; int eleNum=0;
+            double objDensity=0, scale=1;
             string tmp;
             while(ss>>tmp){
                 fname += tmp;
@@ -45,17 +46,21 @@ void Sample::loadInput(string fname){
             int lf=fname.size();
             fname=fname.substr(1,lf-2);
 
-            ss>>eleNum;
+            ss>>eleNum>>objDensity>>scale;
+            objs[ln].objDensity = objDensity;
+            objs[ln].scale = scale;
+
             string eName; int Z;
-            double mass, density, fraction, disE;
+            double mass, fraction, disE;
             objs[ln].loadObj(fname);
 
             for(int i=0; i<eleNum; i++){
                 fi.getline(buff, 1024);
                 str=string(buff);
                 ss.clear(); ss.str(""); ss<<str;
-                ss>>eName>>Z>>mass>>density>>fraction>>disE;
+                ss>>eName>>Z>>mass>>fraction>>disE;
                 Atom atom(eName, Z, mass, Vect(0,0,0), Vect(0,0,0), 0, TARGET);
+                double density = objDensity*fraction/(mass/CN0)/1e24;
                 objs[ln].addElement(atom, fraction, density, disE);
             }
 

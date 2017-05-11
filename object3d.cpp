@@ -36,6 +36,9 @@ void Object3D::loadObj(string fname){
         else if(head=="v"){
             double x,y,z;
             ss>>x>>y>>z;
+            x *= this->scale;
+            y *= this->scale;
+            z *= this->scale;
             xmin=min(xmin, x); xmax=max(xmax, x);
             ymin=min(ymin, y); ymax=max(ymax, y);
             zmin=min(zmin, z); zmax=max(zmax, z);
@@ -44,6 +47,7 @@ void Object3D::loadObj(string fname){
         else if(head=="vn"){
             double x,y,z;
             ss>>x>>y>>z;
+
             vnorms.push_back(Vect(x,y,z));
         }
         else if(head=="f"){

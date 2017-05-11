@@ -21,6 +21,8 @@ public:
 
     double ZAve,massAve;//average Z and average mass
     double densityAve;//total atom density
+    double objDensity; //g/cm3
+    double scale;//
 
 public:
     Object3D();

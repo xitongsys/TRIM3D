@@ -85,7 +85,7 @@
             </font>
            </property>
            <attribute name="horizontalHeaderDefaultSectionSize">
-            <number>200</number>
+            <number>110</number>
            </attribute>
            <column>
             <property name="text">
@@ -95,6 +95,16 @@
              <font>
               <pointsize>10</pointsize>
              </font>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Density(g/cm3)</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Scale</string>
             </property>
            </column>
           </widget>
@@ -157,19 +167,6 @@
              <font>
               <pointsize>10</pointsize>
              </font>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>Density(/A3)</string>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="textAlignment">
-             <set>AlignLeading|AlignVCenter</set>
             </property>
            </column>
            <column>
@@ -466,7 +463,7 @@
      <x>0</x>
      <y>0</y>
      <width>1016</width>
-     <height>26</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
