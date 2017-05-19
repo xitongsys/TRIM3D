@@ -7,6 +7,7 @@ using namespace std;
 
 MC::MC(string inFile, string sFile):Sample(inFile),Stopping(sFile){
     incidentNum=0; recoilNum=0;
+    runMode=0;
 }
 
 double MC::randMC(){
@@ -26,7 +27,11 @@ int MC::runOne(int i, int j){
 
     int k=0;
      while(k<(int)record[rc].size()){
-     while(true){
+        if(runMode!=0 && k>0){
+            break;
+        }
+
+        while(true){
            if(record[rc][k].energy<EF){
                k++;break;
            }

@@ -78,6 +78,10 @@ private slots:
 
     void on_actionPlot_triggered();
 
+    void on_actionQuick_triggered();
+
+    void on_actionDetailed_triggered();
+
 public:
     void freshGL();
 };

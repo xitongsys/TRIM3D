@@ -376,8 +376,14 @@ void MainWindow::on_actionLoad_triggered(){
     }
     if(cd.qtdata.filePath.size()==0) return;
 
+
     cd.pmc = new MC(cd.qtdata.filePath, "SCOEF.88");
     //ui->openGLWidget->resetView();
+
+    if(ui->actionQuick->isChecked()){
+        cd.pmc->runMode=1;
+    }
+
     ui->openGLWidget->repaint();
 }
 
@@ -415,7 +421,7 @@ void MainWindow::on_actionExport_data_triggered() {
 void MainWindow::on_actionAbout_triggered(){
     QMessageBox message(this);
     message.setWindowTitle("About TRIM3D");
-    message.setText("Trim3D v2.0\n\n developed by Zhang Xitong\nEmail: xitongsys@gmail.com\n");
+    message.setText("Trim3D v3.2\n\n developed by Zhang Xitong\nEmail: xitongsys@gmail.com\n");
     message.setIconPixmap(QPixmap(":/images/mainIcon/ico128x128.png"));
     message.exec();
 
@@ -515,4 +521,20 @@ void MainWindow::on_actionPlot_triggered()
 
 void MainWindow::slot_repaint(){
     ui->openGLWidget->repaint();
+}
+
+void MainWindow::on_actionQuick_triggered()
+{
+    ui->actionQuick->setChecked(true);
+    ui->actionQuick->setEnabled(false);
+    ui->actionDetailed->setChecked(false);
+    ui->actionDetailed->setEnabled(true);
+}
+
+void MainWindow::on_actionDetailed_triggered()
+{
+    ui->actionQuick->setChecked(false);
+    ui->actionQuick->setEnabled(true);
+    ui->actionDetailed->setChecked(true);
+    ui->actionDetailed->setEnabled(false);
 }

@@ -9,6 +9,7 @@ class MC:public Sample, public Stopping{
 public:
     vector<vector<Atom> > record;
     int incidentNum,recoilNum;
+    int runMode;
 
 public:
     MC(string inFile, string sFile);

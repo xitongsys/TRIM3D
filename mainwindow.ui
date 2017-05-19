@@ -483,6 +483,9 @@
     <addaction name="actionLoad"/>
     <addaction name="actionRun"/>
     <addaction name="actionStop"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuick"/>
+    <addaction name="actionDetailed"/>
    </widget>
    <widget class="QMenu" name="menuData">
     <property name="title">
@@ -720,6 +723,28 @@
    </property>
    <property name="text">
     <string>Plot</string>
+   </property>
+  </action>
+  <action name="actionQuick">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Quick Calculation</string>
+   </property>
+  </action>
+  <action name="actionDetailed">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Detailed Calculation</string>
    </property>
   </action>
  </widget>
